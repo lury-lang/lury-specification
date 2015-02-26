@@ -3,7 +3,7 @@ var header =
     <ul class="nav nav-pills pull-right">\
       <li class="active"><a href="#">Spec Home</a></li>\
     </ul>\
-    <h1 class="text-muted">Lury Specification 0.1</h1>\
+    <h1 class="text-muted">Specification 0.1</h1>\
     <hr />\
   </header>';
 

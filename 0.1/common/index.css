@@ -1,7 +1,20 @@
 header h1 {
     font-size: 200%;
+    background-image: url('https://raw.githubusercontent.com/lury-lang/lury/master/logo/lury.png');
+    background-size: 144px 61.5px;
+    background-position: left center;
+    background-repeat: no-repeat;
+    padding-left: 150px;
+    line-height: 41.5px;
+    padding-top: 20px;
+    margin-bottom: 0;
 }
-
+header ul.nav {
+    margin-top: 20px;
+}
+hr {
+    margin-top: 10px;
+}
 
 /**** Affix Navigation ****/
 
