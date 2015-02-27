@@ -66,6 +66,7 @@ function build_regexLink() {
 $(function(){
   $('#content').before(header)
                .after(footer);
+  $(".markdown").markdown();
   build_nav();
   build_regexLink();
 });
