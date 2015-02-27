@@ -55,8 +55,17 @@ function build_nav() {
   $('body').scrollspy({ target: 'nav.affix-nav' });
 }
 
+function build_regexLink() {
+  var service = 'http://regexper.com/#';
+  $('a[regex]').each(function() {
+    $(this).attr('href', service + encodeURIComponent($(this).attr('regex')))
+           .attr('target', '_blank');
+  });
+}
+
 $(function(){
   $('#content').before(header)
                .after(footer);
   build_nav();
+  build_regexLink();
 });
