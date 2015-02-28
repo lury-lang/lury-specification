@@ -24,18 +24,17 @@ function build_nav() {
   var navul = nav.children('ul.nav');
 
   $('.col-main>section').each(function() {
-    var section = $('<li></li>').prepend(_('<a href="#{0}">{1}</a>', $(this).attr('id'), $(this).find('h3:first').text()));
+    var section = $('<li></li>').prepend(_('<a href="#{0}">{1}</a>', $(this).attr('id'), $(this).find(':header:first').text()));
     var subsection = $(_('.col-main section#{0} section', $(this).attr('id')));
 
     if (subsection.length > 0) {
       var subnavul = $('<ul class="nav"></ul>');
       subsection.each(function() {
-        $('<li></li>').prepend(_('<a href="#{0}">{1}</a>', $(this).attr('id'), $(this).find('h4:first').text()))
+        $('<li></li>').prepend(_('<a href="#{0}">{1}</a>', $(this).attr('id'), $(this).find(':header:first').text()))
                       .appendTo(subnavul);
       });
       subnavul.appendTo(section);
     }
-
     section.appendTo(navul);
   });
 
