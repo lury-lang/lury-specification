@@ -25,7 +25,7 @@ function build_nav() {
 
   $('.col-main>section').each(function() {
     var section = $('<li></li>').prepend(_('<a href="#{0}">{1}</a>', $(this).attr('id'), $(this).find('h3:first').text()));
-    var subsection = $(_('.col-main>section#{0}>section', $(this).attr('id')));
+    var subsection = $(_('.col-main section#{0} section', $(this).attr('id')));
 
     if (subsection.length > 0) {
       var subnavul = $('<ul class="nav"></ul>');
