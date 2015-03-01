@@ -1,4 +1,4 @@
-(function() { 
+function loader_load(dir) { 
   var css = [
 	    'common/bootstrap.min.css',  
 	    'common/bootstrap-theme.min.css',
@@ -14,7 +14,7 @@
 		'common/index.js'
 	];
   for (var i = 0; i < css.length; i++)
-    document.write('<link rel="stylesheet" href="' + css[i] + '" />');
+    document.write('<link rel="stylesheet" href="' + dir + css[i] + '" />');
 	for (var i = 0; i < js.length; i++)
-		document.write('<script src="' + js[i] + '"></script>');
-})();
+		document.write('<script src="' + dir + js[i] + '"></script>');
+}
