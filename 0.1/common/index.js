@@ -62,10 +62,17 @@ function build_regexLink() {
   });
 }
 
+function build_grammarAnchor() {
+  $('a.grammar').each(function() {
+    $(this).attr('name', $(this).text());
+  });
+}
+
 $(function(){
   $('#content').before(header)
                .after(footer);
   $(".markdown").markdown();
   build_nav();
   build_regexLink();
+  build_grammarAnchor();
 });
