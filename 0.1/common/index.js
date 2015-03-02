@@ -43,7 +43,7 @@ function build_nav() {
   // apply affix
   $('nav.affix-nav').affix({
     offset: {
-      top: $('#content').position().top,
+      top: $('.container>.row:first').position().top,
       bottom: 50
     }
   }).on('affix.bs.affix', function() {
@@ -69,8 +69,7 @@ function build_grammarAnchor() {
 }
 
 $(function(){
-  $('#content').before(header)
-               .after(footer);
+  $('.container>.row:first').before(header).after(footer);
   $(".markdown").markdown();
   build_nav();
   build_regexLink();
