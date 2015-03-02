@@ -20,7 +20,7 @@ function _(format)
 }
 
 function build_nav() {
-  var nav = $('<nav class="affix-nav"><ul class="nav"></ul></nav>');
+  var nav = $('<nav class="affix-nav hidden-print hidden-xs"><ul class="nav"></ul></nav>');
   var navul = nav.children('ul.nav');
 
   $('.col-main>section').each(function() {
