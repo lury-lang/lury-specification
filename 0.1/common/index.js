@@ -71,6 +71,11 @@ function build_grammarAnchor() {
 $(function(){
   $('.container>.row:first').before(header).after(footer);
   $(".markdown").markdown();
+
+  $('<div class="col-navigator"></div>').insertAfter('.col-main');
+  $('.col-main').addClass('col-sm-9');
+  $('.col-navigator').addClass('col-sm-3');
+
   build_nav();
   build_regexLink();
   build_grammarAnchor();
