@@ -69,7 +69,7 @@ function build_grammarAnchor() {
 }
 
 function build_parmaLink() {
-  $(this).find(':header').each(function(){
+  $(':header').each(function(){
     var id = $(this).parents('section:first').attr('id');
 
     if (typeof id === 'undefined')
