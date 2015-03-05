@@ -7,7 +7,7 @@
 }
 
 .markdown-body > *:first-child {
-    margin-top: 0 !important;
+    margin-top: 0;
 }
 
 .markdown-body h1 {
@@ -153,7 +153,7 @@ b, strong {
 }
 
 .markdown-body a, .markdown-body a:visited {
-    color: #4890A8!important;
+    color: #4890A8;
 }
 
 .markdown-body code {
