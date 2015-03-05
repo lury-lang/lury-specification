@@ -9,22 +9,19 @@
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-main">
+      <div class="col-main markdown">
 
-<div class="markdown">
 ## 字句構造
 
 ソースコードは *構文解析器* (parser)で文法が解析されます。しかしながら、構文解析器はソースコードを直接解釈することはできません。そのために、ソースコードを *トークン* と呼ばれる記号列に解析、分解する必要があります。これが *字句解析器* (lexical analyzer)の役割です。 この章では字句解析器が用いる字句構造、解析方法について記述します。
-</div>
 
-<section id="tokenization" class="markdown">
+<section id="tokenization">
 ### トークン化
 
 字句解析器は可能な限り長いトークンを生成しようとします（最長一致）。たとえば `>=` という入力は関係演算子 `>=` という1つのトークンと解釈します。これを `>`, `=` のように分割して解釈することはありません。
 </section>
 
 <section id="encoding">
-<div class="markdown">
 ### 文字コード
 
 Lury コンパイラが有効なソースコードとして *認識しなくてはならない* 文字コードは以下の通りです:
@@ -40,18 +37,17 @@ Lury コンパイラが有効なソースコードとして *認識しなくて�
 
 上記の文字コードのうち、ASCII 以外に関してはソースコードの先頭にバイトオーダーマーク(BOM)を付加することができます。コンパイラは BOM をソースコードの一部として *認識してはいけません*。ソースコードが BOM を付加されない場合、最初の2バイトは `0x7F` 以下でなくてはなりません。付加できる BOM データは以下の通りです:
 
-文字コード | BOM
------------|-----------------------
-UTF-8      | `0xEF 0xBB 0xBF`
-UTF-16BE   | `0xFE 0xFF`
-UTF-16LE   | `0xFF 0xFE`
-UTF-32BE   | `0x00 0x00 0xFE 0xFF`
-UTF-32LE   | `0xFE 0xFF 0x00 0x00`
+ 文字コード | BOM
+------------|-----------------------
+ UTF-8      | `0xEF 0xBB 0xBF`
+ UTF-16BE   | `0xFE 0xFF`
+ UTF-16LE   | `0xFF 0xFE`
+ UTF-32BE   | `0x00 0x00 0xFE 0xFF`
+ UTF-32LE   | `0xFE 0xFF 0x00 0x00`
 
 C や C++ のコンパイラで一部サポートされているトライグラフ(digraph, trigraph)は Lury では *サポートしません*。
-</div>
 
-<section id="character_set" class="markdown">
+<section id="character_set">
 #### 文字集合
 
 ```text
@@ -66,7 +62,7 @@ C や C++ のコンパイラで一部サポートされているトライグラ�
 Lury コンパイラはソースコードのコードセットを Unicode として内部では扱い、処理します。
 </section>
 
-<section id="endoffile" class="markdown">
+<section id="endoffile">
 #### ファイル終端
 
 ```text
@@ -81,13 +77,11 @@ Lury コンパイラはソースコードのコードセットを Unicode とし
 </section>
 
 <section id="line">
-<div class="markdown">
 ### 行構造
 
 Lury ではブロックを行の構造で表現します。これは Python のそれと非常に似ている部分です。行の構造は各行の冒頭にある、空白文字を使った *インデントの文字数* によって表現します。
-</div>
 
-<section id="physicalLine" class="markdown">
+<section id="physicalLine">
 #### 物理行
 
 物理行 (physical line) とは、文字列において改行文字に区切られた部分文字列のことです。文字列に改行文字が含まれていない場合は、その文字列自体が部分文字列、すなわち行数 1 をもつ文字列とみなします。一般に、`行数 = 改行文字数 + 1` の関係が成り立ちます。
@@ -95,16 +89,18 @@ Lury ではブロックを行の構造で表現します。これは Python の�
 改行文字とは `\r`、`\n` または `\r\n` などを指します。3 つ目の例のように、改行文字がデータの上で 1 バイトであるとは限りません。さらに、`\r\n` を `\r` と `\n` と 2 つに分割して考えることはありません。
 
 完全な *改行文字* の一覧は後述する [*LineTerminator*](#LineTerminator) と同じですが、混乱を避けるため、この単語と *行終端* という単語は字句解析時に用い、主にトークンの名前として用います。*改行文字* とは前述の通り、`\r`、`\n` または `\r\n` などのバイト列そのものを指す言葉としてここでは用います。
+
+Lury では行終端をキャンセルし、2つの物理行を1つの論理行へ連結可能なトークンが2つあります。バックスラッシュ `\` と、括弧内のカンマ `,` です。前者を *明示的な行連結*、後者を *暗黙的な行連結* とも呼びます。行連結は2行以上連続して指定することができます。バックスラッシュによるキャンセルは [コメント](#comment) を参照してください。
 </section>
 
-<section id="logicalLine" class="markdown">
+<section id="logicalLine">
 #### 論理行
 
-__(work in progress)__
+論理行 (logical line) とは、トークン [EndOfLine](#EndOfLine) で区切られたトークン列上の行のことです。Lury では1つの論理行には1つの実行文および単純文 (simple statement) のみ記述できます。これを、複数の論理行に跨って記述することはできません。複合文 (compound statement) ではセミコロンを使って、複数の実行文を記述できます。
 
 </section>
 
-<section id="endofline" class="markdown">
+<section id="endofline">
 #### 行終端
 
 ```text
@@ -120,10 +116,9 @@ __(work in progress)__
   EndOfFile
 ```
 
-Lury では行終端をキャンセルし、2つの物理行を1つの論理行へ接続するトークンが2つあります。バックスラッシュ `\` と カンマ `,` です。バックスラッシュによるキャンセルは [コメント](#comment) を参照してください。
 </section>
 
-<section id="whitespace" class="markdown">
+<section id="whitespace">
 #### 空白文字
 
 ```text
@@ -141,7 +136,7 @@ Lury では行終端をキャンセルし、2つの物理行を1つの論理行�
 これ以外の空白文字、特に全角スペース `　` は空白文字に入りません。Lury コンパイラはこれらの空白文字を有効な空白文字へは *変換しません*。
 </section>
 
-<section id="comment" class="markdown">
+<section id="comment">
 #### コメント
 
 ```text
@@ -171,7 +166,7 @@ __(work in progress)__
 </section>
 </section>
 
-<section id="cite" class="markdown">
+<section id="cite">
 ### 参考文献
 - [字句の構成 - プログラミング言語 D (日本語訳)](http://www.kmonos.net/alang/d/lex.html)
 - [2. 字句解析 &mdash; Python 3.4.2 ドキュメント](http://docs.python.jp/3.4/reference/lexical_analysis.html)
