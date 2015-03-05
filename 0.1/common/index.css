@@ -22,7 +22,6 @@ hr {
     padding-left: 32px;
 }
 .markdown-body {
-    padding: 0;
 }
 .markdown-body pre {
     margin: 1em 3em;
@@ -36,6 +35,17 @@ a[regex],
 a[regex]:visited {
     font-weight: bold;
     color: black !important;
+}
+a.permalink {
+    margin-left: -2ex;
+    width: 2ex;
+    text-decoration: none;
+    color: #888 !important;
+    -moz-user-select: none;
+    position: absolute;
+    text-align: center;
+    font-weight: normal;
+    opacity: 0;
 }
 
 /**** Affix Navigation ****/
