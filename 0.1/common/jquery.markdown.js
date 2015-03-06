@@ -463,6 +463,18 @@
                                         }
 
                                         var getTitle = function(src) {
+                                            src = src.replace(/\\/g, "\\\\")
+                                                     .replace(/\*/g, "\\*")
+                                                     .replace(/\(/g, "\\(")
+                                                     .replace(/\)/g, "\\)")
+                                                     .replace(/\[/g, "\\[")
+                                                     .replace(/\]/g, "\\]")
+                                                     .replace(/\^/g, "\\^")
+                                                     .replace(/\$/g, "\\$")
+                                                     .replace(/\-/g, "\\-")
+                                                     .replace(/\|/g, "\\|")
+                                                     .replace(/\//g, "\\/");
+
                                             var title = null;
                                             var matches = new RegExp("\\[" + src + "\\]:", "i");
 
@@ -490,37 +502,34 @@
                                             return a;
                                         }
 
-                                        if (null !== md.vs.nowv.match(/!?\[.*?\]\(.*?\)/)) {
-                                            var alt = md.vs.nowv.replace(/^.*?!?\[(.*?)\]\(.*?\).*/, "$1");
-                                            var src = md.vs.nowv.replace(/^.*?!?\[.*?\]\((.*?)\).*/, "$1").split(" ")[0];
-                                            var title = md.vs.nowv.replace(/^.*?!?\[.*?\]\(.*\s"(.*?)"\).*/, "$1");
-                                            title = (md.vs.nowv !== title) ? title : null;
-
-                                            var a = createtags(src, alt, title);
-                                            md.vs.nowv = md.vs.nowv.replace(/^(.*)?(!?\[.*?\]\(.*?\))(.*)?/, "$1" + a + "$3");
+                                        while (null !== md.vs.nowv.match(/!?\[.*?\]\(.*?\)/)) {
+                                            var a_match = md.vs.nowv.match(/\[(.*?)\]\((.*?)\)/);
+                                            var src_title = a_match[2].split(" ");
+                                            var title = src_title[1] && src_title[1].replace(/"/g, "");
+                                            var a = createtags(src_title[0], a_match[1], title);
+                                            md.vs.nowv = md.vs.nowv.replace(a_match[0], a);
                                         }
 
-                                        if (null !== md.vs.nowv.match(/!?\[.*?\]\[.*?\]/)) {
-                                            var alt = md.vs.nowv.replace(/^.*?!?\[(.*?)\]\[.*?\].*/, "$1");
-                                            var src = md.vs.nowv.replace(/^.*?!?\[.*?\]\[(.*?)\].*/, "$1");
+                                        if (null !== md.vs.nowv.match(/!?\[.*\]\[.*\]/)) {
+                                            var alt = md.vs.nowv.replace(/!?\[(.*)\]\[.*\]/, "$1");
+                                            var src = md.vs.nowv.replace(/!?\[.*\]\[(.*)\]/, "$1");
+
+                                            var title_matches = getTitle(src);
+                                            src   = title_matches[0];
+                                            title = title_matches[1];
+
+                                            md.vs.nowv = createtags(src, alt, title);
+                                        }
+
+                                        if (null !== md.vs.nowv.match(/!?\[.*\]/)) {
+                                            var alt = src = md.vs.nowv.replace(/^.*?!?\[(.*)\].*?/, "$1");
 
                                             var title_matches = getTitle(src);
                                             src   = title_matches[0];
                                             title = title_matches[1];
 
                                             var a = createtags(src, alt, title);
-                                            md.vs.nowv = md.vs.nowv.replace(/^(.*)?(!?\[.*?\]\[.*?\])(.*)?/, "$1" + a + "$3");
-                                        }
-
-                                        if (null !== md.vs.nowv.match(/!?\[.*?\]/)) {
-                                            var alt = src = md.vs.nowv.replace(/^.*?!?\[(.*?)\].*?/, "$1");
-
-                                            var title_matches = getTitle(src);
-                                            src   = title_matches[0];
-                                            title = title_matches[1];
-
-                                            var a = createtags(src, alt, title);
-                                            md.vs.nowv = md.vs.nowv.replace(/^(.*)?!?\[(.*?)\](.*)?/, "$1" + a + "$3");
+                                            md.vs.nowv = md.vs.nowv.replace(/^(.*)?!?\[(.*)\](.*)?/, "$1" + a + "$3");
                                         }
 
                                         if (typeof md.vs.nexv !== 'undefined') {
