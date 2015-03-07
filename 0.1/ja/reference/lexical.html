@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Lury Specification 0.1 - 字句構造</title>
+  <title>Lury Specification 0.1 - 2. 字句構造</title>
   <script src="../../common/loader.js"></script>
   <script type="text/javascript">loader_load('../../')</script>
 </head>
@@ -11,18 +11,18 @@
     <div class="row">
       <div class="col-main markdown">
 
-## 字句構造
+## 2. 字句構造
 
 ソースコードは *構文解析器* (parser)で文法が解析されます。しかしながら、構文解析器はソースコードを直接解釈することはできません。そのために、ソースコードを *トークン* と呼ばれる記号列に解析、分解する必要があります。これが *字句解析器* (lexical analyzer)の役割です。 この章では字句解析器が用いる字句構造、解析方法について記述します。
 
 <section id="tokenization">
-### トークン化
+### 2.1. トークン化
 
 字句解析器は可能な限り長いトークンを生成しようとします（最長一致）。たとえば `>=` という入力は関係演算子 `>=` という1つのトークンと解釈します。これを `>`, `=` のように分割して解釈することはありません。
 </section>
 
 <section id="encoding">
-### 文字コード
+### 2.2. 文字コード
 
 Lury コンパイラが有効なソースコードとして *認識しなくてはならない* 文字コードは以下の通りです:
 
@@ -48,7 +48,7 @@ Lury コンパイラが有効なソースコードとして *認識しなくて�
 C や C++ のコンパイラで一部サポートされているトライグラフ(digraph, trigraph)は Lury では *サポートしません*。
 
 <section id="characterSet">
-#### 文字集合
+#### 2.2.1. 文字集合
 
 ```text
 <a class="grammar" regex=".">Character</a>:
@@ -63,7 +63,7 @@ Lury コンパイラはソースコードのコードセットを Unicode とし
 </section>
 
 <section id="endoffile">
-#### ファイル終端
+#### 2.2.2. ファイル終端
 
 ```text
 <a class="grammar" regex="EOF|\u0000|\u001a">EndOfFile</a>:
@@ -77,12 +77,12 @@ Lury コンパイラはソースコードのコードセットを Unicode とし
 </section>
 
 <section id="line">
-### 行構造
+### 2.3. 行構造
 
 Lury ではブロックを行の構造で表現します。これは Python のそれと非常に似ている部分です。行の構造は各行の冒頭にある、空白文字を使った *インデントの文字数* によって表現します。
 
 <section id="physicalLine">
-#### 物理行
+#### 2.3.1. 物理行
 
 物理行 (physical line) とは、文字列において改行文字に区切られた部分文字列のことです。文字列に改行文字が含まれていない場合は、その文字列自体が部分文字列、すなわち行数 1 をもつ文字列とみなします。一般に、`行数 = 改行文字数 + 1` の関係が成り立ちます。
 
@@ -94,14 +94,14 @@ Lury では行終端をキャンセルし、2つの物理行を1つの論理行�
 </section>
 
 <section id="logicalLine">
-#### 論理行
+#### 2.3.2. 論理行
 
 論理行 (logical line) とは、トークン [EndOfLine](#EndOfLine) で区切られたトークン列上の行のことです。Lury では1つの論理行には1つの実行文および単純文 (simple statement) のみ記述できます。これを、複数の論理行に跨って記述することはできません。複合文 (compound statement) ではセミコロンを使って、複数の実行文を記述できます。
 
 </section>
 
 <section id="endofline">
-#### 行終端
+#### 2.3.3. 行終端
 
 ```text
 <a class="grammar" regex="\u000d|\u001a|(?:\u000d\u000a)|\u2028|\u2029">LineTerminator</a>:
@@ -119,7 +119,7 @@ Lury では行終端をキャンセルし、2つの物理行を1つの論理行�
 </section>
 
 <section id="whitespace">
-#### 空白文字
+#### 2.3.4. 空白文字
 
 ```text
 <a class="grammar" regex="\u0020|\u0009|\u000b|\u000c">Space</a>:
@@ -143,7 +143,7 @@ Lury では行終端をキャンセルし、2つの物理行を1つの論理行�
 </section>
 
 <section id="comment">
-#### コメント
+#### 2.3.5. コメント
 
 ```text
 <a class="grammar" regex="###(?:Characters)###">BlockComment</a>:
