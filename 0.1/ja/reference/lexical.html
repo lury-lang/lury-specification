@@ -167,9 +167,70 @@ Lury では行終端をキャンセルし、2つの物理行を1つの論理行�
 
 ラインキャンセルは行末の `\` で表現されます。結果的に `\` および行終端文字（改行文字）はコメントと同一視され、構文解析時には無視されます。`\` はファイル終端をキャンセルすることはできません。すなわち、ソースコードの末尾に `\` を記述することはできません。また、`\` と行終端文字の間に空白文字を入れることはできません。
 
+</section>
+</section>
+
+<section id="indent">
+### 2.4. インデント
+
+Lury では複合文の表現をインデントを用いた *オフサイドルール* によって行います。C 言語またはその子孫の言語ではブロック (`{` から `}`)で表現されます。インデントは行頭の [空白文字](#whitespace) を用いて表現します。インデントのレベルには空白文字の文字数が採用され、文字の表示上の幅は考慮されません。例えば、タブ文字 `\t` は環境によって 2 文字以上のスペース ` ` の幅で表示されますが、Lury では 1 つの `\t` と 1 つの ` ` に差はありません。
+
+<section id="offsiderule">
+#### 2.4.1. オフサイドルール
+
+Lury におけるオフサイドルール (off-side rule) とは、複合文の範囲をインデントによって表現する規則のことです。物理行の先頭すなわち行頭にあるインデントが、オフサイドルールに用いられます。しかし、物理行の行頭にあるインデントが、常にいつでもオフサイドルールとして採用されるわけではありません。
+
 __(work in progress)__
 
 </section>
+
+<section id="exceptOfOffsiderule">
+#### 2.4.2. オフサイドルールが適用されないインデント
+
+__(work in progress)__
+
+</section>
+</section>
+
+<section id="identifier">
+### 2.5. 識別子
+
+__(work in progress)__
+
+</section>
+
+<section id="keyword">
+### 2.6. キーワード
+
+__(work in progress)__
+
+<section id="contextualKeyword">
+#### 2.6.1. コンテキストキーワード
+
+__(work in progress)__
+
+</section>
+</section>
+
+<section id="literal">
+### 2.7. リテラル
+
+__(work in progress)__
+
+</section>
+
+<section id="operator">
+### 2.8. 演算子
+
+__(work in progress)__
+
+</section>
+
+<section id="delimiter">
+### 2.9. デリミタ
+
+__(work in progress)__
+
 </section>
 
 <section id="cite">
