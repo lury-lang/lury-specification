@@ -263,7 +263,27 @@ list = [ 1, 2, 3,
 <section id="identifier">
 ### 2.5. 識別子
 
-__(work in progress)__
+```text
+<a class="grammar" regex="\\p\{Lu\}|(?:\\p\{Ll\})|\\p\{Lt\}|(?:\\p\{Lm\})|\\p\{Lo\}|(?:\\p\{Nl\})">IdentifierStart</a>:
+  \p{Lu}
+  \p{Ll}
+  \p{Lt}
+  \p{Lm}
+  \p{Lo}
+  \p{Nl}
+
+<a class="grammar" regex="IdentifierStart|(?:\\p\{Mn\})|\\p\{Mc\}|(?:\\p\{Nd\})|\\p\{Pc\}">IdentifierContinue</a>:
+  IdentifierStart
+  \p{Mn}
+  \p{Mc}
+  \p{Nd}
+  \p{Pc}
+
+<a class="grammar" regex="IdentifierStart(?:IdentifierContinue)*">Identifier</a>:
+  IdentifierStart IdentifierContinue<span class="asterisk"></span>
+```
+
+識別子とは 変数名、メンバ名、プロパティ名、クラス名や名前空間などの名前に使われる文字の並びのことです。識別子の長さには制限がありませんが、識別子の最初の文字に使えない Unicode カテゴリの文字があります。
 
 </section>
 
