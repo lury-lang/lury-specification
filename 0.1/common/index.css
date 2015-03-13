@@ -65,6 +65,10 @@ video {
     content: '`';
 }
 
+.asterisk:after {
+    content: '*';
+}
+
 /**** Affix Navigation ****/
 
 .affix-nav {
