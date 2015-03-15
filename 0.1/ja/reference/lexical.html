@@ -279,11 +279,14 @@ list = [ 1, 2, 3,
   \p{Nd}
   \p{Pc}
 
-<a class="grammar" regex="IdentifierStart(?:IdentifierContinue)*">Identifier</a>:
+<a class="grammar" regex="IdentifierStart(?:IdentifierContinue)*|\$">Identifier</a>:
   IdentifierStart IdentifierContinue<span class="asterisk"></span>
+  $
 ```
 
 識別子とは 変数名、メンバ名、プロパティ名、クラス名や名前空間などの名前に使われる文字の並びのことです。識別子の長さには制限がありませんが、識別子の最初の文字に使えない Unicode カテゴリの文字があります。
+
+`$` はコンテナの長さを表すための特別な識別子です。スライスなどで範囲リテラルとともに用いられます。
 
 </section>
 
