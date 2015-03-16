@@ -366,52 +366,68 @@ __(work in progress)__
 演算子には同じ記号列で複数の意味を持つものがあります。例えば前置インクリメント `++a` と 後置インクリメント `a++` です。これをわかりやすくするため、項となる識別子も以下の一覧には表示されています。
 
 ```
-一次式                  new      nameof   reflect
+一次式
+    new      nameof   reflect
                         a**.**b      a__..__b     a**...**b
 
-後置一項演算子          a**++**      a__--__
+後置一項演算子
+    a**++**      a__--__
 
-前置一項演算子          **++**a      __--__a
+前置一項演算子
+    **++**a      __--__a
                         **+**a       __-__a       **~**a
                         **!**a       **not** a
 
-冪乗演算子              a **<span class="asterisk"></span><span class="asterisk"></span>** b
+冪乗演算子
+    a **<span class="asterisk"></span><span class="asterisk"></span>** b
 
-乗法演算子              a **<span class="asterisk"></span>** b    a __/__ b    a **//** b   a __%__ b
+乗法演算子
+    a **<span class="asterisk"></span>** b    a __/__ b    a **//** b   a __%__ b
                         a **~** b
 
-加法演算子              a **+** b    a __-__ b
+加法演算子
+    a **+** b    a __-__ b
 
-シフト演算子            a **<<** b   a __>>__ b
+シフト演算子
+    a **<<** b   a __>>__ b
 
-関係演算子              a **==** b   a __!=__ b
+関係演算子
+    a **==** b   a __!=__ b
                         a **<** b    a __>__ b    a **<=** b    a __>=__ b
                         a **is** b   a __!is__ b  a **not is** b
                         a **in** b   a __!in__ b  a **not in** b
 
-論理演算子(AND)         a **&** b
-論理演算子(XOR)         a **^** b
-論理演算子(OR)          a **|** b
+論理演算子
+    (AND) a **&** b
+    (XOR) a **^** b
+    (OR)  a **|** b
 
-論理演算子(短絡論理積)  a **&&** b   a **and** b
+論理演算子(短絡論理積)
+    a **&&** b   a **and** b
 
-論理演算子(短絡論理和)  a **||** b   a **or** b
+論理演算子(短絡論理和)
+    a **||** b   a **or** b
 
-条件演算子              a **?** b __:__ c
+条件演算子
+    a **?** b __:__ c
                         a **if** b __else__ c
                         a **unless** b __else__ c
 
-nil合体演算子           a **??** b
+nil合体演算子
+    a **??** b
 
-ラムダ式                a **=>** b
+ラムダ式
+    a **=>** b
 
-代入演算子              a **=** b
+代入演算子
+    a **=** b
                         a **+=** b   a __-=__ b   a **<span class="asterisk"></span>=** b   a __/=__ b
                         a **//=** b  a __%=__ b   a **~=** b   a __<span class="asterisk"></span><span class="asterisk"></span>=__ b
                         a **|=** b   a __&=__ b   a **^=** b
                         a **<<=** b  a __>>=__ b
 
-カンマ演算子            a **,** b
+カンマ演算子
+    a **,** b
 ```
 
 </section>
