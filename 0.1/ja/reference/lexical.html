@@ -354,8 +354,47 @@ elif          invariant     private       switch        yield
 <section id="literal">
 ### 2.7. リテラル
 
-__(work in progress)__
+<section id="stringLiteral">
+### 2.7.1. 文字列リテラル
 
+__(work in progress)__
+</section>
+
+<section id="expressionEmbedStringLiteral">
+### 2.7.2. 式埋め込み文字列リテラル
+
+__(work in progress)__
+</section>
+
+<section id="wysiwygStringLiteral">
+### 2.7.3. WYSIWYG文字列リテラル
+
+__(work in progress)__
+</section>
+
+<section id="numberLiteral">
+### 2.7.4. 数値リテラル
+
+__(work in progress)__
+</section>
+
+<section id="integerLiteral">
+### 2.7.5. 整数リテラル
+
+__(work in progress)__
+</section>
+
+<section id="floatLiteral">
+### 2.7.6. 浮動小数点数リテラル
+
+__(work in progress)__
+</section>
+
+<section id="imaginaryNumberLiteral">
+### 2.7.7. 虚数リテラル
+
+__(work in progress)__
+</section>
 </section>
 
 <section id="operator">
@@ -368,22 +407,22 @@ __(work in progress)__
 ```
 一次式
     new      nameof   reflect
-                        a**.**b      a__..__b     a**...**b
+    a**.**b      a__..__b     a**...**b
 
 後置一項演算子
     a**++**      a__--__
 
 前置一項演算子
     **++**a      __--__a
-                        **+**a       __-__a       **~**a
-                        **!**a       **not** a
+    **+**a       __-__a       **~**a
+    **!**a       **not** a
 
 冪乗演算子
     a **<span class="asterisk"></span><span class="asterisk"></span>** b
 
 乗法演算子
     a **<span class="asterisk"></span>** b    a __/__ b    a **//** b   a __%__ b
-                        a **~** b
+    a **~** b
 
 加法演算子
     a **+** b    a __-__ b
@@ -393,9 +432,9 @@ __(work in progress)__
 
 関係演算子
     a **==** b   a __!=__ b
-                        a **<** b    a __>__ b    a **<=** b    a __>=__ b
-                        a **is** b   a __!is__ b  a **not is** b
-                        a **in** b   a __!in__ b  a **not in** b
+    a **<** b    a __>__ b    a **<=** b    a __>=__ b
+    a **is** b   a __!is__ b  a **not is** b
+    a **in** b   a __!in__ b  a **not in** b
 
 論理演算子
     (AND) a **&** b
@@ -410,8 +449,8 @@ __(work in progress)__
 
 条件演算子
     a **?** b __:__ c
-                        a **if** b __else__ c
-                        a **unless** b __else__ c
+    a **if** b __else__ c
+    a **unless** b __else__ c
 
 nil合体演算子
     a **??** b
@@ -421,10 +460,10 @@ nil合体演算子
 
 代入演算子
     a **=** b
-                        a **+=** b   a __-=__ b   a **<span class="asterisk"></span>=** b   a __/=__ b
-                        a **//=** b  a __%=__ b   a **~=** b   a __<span class="asterisk"></span><span class="asterisk"></span>=__ b
-                        a **|=** b   a __&=__ b   a **^=** b
-                        a **<<=** b  a __>>=__ b
+    a **+=** b   a __-=__ b   a **<span class="asterisk"></span>=** b   a __/=__ b
+    a **//=** b  a __%=__ b   a **~=** b   a __<span class="asterisk"></span><span class="asterisk"></span>=__ b
+    a **|=** b   a __&=__ b   a **^=** b
+    a **<<=** b  a __>>=__ b
 
 カンマ演算子
     a **,** b
