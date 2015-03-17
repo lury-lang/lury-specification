@@ -395,7 +395,13 @@ __(work in progress)__
 <section id="imaginaryNumberLiteral">
 ### 2.7.7. 虚数リテラル
 
-__(work in progress)__
+```text
+<a class="grammar" regex="(?:FloatNumber|(?:FloatIntegerPart))i">ImaginaryNumber</a>:
+  (FloatNumber | FloatIntegerPart) "i"
+```
+
+虚数リテラルは実数部が 0.0 の複素数型として処理されます。複素数を表現したい場合は `2.4 + 3.5i` のように実数と虚数を加算もしくは減算させます。虚数部が 0.0 の複素数を表現する場合は `1.0 + 0.0i` と記述します。
+
 </section>
 </section>
 
