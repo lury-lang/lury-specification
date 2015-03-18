@@ -386,7 +386,54 @@ __(work in progress)__
 <section id="integerLiteral">
 ### 2.7.5. 整数リテラル
 
-__(work in progress)__
+```text
+<a class="grammar" regex="DecimalInteger|(?:BinaryInteger)|OctalInteger|(?:HexadecimalInteger)">Integer</a>:
+  DecimalInteger
+  BinaryInteger
+  OctalInteger
+  HexadecimalInteger
+
+<a class="grammer" regex="Digit(?:DecimalDigits)*">DecimalInteger</a>:
+  Digit DecimalDigits*
+
+<a class="grammer" regex="%5f?Digit">DecimalDigits</a>:
+  "<span class="underline"></span>"? Digit
+
+<a class="grammer" regex="0[bB](?:BinaryDigits)+">BinaryInteger</a>:
+  "0" ("b" | "B") BinaryDigits+
+
+<a class="grammer" regex="%5f?BinaryDigit">BinaryDigits</a>:
+  "<span class="underline"></span>"? BinaryDigit
+
+<a class="grammer" regex="0[oO](?:OctalDigits)+">OctalInteger</a>:
+  "0" ("o" | "O") OctalDigits+
+
+<a class="grammer" regex="%5f?OctalDigit">OctalDigits</a>:
+  "<span class="underline"></span>"? OctalDigit
+
+<a class="grammer" regex="0[xX](?:HexadecimalDigits)+">HexadecimalInteger</a>:
+  "0" ("x" | "X") HexadecimalDigits+
+
+<a class="grammer" regex="%5f?HexadecimalDigit">HexadecimalDigits</a>:
+  "<span class="underline"></span>"? HexadecimalDigit
+
+<a class="grammer" regex="[0-9]">Digit</a>:
+  "0" ... "9"
+
+<a class="grammer" regex="[01]">BinaryDigit</a>:
+  "0"
+  "1"
+
+<a class="grammer" regex="[0-7]">OctalDigit</a>:
+  "0" ... "7"
+
+<a class="grammer" regex="digit|[a-fA-F]">HexadecimalDigit</a>:
+  digit
+  "a" ... "f"
+  "A" ... "F"
+```
+
+整数リテラルは 10進数のほか、2進数、8進数そして 16進数を記述できます。それぞれ `0x`、`0o` そして `0x` とプレフィクスをつけます。プレフィクスに大文字と小文字の区別はありません。
 </section>
 
 <section id="floatLiteral">
