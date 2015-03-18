@@ -82,6 +82,14 @@ function build_parmaLink() {
   });
 }
 
+function place_markdownChar () {
+  $('.bracket-left').text('[');
+  $('.bracket-right').text('[');
+  $('.backquote').text('`');
+  $('.asterisk').text('*');
+  $('.underline').text('_');
+}
+
 $(function(){
   $('.container>.row:first').before(header).after(footer);
   $(".markdown").markdown();
@@ -94,4 +102,5 @@ $(function(){
   build_regexLink();
   build_grammarAnchor();
   build_parmaLink();
+  place_markdownChar();
 });

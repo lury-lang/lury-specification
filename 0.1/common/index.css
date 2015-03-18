@@ -53,22 +53,6 @@ video {
     display: block;
 }
 
-.bracket-left:before {
-    content: '[';
-}
-
-.bracket-right:after {
-    content: ']';
-}
-
-.backquote:after {
-    content: '`';
-}
-
-.asterisk:after {
-    content: '*';
-}
-
 /**** Affix Navigation ****/
 
 .affix-nav {
