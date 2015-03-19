@@ -438,7 +438,30 @@ __(work in progress)__
 <section id="floatLiteral">
 ### 2.7.6. 浮動小数点数リテラル
 
-__(work in progress)__
+```text
+<a class="grammer" regex="PointFloat|(?:ExponentFloat)">FloatNumber</a>:
+  PointFloat
+  ExponentFloat
+
+<a class="grammer" regex="(?:(?:FloatIntegerPart)?Fraction)|(?:FloatIntegerPart\.)">PointFloat</a>:
+  FloatIntegerPart? Fraction
+  FloatIntegerPart "."
+
+<a class="grammer" regex="(?:FloatIntegerPart(?:Exponent))|(?:PointFloat(?:Exponent))">ExponentFloat</a>:
+  FloatIntegerPart Exponent
+  PointFloat Exponent
+
+<a class="grammer" regex="(?:Digit)+">FloatIntegerPart</a>:
+  Digit+
+
+<a class="grammer" regex="\.(?:Digit)+">Fraction</a>:
+  "." Digit+
+
+<a class="grammer" regex="[eE][+-](?:Digit)+">Exponent</a>:
+  [eE] [+-] Digit+
+```
+
+浮動小数点数リテラルは仮数部、指数部をともに 10進数として解釈します。
 </section>
 
 <section id="imaginaryNumberLiteral">
