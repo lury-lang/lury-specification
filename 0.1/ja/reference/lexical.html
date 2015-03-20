@@ -354,6 +354,20 @@ elif          invariant     private       switch        yield
 <section id="literal">
 ### 2.7. リテラル
 
+```text
+<a class="grammar" regex="StringLiteral|(?:EmbedStringLiteral)|WysiwygStringLiteral|(?:Integer)|FloatNumber|(?:ImaginaryNumber)">Literal</a>:
+  StringLiteral
+  EmbedStringLiteral
+  WysiwygStringLiteral
+  Integer
+  FloatNumber
+  ImaginaryNumber
+```
+
+Lury でのリテラル (literal、即値) とはソースコード上で直接、値として記述できるものを指します。上記に示した文字列、数値がリテラルとして記述できます。リテラルは字句解析レベルで処理され、*式埋め込み文字列リテラルを除いて* その場で値が決定します。
+
+リテラルではないものの主な例は 式 (expression) です。たとえば `5 + 3` というコード自体はリテラルではなく、2つのリテラルと演算子が結びついた式です。コンパイラの最適化によっては実行前に `8` という値にまとめられる可能性もありますが、少なくともその最適化は字句解析レベルでは行われません。
+
 <section id="stringLiteral">
 ### 2.7.1. 文字列リテラル
 
