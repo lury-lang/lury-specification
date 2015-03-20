@@ -84,7 +84,7 @@ function build_parmaLink() {
 
 function place_markdownChar () {
   $('.bracket-left').text('[');
-  $('.bracket-right').text('[');
+  $('.bracket-right').text(']');
   $('.backquote').text('`');
   $('.asterisk').text('*');
   $('.underline').text('_');
