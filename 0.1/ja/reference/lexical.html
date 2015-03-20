@@ -435,7 +435,19 @@ Lury の文字列リテラルにプレフィクスはありません。
 <section id="wysiwygStringLiteral">
 ### 2.7.3. WYSIWYG文字列リテラル
 
-__(work in progress)__
+```text
+<a class="grammar" regex="%60(?:WysiwygStringCharacters)%2a%60">WysiwygStringLiteral</a>:
+  "<span class="backquote"></span>" WysiwygStringCharacters<span class="asterisk"></span> "<span class="backquote"></span>"
+
+<a class="grammar" regex="%60%60|[^%60]">WysiwygStringCharacters</a>:
+  "<span class="backquote"></span><span class="backquote"></span>"
+  すべてのUnicode文字("<span class="backquote"></span>"を除く)
+```
+
+WYSIWYG文字列は `<span class="backquote"></span>` で囲まれた Unicode文字列をそのまま文字列として扱うことが出来ます。これは、改行文字も含まれます。`'` および `"` も記述ができ、`\` もそのまま記述ができます。エスケープシーケンスは記述できません。また、式の埋め込みはできません。
+
+WYSIWYG文字列リテラルはヒアドキュメントなどで文書をそのまま読み込みたいとき、もしくは正規表現のようにエスケープシーケンスを用いると表記が煩雑になってしまう場合に効果を発揮するでしょう。
+
 </section>
 
 <section id="numberLiteral">
