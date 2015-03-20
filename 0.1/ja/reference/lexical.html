@@ -400,7 +400,22 @@ Lury の文字列リテラルにプレフィクスはありません。
 <section id="expressionEmbedStringLiteral">
 ### 2.7.2. 式埋め込み文字列リテラル
 
-__(work in progress)__
+```text
+<a class="grammar" regex="%22(?:EmbedStringCharactersWithoutSinglequote)%2a%22">EmbedStringLiteral</a>:
+  """ EmbedStringCharactersWithoutSinglequote<span class="asterisk"></span> """
+
+<a class="grammar" regex="EmbedStringCharacters|'|%60">EmbedStringCharactersWithoutSinglequote</a>:
+  StringCharacters
+  "'"
+  "<span class="backquote"></span>"
+  "##"
+  "#{" すべてのUnicode文字(`"` および `}` を除く) "}"
+```
+
+式埋め込み文字列リテラルは 2つの `"` で囲まれ記述されます。
+
+通常の文字列リテラルと違い、`#{...}` で囲まれた文字を*実行前に* Lury の有効な式として展開し、置換します。ただし、式中では `"` および `}` は使えません。無効な式が指定された場合はコンパイルエラーとなります。
+
 </section>
 
 <section id="wysiwygStringLiteral">
@@ -416,7 +431,7 @@ __(work in progress)__
 
 整数および浮動小数点数の仮数部の符号 (`+` または `-`) は含まれませんが、指数部の符号は含まれます。
 
-記述できる数値の上限は、コンパイラが数値オブジェクトでサポートする数値の上限に依存します。 
+記述できる数値の上限は、コンパイラが数値オブジェクトでサポートする数値の上限に依存します。
 </section>
 
 <section id="integerLiteral">
