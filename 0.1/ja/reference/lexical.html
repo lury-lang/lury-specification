@@ -357,7 +357,44 @@ elif          invariant     private       switch        yield
 <section id="stringLiteral">
 ### 2.7.1. 文字列リテラル
 
-__(work in progress)__
+```text
+<a class="grammar" regex="'(?:StringCharactersWithoutSinglequote)%2a'">StringLiteral</a>:
+  "'" StringCharactersWithoutSinglequote<span class="asterisk"></span> "'"
+
+<a class="grammar" regex="StringCharacters|%22|%60">StringCharactersWithoutSinglequote</a>:
+  StringCharacters
+  """
+  "<span class="backquote"></span>"
+
+<a class="grammar" regex="EscapeSequence|.%2a">StringCharacters</a>:
+  EscapeSequence
+  すべてのUnicode文字(EndOfLine, 正規表現 `\\.` を除く)
+
+<a class="grammar" regex="\\(?:LineTerminator)|\\\\|\\'|\\%22|\\a|\\b|\\f|\\n|\\r|\\t|\\v|\\(?:OctalDigit){1,3}|\\x(?:HexadecimalDigit){2}|\\u(?:HexadecimalDigit){4}|\\U(?:HexadecimalDigit){8}">EscapeSequence</a>:
+  "\" LineTerminator
+  "\\"
+  "\'"
+  "\""
+  "\a"
+  "\b"
+  "\f"
+  "\n"
+  "\r"
+  "\t"
+  "\v"
+  "\" OctalDigit
+  "\" OctalDigit{2}
+  "\" OctalDigit{3}
+  "\x" HexadecimalDigit{2}
+  "\u" HexadecimalDigit{4}
+  "\U" HexadecimalDigit{8}
+```
+
+文字列リテラルは 2つの `'` で囲まれ記述されます。常に Unicode 文字列として認識されます。また、常に string 型のオブジェクトとして処理されます。
+
+Lury の文字列リテラルにプレフィクスはありません。
+
+文字列リテラルでの改行はエスケープシーケンス `\r` または `\n` を記述しなければなりません。単なる改行は不正です。
 </section>
 
 <section id="expressionEmbedStringLiteral">
