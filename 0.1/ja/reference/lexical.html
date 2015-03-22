@@ -541,13 +541,13 @@ WYSIWYG文字列リテラルはヒアドキュメントなどで文書をその�
   PointFloat Exponent
 
 <a class="grammer" regex="(?:Digit)+">FloatIntegerPart</a>:
-  Digit+
+  DecimalInteger
 
 <a class="grammer" regex="\.(?:Digit)+">Fraction</a>:
-  "." Digit+
+  "." DecimalInteger
 
-<a class="grammer" regex="[eE][+-](?:Digit)+">Exponent</a>:
-  [eE] [+-] Digit+
+<a class="grammer" regex="[eE][+-]?(?:Digit)+">Exponent</a>:
+  [eE] [+-]? DecimalInteger
 ```
 
 浮動小数点数リテラルは仮数部、指数部をともに 10進数として解釈します。
