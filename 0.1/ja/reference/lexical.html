@@ -328,6 +328,15 @@ elif          invariant     private       switch        yield
 どのような文脈でコンテキストキーワードとするかは字句解析時よりも、構文解析時に判定する必要があるかもしれません。何れにせよ、コンパイラは誤ったコンテキストキーワードの使用時に何らかのエラーを出力しなければなりません。
 
 ```text
+**ContextualKeyword**:
+  IdentifierGet
+  IdentifierSet
+  IdentifierFile
+  IdentifierLine
+  IdentifierExit
+  IdentifierSuccess
+  IdentifierFailure
+
 <a class="grammar" regex="get">IdentifierGet</a>:
   get
 
