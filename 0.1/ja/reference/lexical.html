@@ -96,11 +96,11 @@ Lury では行終端をキャンセルし、2つの物理行を1つの論理行�
 <section id="logicalLine">
 #### 2.3.2. 論理行
 
-論理行 (logical line) とは、トークン [EndOfLine](#EndOfLine) で区切られたトークン列上の行のことです。Lury では1つの論理行には1つの実行文および単純文 (simple statement) のみ記述できます。これを、複数の論理行に跨って記述することはできません。複合文 (compound statement) ではセミコロンを使って、複数の実行文を記述できます。
+論理行 (logical line) とは、トークン [NewLine](#NewLine) で区切られたトークン列上の行のことです。Lury では1つの論理行には1つの実行文および単純文 (simple statement) のみ記述できます。これを、複数の論理行に跨って記述することはできません。複合文 (compound statement) ではセミコロンを使って、複数の実行文を記述できます。
 
 </section>
 
-<section id="endofline">
+<section id="newline">
 #### 2.3.3. 行終端
 
 ```text
@@ -111,7 +111,7 @@ Lury では行終端をキャンセルし、2つの物理行を1つの論理行�
   \u2028
   \u2029
 
-<a class="grammar" regex="LineTerminator|EndOfFile">EndOfLine</a>:
+<a class="grammar" regex="LineTerminator|EndOfFile">NewLine</a>:
   LineTerminator
   EndOfFile
 ```
@@ -149,8 +149,8 @@ Lury では行終端をキャンセルし、2つの物理行を1つの論理行�
 <a class="grammar" regex="###(?:Characters)###">BlockComment</a>:
   ### Characters ###
 
-<a class="grammar" regex="#(?:Characters)EndOfLine">LineComment</a>:
-  # Characters EndOfLine
+<a class="grammar" regex="#(?:Characters)NewLine">LineComment</a>:
+  # Characters NewLine
 
 <a class="grammar" regex="\\(?:LineTerminator)">LineCancel</a>:
   \ LineTerminator
@@ -382,7 +382,7 @@ Lury でのリテラル (literal、即値) とはソースコード上で直接�
 
 <a class="grammar" regex="EscapeSequence|.%2a">StringCharacters</a>:
   EscapeSequence
-  すべてのUnicode文字(EndOfLine, 正規表現 `\\.` を除く)
+  すべてのUnicode文字(NewLine, 正規表現 `\\.` を除く)
 
 <a class="grammar" regex="\\(?:LineTerminator)|\\\\|\\'|\\%22|\\a|\\b|\\f|\\n|\\r|\\t|\\v|\\(?:OctalDigit){1,3}|\\x(?:HexadecimalDigit){2}|\\u(?:HexadecimalDigit){4}|\\U(?:HexadecimalDigit){8}">EscapeSequence</a>:
   "\" LineTerminator
