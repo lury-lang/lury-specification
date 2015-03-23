@@ -488,19 +488,19 @@ WYSIWYG文字列リテラルはヒアドキュメントなどで文書をその�
   "<span class="underline"></span>"? Digit
 
 <a class="grammer" regex="0[bB](?:BinaryDigits)+">BinaryInteger</a>:
-  "0" ("b" | "B") BinaryDigits+
+  "0" ("b" | "B") BinaryDigits BinaryDigits<span class="asterisk"></span>
 
 <a class="grammer" regex="%5f?BinaryDigit">BinaryDigits</a>:
   "<span class="underline"></span>"? BinaryDigit
 
 <a class="grammer" regex="0[oO](?:OctalDigits)+">OctalInteger</a>:
-  "0" ("o" | "O") OctalDigits+
+  "0" ("o" | "O") OctalDigits OctalDigits<span class="asterisk"></span>
 
 <a class="grammer" regex="%5f?OctalDigit">OctalDigits</a>:
   "<span class="underline"></span>"? OctalDigit
 
 <a class="grammer" regex="0[xX](?:HexadecimalDigits)+">HexadecimalInteger</a>:
-  "0" ("x" | "X") HexadecimalDigits+
+  "0" ("x" | "X") HexadecimalDigits HexadecimalDigits<span class="asterisk"></span>
 
 <a class="grammer" regex="%5f?HexadecimalDigit">HexadecimalDigits</a>:
   "<span class="underline"></span>"? HexadecimalDigit
