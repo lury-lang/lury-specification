@@ -19,6 +19,89 @@
 ### 2.1. トークン化
 
 字句解析器は可能な限り長いトークンを生成しようとします（最長一致）。たとえば `>=` という入力は関係演算子 `>=` という1つのトークンと解釈します。これを `>`, `=` のように分割して解釈することはありません。
+
+以下は、字句解析器が出力するトークンの一覧です。
+
+```text
+**Token**:
+  NewLine
+  Indent
+  Dedent
+  EndOfFile
+
+  *ContextualKeyword*
+  *Keyword*
+  Identifier
+  $
+
+  StringLiteral
+  EmbedStringLiteral
+  WysiwygStringLiteral
+
+  ImaginaryNumber
+  FloatNumber
+  Integer
+
+  ...
+  ..
+  .
+  ++
+  +=
+  +
+  --
+  -=
+  ->
+  -
+  ~=
+  ~
+  <span class="asterisk"></span><span class="asterisk"></span>=
+  <span class="asterisk"></span><span class="asterisk"></span>
+  <span class="asterisk"></span>=
+  <span class="asterisk"></span>
+  //=
+  //
+  /=
+  /
+  %=
+  %
+  <<=
+  <<
+  <=
+  <
+  >>=
+  >>
+  >=
+  >
+  ==
+  =>
+  =
+  !in
+  !is
+  !=
+  !
+  &&
+  &=
+  &
+  ^=
+  ^
+  ||
+  |=
+  |
+  ??
+  ?
+  :
+  ,
+
+  (
+  )
+  <span class="bracket-left"></span>
+  <span class="bracket-right"></span>
+  {
+  }
+  ;
+  @
+```
+
 </section>
 
 <section id="encoding">
