@@ -90,6 +90,14 @@ function place_markdownChar () {
   $('.underline').text('_');
 }
 
+function moveToHash () {
+  if (!location.hash || location.hash === '#')
+    return;
+
+  var p = $(location.hash).offset().top;
+  $("html, body").animate({scrollTop: p}, 0);
+}
+
 $(function(){
   $('.container>.row:first').before(header).after(footer);
   $(".markdown").markdown();
@@ -103,4 +111,6 @@ $(function(){
   build_grammarAnchor();
   build_parmaLink();
   place_markdownChar();
+
+  moveToHash();
 });
