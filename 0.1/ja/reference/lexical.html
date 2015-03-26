@@ -20,7 +20,9 @@
 
 字句解析器は可能な限り長いトークンを生成しようとします（最長一致）。たとえば `>=` という入力は関係演算子 `>=` という1つのトークンと解釈します。これを `>`, `=` のように分割して解釈することはありません。
 
-以下は、字句解析器が出力するトークンの一覧です。
+しかしながら、最長一致の例外となるトークンが範囲演算子 `..` および `...` です。例えば、2つの整数リテラルと範囲演算子を結んだものを `3..5` と表記すると、最長一致のみを用いた字句解析器は `3.` と `.5` という 2つの *正しい* 浮動小数点数リテラルのトークンに分割されてしまいます。Lury コンパイラでは、このような場合は `3` `..` `5` という 3つのトークンに *分割されなければなりません*。従って、`3..5` と `3. .5` は全く異なるトークンを生成することを意味します。これは演算子 `...` についても同様です。
+
+以下は、字句解析器が出力するトークンの一覧です。このうち、[コンテキストキーワード](#contextualKeyword)と[キーワード](#keyword)は実際には展開されて出力されます。
 
 ```text
 **Token**:
@@ -379,17 +381,17 @@ list = [ 1, 2, 3,
 
 ```
 **Keyword**:
-abstract      else          is            property      this
-and           enum          lazy          protected     throw
-break         extended      nameof        public        true
-case          false         new           ref           try
-catch         finally       nil           reflect       unittest
-class         for           not           return        unless
-continue      if            or            scope         until
-def           import        out           sealed        var
-default       in            override      static        while
-delete        interface     pass          super         with
-elif          invariant     private       switch        yield
+  abstract      else          is            property      this
+  and           enum          lazy          protected     throw
+  break         extended      nameof        public        true
+  case          false         new           ref           try
+  catch         finally       nil           reflect       unittest
+  class         for           not           return        unless
+  continue      if            or            scope         until
+  def           import        out           sealed        var
+  default       in            override      static        while
+  delete        interface     pass          super         with
+  elif          invariant     private       switch        yield
 ```
 
 以上に示す識別子は Lury において特別な意味を持ち、通常の識別子として使用することはできません。キーワードは大文字と小文字を区別します。しかしながら、キーワードは文字列中では使用が可能ですが、式埋め込み文字列内では通常の識別子として使用することはできません。
