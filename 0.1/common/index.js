@@ -1,7 +1,14 @@
 var header =
   '<header class="header">\
     <ul class="nav nav-pills pull-right">\
-      <li class="active"><a href="#">Spec Home</a></li>\
+      <li class="dropdown">\
+        <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">サイトジャンプ</a>\
+        <ul class="dropdown-menu" role="menu">\
+          <li><a href="../index.html">仕様トップ</a></li>\
+          <li class="divider"></li>\
+          <li><a href="../reference/index.html">言語リファレンス</a></li>\
+        </ul>\
+      </li>\
     </ul>\
     <h1 class="text-muted">Specification 0.1</h1>\
     <hr />\
