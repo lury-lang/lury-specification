@@ -17,6 +17,10 @@ var header =
 var footer =
   '<footer class="footer">\
     <hr />\
+    <p>\
+      <a href="../index.html">仕様トップ</a> --\
+      <a href="../reference/index.html">言語リファレンス</a>\
+    </p>\
     <p>Copyright &copy; 2015 Tomona Nanase</p>\
   </footer>';
 
