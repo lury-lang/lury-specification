@@ -201,6 +201,10 @@ Lury では行終端をキャンセルし、2つの物理行を1つの論理行�
   EndOfFile
 ```
 
+Lury の字句解析器は連続した NewLine トークンを *出力しません*。連続した NewLine トークンは文法的な空行の存在を意味します。Lury における空行は意味をなしません。また、何もしない文を表すための `pass` というキーワードも用意されています。
+
+字句解析の結果、NewLine トークンが2つ以上連続する場合は 1つのみ出力されます。また NewLine と EndOfFile トークンが連続する場合は、EndOfFile トークンのみが出力されます。
+
 </section>
 
 <section id="whitespace">
