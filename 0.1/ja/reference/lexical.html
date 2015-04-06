@@ -353,7 +353,7 @@ list = [ 1, 2, 3,
 ### 2.5. 識別子
 
 ```text
-<a class="grammar" regex="_|\\p\{Lu\}|(?:\\p\{Ll\})|\\p\{Lt\}|(?:\\p\{Lm\})|\\p\{Lo\}|(?:\\p\{Nl\})">IdentifierStart</a>:
+<a class="grammar" regex="_|\\p\{Lu\}|(?:\\p\{Ll\})|\\p\{Lt\}|(?:\\p\{Lm\})|\\p\{Lo\}|(?:\\p\{Nl\})|[\u25A0-\u27BF]|\uD83C[\uDF00-\uDFF7]|\uD83D[\uDC00-\uDE4F\uDE80-\uDEF3]">IdentifierStart</a>:
   "<span class="underline"></span>"
   \p{Lu}
   \p{Ll}
@@ -361,6 +361,10 @@ list = [ 1, 2, 3,
   \p{Lm}
   \p{Lo}
   \p{Nl}
+  \u25A0 ... \u27BF
+  \uD83C (\uDF00 ... \uDFF7)
+  \uD83D (\uDC00 ... \uDE4F)
+  \uD83D (\uDE80 ... \uDEF3)
 
 <a class="grammar" regex="IdentifierStart|(?:\\p\{Mn\})|\\p\{Mc\}|(?:\\p\{Nd\})|\\p\{Pc\}">IdentifierContinue</a>:
   IdentifierStart
