@@ -18,6 +18,9 @@ header ul.nav {
 hr {
     margin-top: 10px;
 }
+blockquote {
+    font-size: 14px;
+}
 .col-main {
     padding-left: 32px;
 }
