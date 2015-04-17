@@ -1,4 +1,7 @@
-function loader_load(dir) { 
+var root_dir = null;
+
+function loader_load(dir) {
+  root_dir = dir; 
   var css = [
 	    'common/bootstrap.min.css',  
 	    'common/bootstrap-theme.min.css',

@@ -4,9 +4,9 @@ var header =
       <li class="dropdown">\
         <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">サイトジャンプ</a>\
         <ul class="dropdown-menu" role="menu">\
-          <li><a href="../index.html">仕様トップ</a></li>\
+          <li><a href="{0}ja/index.html">仕様トップ</a></li>\
           <li class="divider"></li>\
-          <li><a href="../reference/index.html">言語リファレンス</a></li>\
+          <li><a href="{0}ja/reference/index.html">言語リファレンス</a></li>\
         </ul>\
       </li>\
     </ul>\
@@ -18,8 +18,8 @@ var footer =
   '<footer class="footer">\
     <hr />\
     <p>\
-      <a href="../index.html">仕様トップ</a> --\
-      <a href="../reference/index.html">言語リファレンス</a>\
+      <a href="{0}ja/index.html">仕様トップ</a> --\
+      <a href="{0}ja/reference/index.html">言語リファレンス</a>\
     </p>\
     <p>Copyright &copy; 2015 Tomona Nanase</p>\
   </footer>';
@@ -110,7 +110,7 @@ function moveToHash () {
 }
 
 $(function(){
-  $('.container>.row:first').before(header).after(footer);
+  $('.container>.row:first').before(_(header, root_dir)).after(_(footer, root_dir));
   $(".markdown").markdown();
 
   $('<div class="col-navigator"></div>').insertAfter('.col-main');
