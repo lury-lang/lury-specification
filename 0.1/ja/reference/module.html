@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Lury Specification 0.1 - 3. モジュール</title>
+  <script src="../../common/loader.js"></script>
+  <script type="text/javascript">loader_load('../../')</script>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-main markdown">
+
+## 3. モジュール
+
+_モジュール(module)_は 0 個以上のクラスを含む集合のことです。Lury におけるモジュールはプログラムを格納する集合としてはクラスよりも大きな、最大の集合です。
+
+
+<section id="modulesystem">
+### 3.1. モジュールシステム
+
+モジュールは名前によって区別されます。その名前はモジュールが書かれたソースコードのファイル名またはファイルパスに由来します。
+
+ソースコードのファイル名が `sample.lr` であったとき、モジュール名は `sample` となります。またファイルがとあるディレクトリ内にある場合、例えば `program/sample.lr` であったとき、モジュール名は `program.sample` となります。
+
+<section id="namespace">
+### 3.1.1. 名前空間
+
+モジュール名は 名前空間(namespace) を構成します。これにより、クラスや関数の名前の衝突を防止可能です。モジュール名はディレクトリによりドット `.` で区切られますが、入れ子構造ではありません。
+
+例えば 2 つのモジュール `sample`、`sample.child` があったとして、モジュール `sample.child` は `sample` の集合でも部分集合でもありません。2 つのモジュールは完全に別のモジュールとして扱われます。
+
+また、モジュールは異なるがクラス名が同じ `a.TestClass` と `b.TestClass` は別のクラスであると区別されます。
+
+モジュール名とクラス名をドット `.` で連結し、ただ一つのクラスを識別するための名前を _完全名(full name)_ と呼びます。例えばモジュール `sample.foo` に所属するクラス `Bar` の完全名は `sample.foo.Bar` となります。
+
+</section>
+
+<section id="modulenamelimit">
+### 3.1.2. モジュール名の制限
+
+モジュールは名前を持ちます。名前に使われる文字と長さに制限はありませんが、Unicode として正しくデコードできる名前であり、名前は少なくとも 1 文字以上でなければなりません。しかし、モジュール名は以下の 2 つによって大きく制限されます。
+
+__文法上の制限__: Lury の import文で使用できるモジュール名は文法上、[識別子](lexical.html#identifier)とドット `.` で使用できる文字で構成される必要があります。すなわち、名前を識別子として表すことのできないモジュールは import文を用いることができず、利用ができません。モジュール名の先頭文字を数値とすることもできません。
+
+__ファイルシステム上の制限__: Lury のモジュール名はファイル名およびファイルパスに由来します。よって、ファイルシステムで使用できない名前をモジュール名として用いることはできません。
+
+Lury の内部で用いられるモジュール名は、外部から指定できないことを条件に、以上の制限を受けません。
+
+</section>
+</section>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
