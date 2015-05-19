@@ -52,6 +52,98 @@ Lury の内部で用いられるモジュール名は、外部から指定でき
 </section>
 </section>
 
+<section id="importstatement">
+### 3.2. import文
+
+```
+import<span class="underline"></span>statement   : 'import' import<span class="underline"></span>names
+                   | 'public' 'import' import<span class="underline"></span>names
+
+import<span class="underline"></span>names       : import<span class="underline"></span>name
+                   | import<span class="underline"></span>names ',' import<span class="underline"></span>name
+
+import<span class="underline"></span>name        : member<span class="underline"></span>name
+
+member<span class="underline"></span>name        : identifier<span class="underline"></span>all
+                   | member<span class="underline"></span>name '.' identifier<span class="underline"></span>all
+
+identifier<span class="underline"></span>all     : Identifier
+                   | contextual<span class="underline"></span>keyword
+
+contextual<span class="underline"></span>keyword : IdentifierGet
+                   | IdentifierSet
+                   | IdentifierFile
+                   | IdentifierLine
+                   | IdentifierExit
+                   | IdentifierSuccess
+                   | IdentifierFailure
+```
+
+import文は他のモジュールを読み込む文です。また、読み込まれたモジュールは import文が書かれたスコープでのみ使用可能です。スコープから脱出すると、もう一度 import文で読み込まない限り、再度モジュールにアクセスすることはできません。
+
+import文はモジュールのソースコードを_展開しません_。import文で読み込まれたモジュールは別の名前空間とスコープを持ちます。同じモジュールを再度読みこむことはできませんが、この場合は単に無視されます。
+
+<section id="basicimport">
+#### 3.2.1. 基本 import
+
+基本形となる import 方式です。基本 import では、読み込まれたモジュールは外部に対して公開されません(_private な import_)。
+
+```
+# [A.lr]
+import B
+
+func<span class="underline"></span>b
+
+if true:
+  import C            # モジュール C はこのifブロック内でのみアクセス可能
+  func<span class="underline"></span>c
+```
+
+```
+# [B.lr]
+def func<span class="underline"></span>b:
+  pass
+```
+
+```
+# [C.lr]
+def func<span class="underline"></span>c:
+  pass
+```
+
+</section>
+
+<section id="publicimport">
+#### 3.2.2. 公開 import
+
+公開 import は、import したことを外部に公開する import です(_public な import_)。以下の例ではモジュール A はモジュール B を import していますが、モジュール B にてモジュール C を公開 import しているため、モジュール A でも新たな import なしでモジュール C にアクセスできます。
+
+```
+# [A.lr]
+import B
+
+func<span class="underline"></span>b
+func<span class="underline"></span>c
+```
+
+```
+# [B.lr]
+public import C
+
+def func<span class="underline"></span>b:
+  pass
+```
+
+```
+# [C.lr]
+def func<span class="underline"></span>c:
+  pass
+```
+
+</section>
+
+</section>
+
       </div>
     </div>
   </div>
