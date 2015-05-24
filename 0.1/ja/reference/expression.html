@@ -21,7 +21,7 @@
 _原始式_ (atom) は演算を含まない、式の基本的な要素です。
 
 ```
-atom = identifier<span class="underline"></span>all
+atom : identifier<span class="underline"></span>all
      | literal
 ```
 
@@ -38,7 +38,7 @@ _識別子_ (identifier) はオブジェクトの名前を表現するために�
 #### 4.1.2. リテラル
 
 ```
-literal = StringLiteral
+literal : StringLiteral
         | EmbedStringLiteral
         | WysiwygStringLiteral
         | ImaginaryNumber
@@ -60,7 +60,7 @@ _リテラル_ (literal) では文字列や数値の記述した値そのもの�
 #### 4.2. プライマリ
 
 ```
-primary = atom
+primary : atom
         | attribute<span class="underline"></span>reference
 ```
 
@@ -72,7 +72,7 @@ _プライマリ_ (primary) には原始式と属性参照が含まれます。
 #### 4.2.1. 属性参照
 
 ```
-attribute<span class="underline"></span>reference = primary "." identifier<span class="underline"></span>all
+attribute<span class="underline"></span>reference : primary "." identifier<span class="underline"></span>all
 ```
 
 _属性参照_ (attribute reference) はオブジェクトの属性 (attribute) を参照します。属性は _メンバ_ (member) とも呼ばれます。ドット演算子を介して、オブジェクトに含まれる属性にアクセスします。
