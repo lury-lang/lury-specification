@@ -62,6 +62,7 @@ _リテラル_ (literal) では文字列や数値の記述した値そのもの�
 ```
 primary : atom
         | attribute<span class="underline"></span>reference
+        | calling
 ```
 
 _プライマリ_ (primary) には原始式と属性参照が含まれます。
@@ -76,6 +77,32 @@ attribute<span class="underline"></span>reference : primary "." identifier<span 
 ```
 
 _属性参照_ (attribute reference) はオブジェクトの属性 (attribute) を参照します。属性は _メンバ_ (member) とも呼ばれます。ドット演算子を介して、オブジェクトに含まれる属性にアクセスします。
+
+</section>
+
+<section id="calling">
+#### 4.2.2. 関数呼び出し
+
+```
+calling        : primary '(' ')'
+               | primary '(' arguments ')'
+
+arguments      : argument
+               | arguments ',' argument
+
+argument       : expression
+               | named<span class="underline"></span>argument
+
+named<span class="underline"></span>argument : identifier<span class="underline"></span>all ':' expression
+```
+
+関数について、呼び出し側で実行に必要なデータを渡し、関数側で受け取ることができます。このようなデータを __引数__ と呼び、呼び出し側での引数を __実引数__ (argument)、関数側の引数を __仮引数__ (parameter) と区別して呼びます。
+
+_calling_ は関数を呼び出し、実行するための構文です。関数呼び出しは関数名と丸括弧 `()` に挟まれた実引数リストによって構成されています。実引数を必要としない場合、実引数リストは空にすることができ、さらに丸括弧も省略可能です。
+
+_名前付き引数_ (named argument) は、名前と仮引数値をコロン `:` で結合したものです。呼び出される関数に存在する仮引数名のみ使用することができます。同名の名前付き引数を複数回指定することはできません。
+
+実引数リストの順番は、呼び出される仮引数の順番と一致している必要があります。名前付き引数の順番は任意に決めることができます。また、通常の実引数と名前付き引数は混在可能です。ただし、通常の実引数と名前付き引数で同一の仮引数を指定することはできません。
 
 </section>
 
