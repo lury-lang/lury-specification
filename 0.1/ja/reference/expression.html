@@ -32,6 +32,8 @@ _識別子_ (identifier) はオブジェクトの名前を表現するために�
 
 トークン Identifier についての詳細は [2.5. 識別子](lexical.html#identifier) を参照してください。
 
+識別子がプライマリ中で単独で使用された場合、なおかつ指し示すオブジェクトが Function 型である場合はその関数が引数なしで実行されます。関数の呼び出しに関しては [4.2.2. 関数呼び出し](#calling) を参照してください。
+
 </section>
 
 <section id="literal">
@@ -77,6 +79,8 @@ attribute<span class="underline"></span>reference : primary "." identifier<span 
 ```
 
 _属性参照_ (attribute reference) はオブジェクトの属性 (attribute) を参照します。属性は _メンバ_ (member) とも呼ばれます。ドット演算子を介して、オブジェクトに含まれる属性にアクセスします。
+
+属性参照がプライマリ中で単独で使用された場合、なおかつ指し示すオブジェクトが Function 型である場合はその関数が引数なしで実行されます。関数の呼び出しに関しては [4.2.2. 関数呼び出し](#calling) を参照してください。
 
 </section>
 
