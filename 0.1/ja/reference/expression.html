@@ -141,7 +141,7 @@ _new 式_ はクラスのコンストラクタを呼び出し、インスタン�
 </section>
 
 <section id="power">
-#### 4.3.2. 冪乗演算式
+#### 4.3.2. 冪乗演算
 
 ```
 power<span class="underline"></span>expression : primary
@@ -149,6 +149,31 @@ power<span class="underline"></span>expression : primary
 ```
 
 冪乗演算式は _冪乗演算_ (power operator) を行う二項演算です。結合性は _右_ (←) です。
+
+単項演算子よりも優先順位が高いため、たとえば `-1 <span class="asterisk"></span><span class="asterisk"></span> 2` の結果は `-1` となります。括弧をつけてわかりやすくすると、`-(1 <span class="asterisk"></span><span class="asterisk"></span> 2)` となります。
+
+二項が同じ型かつ冪数が正の数であるとき、冪乗の結果は二項と同じ型となります。基数が整数で冪数が負の数であるとき、結果は数値に依らず浮動小数点数となります。基数が負の数で冪数が浮動小数点数であるとき、結果は数値に依らず複素数になります。
+
+Lury ではゼロのゼロ乗 (0<sup>0</sup>) は `1` として処理します。
+
+基数がゼロで冪数が負の数であるときは実行時エラーが発生します。数値型以外のオブジェクトに対してこの演算は実行時エラーが発生します。
+</section>
+
+<section id="unary">
+#### 4.3.3. 単項算術演算と単項ビット演算
+
+```
+unary<span class="underline"></span>expression : power
+                 | '++' unary<span class="underline"></span>expression
+                 | '--' unary<span class="underline"></span>expression
+                 | '-' unary<span class="underline"></span>expression
+                 | '+' unary<span class="underline"></span>expression
+                 | '~' unary<span class="underline"></span>expression
+                 | '!' unary<span class="underline"></span>expression
+                 | new<span class="underline"></span>expression
+```
+
+単項演算はただ一つの項を持つ演算です。結合性は _右_ (←) です。
 
 単項演算子よりも優先順位が高いため、たとえば `-1 <span class="asterisk"></span><span class="asterisk"></span> 2` の結果は `-1` となります。括弧をつけてわかりやすくすると、`-(1 <span class="asterisk"></span><span class="asterisk"></span> 2)` となります。
 
