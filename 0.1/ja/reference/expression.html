@@ -64,25 +64,6 @@ Lury の演算子は 単項演算子、二項演算子、三項演算子 の3つ
 
 演算と演算子はある特定の型に対してのみ、正常に動作します。要求する型以外が項として渡されたとき、実行時エラーが発生します。また、演算の出力の型は入力となる項の型によって変化します。
 
-<section id="new">
-#### 4.3.1. new 式
-
-```
-new<span class="underline"></span>expression : 'new' class<span class="underline"></span>name
-               | 'new' class<span class="underline"></span>name new<span class="underline"></span>argument
-
-new<span class="underline"></span>argument   : '(' ')'
-               | '(' arguments ')'
-
-class<span class="underline"></span>name     : identifier<span class="underline"></span>all
-               | class<span class="underline"></span>name '.' identifier<span class="underline"></span>all
-```
-
-_new 式_ はクラスのコンストラクタを呼び出し、インスタンスを初期化してそれを返す式です。class<span class="underline"></span>name で用いることができるのはクラス名もしくは完全修飾されたクラス名（モジュール名を含む）です。
-
-コンストラクタとなる関数には引数を与えることができます。コンストラクタの呼び出しは、単に関数呼び出しの一種と考えることができます。詳しくは [4.2.2. 関数呼び出し](#calling) を参照してください。
-</section>
-
 <section id="power">
 #### 4.3.2. 冪乗演算
 
@@ -125,6 +106,25 @@ unary<span class="underline"></span>expression : power
 Lury ではゼロのゼロ乗 (0<sup>0</sup>) は `1` として処理します。
 
 基数がゼロで冪数が負の数であるときは実行時エラーが発生します。数値型以外のオブジェクトに対してこの演算は実行時エラーが発生します。
+</section>
+
+<section id="new">
+#### 4.2.4. new 式
+
+```
+new<span class="underline"></span>expression : 'new' class<span class="underline"></span>name
+               | 'new' class<span class="underline"></span>name new<span class="underline"></span>argument
+
+new<span class="underline"></span>argument   : '(' ')'
+               | '(' arguments ')'
+
+class<span class="underline"></span>name     : identifier<span class="underline"></span>all
+               | class<span class="underline"></span>name '.' identifier<span class="underline"></span>all
+```
+
+_new 式_ はクラスのコンストラクタを呼び出し、インスタンスを初期化してそれを返す式です。class<span class="underline"></span>name で用いることができるのはクラス名もしくは完全修飾されたクラス名（モジュール名を含む）です。
+
+コンストラクタとなる関数には引数を与えることができます。コンストラクタの呼び出しは、単に関数呼び出しの一種と考えることができます。詳しくは [4.2.2. 関数呼び出し](#calling) を参照してください。
 </section>
 
 </section>
