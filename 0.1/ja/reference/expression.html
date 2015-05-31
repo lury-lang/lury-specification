@@ -64,6 +64,40 @@ Lury の演算子は 単項演算子、二項演算子、三項演算子 の3つ
 
 演算と演算子はある特定の型に対してのみ、正常に動作します。要求する型以外が項として渡されたとき、実行時エラーが発生します。また、演算の出力の型は入力となる項の型によって変化します。
 
+<section id="postfix">
+#### 4.2.1. 後置演算式
+
+```
+postfix<span class="underline"></span>expression : primary
+                   | postfix<span class="underline"></span>expression '.' identifier<span class="underline"></span>all
+                   | postfix<span class="underline"></span>expression '++'
+                   | postfix<span class="underline"></span>expression '--'
+                   | postfix<span class="underline"></span>expression '(' ')'
+                   | postfix<span class="underline"></span>expression '(' arguments ')'
+
+arguments          : argument
+                   | arguments ',' argument
+
+argument           : expression
+                   | named<span class="underline"></span>argument
+
+named<span class="underline"></span>argument     : identifier<span class="underline"></span>all ':' expression
+```
+
+_属性参照_ (attribute reference) はオブジェクトの属性 (attribute) を参照します。属性は _メンバ_ (member) とも呼ばれます。ドット演算子を介して、オブジェクトに含まれる属性にアクセスします。
+
+属性参照が後置演算式中で単独で使用された場合、なおかつ指し示すオブジェクトが Function 型である場合はその関数が引数なしで実行されます。
+
+
+関数について、呼び出し側で実行に必要なデータを渡し、関数側で受け取ることができます。このようなデータを __引数__ と呼び、呼び出し側での引数を __実引数__ (argument)、関数側の引数を __仮引数__ (parameter) と区別して呼びます。
+
+関数呼び出しは関数名と丸括弧 `()` に挟まれた実引数リストによって構成されています。実引数を必要としない場合、実引数リストは空にすることができ、さらに丸括弧も省略可能です。
+
+_名前付き引数_ (named argument) は、名前と仮引数値をコロン `:` で結合したものです。呼び出される関数に存在する仮引数名のみ使用することができます。同名の名前付き引数を複数回指定することはできません。
+
+実引数リストの順番は、呼び出される仮引数の順番と一致している必要があります。名前付き引数の順番は任意に決めることができます。また、通常の実引数と名前付き引数は混在可能です。ただし、通常の実引数と名前付き引数で同一の仮引数を指定することはできません。
+</section>
+
 <section id="power">
 #### 4.2.2. 冪乗演算
 
