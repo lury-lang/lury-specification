@@ -102,8 +102,8 @@ _名前付き引数_ (named argument) は、名前と仮引数値をコロン `:
 #### 4.2.2. 冪乗演算
 
 ```
-power<span class="underline"></span>expression : primary
-                 | primary '**' unary<span class="underline"></span>expression
+power<span class="underline"></span>expression : postfix<span class="underline"></span>expression
+                 | postfix<span class="underline"></span>expression '**' unary<span class="underline"></span>expression
 ```
 
 冪乗演算式は _冪乗演算_ (power operator) を行う二項演算です。結合性は _右_ (←) です。
