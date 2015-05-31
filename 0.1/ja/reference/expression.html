@@ -133,18 +133,19 @@ unary<span class="underline"></span>expression : power
                  | '+' unary<span class="underline"></span>expression
                  | '~' unary<span class="underline"></span>expression
                  | '!' unary<span class="underline"></span>expression
+                 | 'not' unary<span class="underline"></span>expression
                  | new<span class="underline"></span>expression
 ```
 
 単項演算はただ一つの項を持つ演算です。結合性は _右_ (←) です。
 
-単項演算子よりも優先順位が高いため、たとえば `-1 <span class="asterisk"></span><span class="asterisk"></span> 2` の結果は `-1` となります。括弧をつけてわかりやすくすると、`-(1 <span class="asterisk"></span><span class="asterisk"></span> 2)` となります。
+インクリメントおよびデクリメントは値を返す前にその数値に 1 (1.0) を加算または減算します。
 
-二項が同じ型かつ冪数が正の数であるとき、冪乗の結果は二項と同じ型となります。基数が整数で冪数が負の数であるとき、結果は数値に依らず浮動小数点数となります。基数が負の数で冪数が浮動小数点数であるとき、結果は数値に依らず複素数になります。
+負符号はその数値の符号を反転します。正の値は負の値に、負の値は正の値になります。ただし、整数のゼロに付けられた場合は値に変化は起こりません。正符号はその数値の符号を変化させません。
 
-Lury ではゼロのゼロ乗 (0<sup>0</sup>) は `1` として処理します。
+ビット反転はその整数値のビットを反転させます。数値が整数型ではない場合は実行時エラーとなります。
 
-基数がゼロで冪数が負の数であるときは実行時エラーが発生します。数値型以外のオブジェクトに対してこの演算は実行時エラーが発生します。
+論理反転はそのブール値の論理を反転させます。`true` を `false` に、`false` を `true` に変化させます。ブール型ではない場合は実行時エラーとなります。 
 </section>
 
 <section id="new">
