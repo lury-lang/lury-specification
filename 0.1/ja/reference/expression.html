@@ -168,6 +168,28 @@ _new 式_ はクラスのコンストラクタを呼び出し、インスタン�
 コンストラクタとなる関数には引数を与えることができます。コンストラクタの呼び出しは、単に関数呼び出しの一種と考えることができます。
 </section>
 
+<section id="binary">
+#### 4.2.5. 二項算術演算
+
+```
+multiplication<span class="underline"></span>expression : unary<span class="underline"></span>expression
+                          | multiplication<span class="underline"></span>expression '<span class="asterisk"></span>' unary<span class="underline"></span>expression
+                          | multiplication<span class="underline"></span>expression '//' unary<span class="underline"></span>expression
+                          | multiplication<span class="underline"></span>expression '/' unary<span class="underline"></span>expression
+                          | multiplication<span class="underline"></span>expression '%' unary<span class="underline"></span>expression
+
+addition<span class="underline"></span>expression       : multiplication<span class="underline"></span>expression
+                          | addition<span class="underline"></span>expression '+' multiplication<span class="underline"></span>expression
+                          | addition<span class="underline"></span>expression '-' multiplication<span class="underline"></span>expression
+                          | addition<span class="underline"></span>expression '~' multiplication<span class="underline"></span>expression
+```
+
+_二項算術演算_ (binary arithmetic operation) は 2 つの項に対する演算です。加算よりも乗算が数学的に計算の優先順位が高いことを反映しています。
+
+__ (work in progress) __
+
+</section>
+
 </section>
 
 __ (work in progress) __
