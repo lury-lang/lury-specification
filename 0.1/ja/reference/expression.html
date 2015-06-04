@@ -198,6 +198,21 @@ _連結_ (concatenation) は演算子 `~` で表される 2 つの要素に対�
 
 </section>
 
+<section id="shift">
+#### 4.2.6. シフト演算
+
+```
+shift<span class="underline"></span>expression : addition<span class="underline"></span>expression
+                          | shift<span class="underline"></span>expression '&lt;&lt;' addition<span class="underline"></span>expression
+                          | shift<span class="underline"></span>expression '&gt;&gt;' addition<span class="underline"></span>expression
+```
+
+_シフト演算_ (shifting operation) は 2 つの項に対する演算です。`a &lt;&lt; b` の結果は値 a のビットを左に b 回シフトしたものとなります。`a &gt;&gt; b` の結果は値 a のビットを右に b 回シフトしたものとなります。結合性は 左 (→) です。
+
+Lury におけるシフトは算術シフトです。符号ビットを考慮するシフト、いわゆる論理シフトとは異なります。
+
+</section>
+
 </section>
 
 __ (work in progress) __
