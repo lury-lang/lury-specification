@@ -213,6 +213,30 @@ Lury におけるシフトは算術シフトです。符号ビットを考慮す
 
 </section>
 
+<section id="binary_bitwise">
+#### 4.2.7. 二項ビット演算
+
+```
+and<span class="underline"></span>expression : shift<span class="underline"></span>expression
+               | and<span class="underline"></span>expression '&amp;' shift<span class="underline"></span>expression
+
+xor<span class="underline"></span>expression : and<span class="underline"></span>expression
+               | xor<span class="underline"></span>expression '^' and<span class="underline"></span>expression
+
+or<span class="underline"></span>expression  : xor<span class="underline"></span>expression
+               | or<span class="underline"></span>expression '|' xor<span class="underline"></span>expression
+```
+
+_二項ビット演算_ (binary bitwise operation) は 2 つの項に対するビット演算です。結合性はすべて 結合性は 左 (→) です。それぞれの項は整数でなくてはなりません。
+
+演算子 `&amp;` はビットの論理積 (AND) の演算です。
+
+演算子 `^` はビットの排他的論理和 (XOR) の演算です。
+
+演算子 `|` はビットの論理和 (OR) の演算です。
+
+</section>
+
 </section>
 
 __ (work in progress) __
