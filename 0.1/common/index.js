@@ -109,8 +109,20 @@ function moveToHash () {
   $("html, body").animate({scrollTop: p}, 0);
 }
 
+function replace_escape () {
+  var html = $('.markdown').html();
+  $('.markdown').html(
+    html.replace(/\\\\\\/g, '<span class="back-slash"></span>')
+        .replace(/\\\[/g, '<span class="bracket-left"></span>')
+        .replace(/\\\]/g, '<span class="bracket-right"></span>')
+        .replace(/\\`/g, '<span class="backquote"></span>')
+        .replace(/\\\*/g, '<span class="asterisk"></span>')
+        .replace(/\\_/g, '<span class="underline"></span>'));
+}
+
 $(function(){
   $('.container>.row:first').before(_(header, root_dir)).after(_(footer, root_dir));
+  replace_escape();
   $(".markdown").markdown();
 
   $('<div class="col-navigator"></div>').insertAfter('.col-main');
