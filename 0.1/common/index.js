@@ -94,6 +94,7 @@ function build_parmaLink() {
 }
 
 function place_markdownChar () {
+  $('.back-slash').text('\\');
   $('.bracket-left').text('[');
   $('.bracket-right').text(']');
   $('.backquote').text('`');
