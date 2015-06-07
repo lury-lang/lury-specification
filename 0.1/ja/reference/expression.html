@@ -21,7 +21,7 @@
 _原始式_ (primary) は演算を含まない、式の基本的な要素です。
 
 ```
-primary : identifier<span class="underline"></span>all
+primary : identifier\_all
         | literal
         | 'true'
         | 'false'
@@ -34,7 +34,7 @@ primary : identifier<span class="underline"></span>all
 <section id="identifier">
 #### 4.1.1. 識別子
 
-_識別子_ (identifier) はオブジェクトの名前を表現するために用います。構文解析における _identifier<span class="underline"></span>all_ はトークン Identifier とコンテキストキーワードを包括するものです。
+_識別子_ (identifier) はオブジェクトの名前を表現するために用います。構文解析における _identifier\_all_ はトークン Identifier とコンテキストキーワードを包括するものです。
 
 トークン Identifier についての詳細は [2.5. 識別子](lexical.html#identifier) を参照してください。
 
@@ -74,20 +74,20 @@ Lury の演算子は 単項演算子、二項演算子、三項演算子 の3つ
 #### 4.2.1. 後置演算式
 
 ```
-postfix<span class="underline"></span>expression : primary
-                   | postfix<span class="underline"></span>expression '.' identifier<span class="underline"></span>all
-                   | postfix<span class="underline"></span>expression '++'
-                   | postfix<span class="underline"></span>expression '--'
-                   | postfix<span class="underline"></span>expression '(' ')'
-                   | postfix<span class="underline"></span>expression '(' arguments ')'
+postfix\_expression : primary
+                   | postfix\_expression '.' identifier\_all
+                   | postfix\_expression '++'
+                   | postfix\_expression '--'
+                   | postfix\_expression '(' ')'
+                   | postfix\_expression '(' arguments ')'
 
 arguments          : argument
                    | arguments ',' argument
 
 argument           : expression
-                   | named<span class="underline"></span>argument
+                   | named\_argument
 
-named<span class="underline"></span>argument     : identifier<span class="underline"></span>all ':' expression
+named\_argument     : identifier\_all ':' expression
 ```
 
 _属性参照_ (attribute reference) はオブジェクトの属性 (attribute) を参照します。属性は _メンバ_ (member) とも呼ばれます。ドット演算子を介して、オブジェクトに含まれる属性にアクセスします。
@@ -108,13 +108,13 @@ _名前付き引数_ (named argument) は、名前と仮引数値をコロン `:
 #### 4.2.2. 冪乗演算
 
 ```
-power<span class="underline"></span>expression : postfix<span class="underline"></span>expression
-                 | postfix<span class="underline"></span>expression '**' unary<span class="underline"></span>expression
+power\_expression : postfix\_expression
+                 | postfix\_expression '**' unary\_expression
 ```
 
 冪乗演算式は _冪乗演算_ (power operator) を行う二項演算です。結合性は _右_ (←) です。
 
-単項演算子よりも優先順位が高いため、たとえば `-1 <span class="asterisk"></span><span class="asterisk"></span> 2` の結果は `-1` となります。括弧をつけてわかりやすくすると、`-(1 <span class="asterisk"></span><span class="asterisk"></span> 2)` となります。
+単項演算子よりも優先順位が高いため、たとえば `-1 \*\* 2` の結果は `-1` となります。括弧をつけてわかりやすくすると、`-(1 \*\* 2)` となります。
 
 二項が同じ型かつ冪数が正の数であるとき、冪乗の結果は二項と同じ型となります。基数が整数で冪数が負の数であるとき、結果は数値に依らず浮動小数点数となります。基数が負の数で冪数が浮動小数点数であるとき、結果は数値に依らず複素数になります。
 
@@ -127,15 +127,15 @@ Lury ではゼロのゼロ乗 (0<sup>0</sup>) は `1` として処理します�
 #### 4.2.3. 単項算術演算と単項ビット演算
 
 ```
-unary<span class="underline"></span>expression : power<span class="underline"></span>expression
-                 | '++' unary<span class="underline"></span>expression
-                 | '--' unary<span class="underline"></span>expression
-                 | '-' unary<span class="underline"></span>expression
-                 | '+' unary<span class="underline"></span>expression
-                 | '~' unary<span class="underline"></span>expression
-                 | '!' unary<span class="underline"></span>expression
-                 | 'not' unary<span class="underline"></span>expression
-                 | new<span class="underline"></span>expression
+unary\_expression : power\_expression
+                 | '++' unary\_expression
+                 | '--' unary\_expression
+                 | '-' unary\_expression
+                 | '+' unary\_expression
+                 | '~' unary\_expression
+                 | '!' unary\_expression
+                 | 'not' unary\_expression
+                 | new\_expression
 ```
 
 単項演算はただ一つの項を持つ演算です。結合性は _右_ (←) です。
@@ -153,17 +153,17 @@ unary<span class="underline"></span>expression : power<span class="underline"></
 #### 4.2.4. new 式
 
 ```
-new<span class="underline"></span>expression : 'new' class<span class="underline"></span>name
-               | 'new' class<span class="underline"></span>name new<span class="underline"></span>argument
+new\_expression : 'new' class\_name
+               | 'new' class\_name new\_argument
 
-new<span class="underline"></span>argument   : '(' ')'
+new\_argument   : '(' ')'
                | '(' arguments ')'
 
-class<span class="underline"></span>name     : identifier<span class="underline"></span>all
-               | class<span class="underline"></span>name '.' identifier<span class="underline"></span>all
+class\_name     : identifier\_all
+               | class\_name '.' identifier\_all
 ```
 
-_new 式_ はクラスのコンストラクタを呼び出し、インスタンスを初期化してそれを返す式です。class<span class="underline"></span>name で用いることができるのはクラス名もしくは完全修飾されたクラス名（モジュール名を含む）です。演算子 `new` に結合性はありません。
+_new 式_ はクラスのコンストラクタを呼び出し、インスタンスを初期化してそれを返す式です。class\_name で用いることができるのはクラス名もしくは完全修飾されたクラス名（モジュール名を含む）です。演算子 `new` に結合性はありません。
 
 コンストラクタとなる関数には引数を与えることができます。コンストラクタの呼び出しは、単に関数呼び出しの一種と考えることができます。
 </section>
@@ -172,21 +172,21 @@ _new 式_ はクラスのコンストラクタを呼び出し、インスタン�
 #### 4.2.5. 二項算術演算
 
 ```
-multiplication<span class="underline"></span>expression : unary<span class="underline"></span>expression
-                          | multiplication<span class="underline"></span>expression '<span class="asterisk"></span>' unary<span class="underline"></span>expression
-                          | multiplication<span class="underline"></span>expression '//' unary<span class="underline"></span>expression
-                          | multiplication<span class="underline"></span>expression '/' unary<span class="underline"></span>expression
-                          | multiplication<span class="underline"></span>expression '%' unary<span class="underline"></span>expression
+multiplication\_expression : unary\_expression
+                          | multiplication\_expression '\*' unary\_expression
+                          | multiplication\_expression '//' unary\_expression
+                          | multiplication\_expression '/' unary\_expression
+                          | multiplication\_expression '%' unary\_expression
 
-addition<span class="underline"></span>expression       : multiplication<span class="underline"></span>expression
-                          | addition<span class="underline"></span>expression '+' multiplication<span class="underline"></span>expression
-                          | addition<span class="underline"></span>expression '-' multiplication<span class="underline"></span>expression
-                          | addition<span class="underline"></span>expression '~' multiplication<span class="underline"></span>expression
+addition\_expression       : multiplication\_expression
+                          | addition\_expression '+' multiplication\_expression
+                          | addition\_expression '-' multiplication\_expression
+                          | addition\_expression '~' multiplication\_expression
 ```
 
 _二項算術演算_ (binary arithmetic operation) は 2 つの項に対する演算です。加算よりも乗算が数学的に計算の優先順位が高いことを反映しています。これに含まれる全ての演算子の結合性は 左 (→) です。
 
-_乗算_ (multiplication) は演算子 `<span class="asterisk"></span>` で表される、2 つの値に対する積を求める演算です。
+_乗算_ (multiplication) は演算子 `\*` で表される、2 つの値に対する積を求める演算です。
 
 _除算_ (division) は演算子 `/` で表される 2 つの値に対する _実数の商_ を求める演算です。演算子 `//` で表される除算は 2 つの値に対する _整数の商_ を求める演算です。一例を示すと、`10 / 3` `10 // 3` `10.0 / 3.0` `10.0 // 3.0` の結果は `3` `3` `3.333333333` `3.0` となり、`10.0 / 3.5` `10.0 // 3.5` の結果は `2.857142857` `2.0` となります。二項がどちらも整数型の場合にゼロ除算を行うと、実行時エラーとなります。
 
@@ -202,9 +202,9 @@ _連結_ (concatenation) は演算子 `~` で表される 2 つの要素に対�
 #### 4.2.6. シフト演算
 
 ```
-shift<span class="underline"></span>expression : addition<span class="underline"></span>expression
-                          | shift<span class="underline"></span>expression '&lt;&lt;' addition<span class="underline"></span>expression
-                          | shift<span class="underline"></span>expression '&gt;&gt;' addition<span class="underline"></span>expression
+shift\_expression : addition\_expression
+                          | shift\_expression '&lt;&lt;' addition\_expression
+                          | shift\_expression '&gt;&gt;' addition\_expression
 ```
 
 _シフト演算_ (shifting operation) は 2 つの項に対する演算です。`a &lt;&lt; b` の結果は値 a のビットを左に b 回シフトしたものとなります。`a &gt;&gt; b` の結果は値 a のビットを右に b 回シフトしたものとなります。結合性は 左 (→) です。
@@ -217,14 +217,14 @@ Lury におけるシフトは算術シフトです。符号ビットを考慮す
 #### 4.2.7. 二項ビット演算
 
 ```
-and<span class="underline"></span>expression : shift<span class="underline"></span>expression
-               | and<span class="underline"></span>expression '&amp;' shift<span class="underline"></span>expression
+and\_expression : shift\_expression
+               | and\_expression '&amp;' shift\_expression
 
-xor<span class="underline"></span>expression : and<span class="underline"></span>expression
-               | xor<span class="underline"></span>expression '^' and<span class="underline"></span>expression
+xor\_expression : and\_expression
+               | xor\_expression '^' and\_expression
 
-or<span class="underline"></span>expression  : xor<span class="underline"></span>expression
-               | or<span class="underline"></span>expression '|' xor<span class="underline"></span>expression
+or\_expression  : xor\_expression
+               | or\_expression '|' xor\_expression
 ```
 
 _二項ビット演算_ (binary bitwise operation) は 2 つの項に対するビット演算です。結合性はすべて 結合性は 左 (→) です。それぞれの項は整数でなくてはなりません。
