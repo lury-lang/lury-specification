@@ -56,21 +56,21 @@ Lury の内部で用いられるモジュール名は、外部から指定でき
 ### 3.2. import文
 
 ```
-import<span class="underline"></span>statement   : 'import' import<span class="underline"></span>names
-                   | 'public' 'import' import<span class="underline"></span>names
+import\_statement   : 'import' import\_names
+                   | 'public' 'import' import\_names
 
-import<span class="underline"></span>names       : import<span class="underline"></span>name
-                   | import<span class="underline"></span>names ',' import<span class="underline"></span>name
+import\_names       : import\_name
+                   | import\_names ',' import\_name
 
-import<span class="underline"></span>name        : module<span class="underline"></span>name
+import\_name        : module\_name
 
-module<span class="underline"></span>name        : identifier<span class="underline"></span>all
-                   | module<span class="underline"></span>name '.' identifier<span class="underline"></span>all
+module\_name        : identifier\_all
+                   | module\_name '.' identifier\_all
 
-identifier<span class="underline"></span>all     : Identifier
-                   | contextual<span class="underline"></span>keyword
+identifier\_all     : Identifier
+                   | contextual\_keyword
 
-contextual<span class="underline"></span>keyword : IdentifierGet
+contextual\_keyword : IdentifierGet
                    | IdentifierSet
                    | IdentifierFile
                    | IdentifierLine
@@ -92,22 +92,22 @@ import文はモジュールのソースコードを_展開しません_。import
 # [A.lr]
 import B
 
-func<span class="underline"></span>b
+func\_b
 
 if true:
   import C            # モジュール C はこのifブロック内でのみアクセス可能
-  func<span class="underline"></span>c
+  func\_c
 ```
 
 ```
 # [B.lr]
-def func<span class="underline"></span>b:
+def func\_b:
   pass
 ```
 
 ```
 # [C.lr]
-def func<span class="underline"></span>c:
+def func\_c:
   pass
 ```
 
@@ -122,21 +122,21 @@ def func<span class="underline"></span>c:
 # [A.lr]
 import B
 
-func<span class="underline"></span>b
-func<span class="underline"></span>c
+func\_b
+func\_c
 ```
 
 ```
 # [B.lr]
 public import C
 
-def func<span class="underline"></span>b:
+def func\_b:
   pass
 ```
 
 ```
 # [C.lr]
-def func<span class="underline"></span>c:
+def func\_c:
   pass
 ```
 
