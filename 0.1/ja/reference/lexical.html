@@ -56,10 +56,10 @@
   -
   ~=
   ~
-  <span class="asterisk"></span><span class="asterisk"></span>=
-  <span class="asterisk"></span><span class="asterisk"></span>
-  <span class="asterisk"></span>=
-  <span class="asterisk"></span>
+  \*\*=
+  \*\*
+  \*=
+  \*
   //=
   //
   /=
@@ -94,8 +94,8 @@
 
   (
   )
-  <span class="bracket-left"></span>
-  <span class="bracket-right"></span>
+  \[
+  \]
   {
   }
   ;
@@ -176,7 +176,7 @@ Lury ではブロックを行の構造で表現します。これは Python の�
 
 完全な *改行文字* の一覧は後述する [*LineTerminator*](#LineTerminator) と同じですが、混乱を避けるため、この単語と *行終端* という単語は字句解析時に用い、主にトークンの名前として用います。*改行文字* とは前述の通り、`\r`、`\n` または `\r\n` などのバイト列そのものを指す言葉としてここでは用います。
 
-Lury では行終端をキャンセルし、2つの物理行を1つの論理行へ連結可能なトークンが2つあります。バックスラッシュ `\` と、括弧内のカンマ `,` です。前者を *明示的な行連結*、後者を *暗黙的な行連結* とも呼びます。行連結は2行以上連続して指定することができます。バックスラッシュによるキャンセルは [コメント](#comment) を参照してください。
+Lury では行終端をキャンセルし、2つの物理行を1つの論理行へ連結可能なトークンが2つあります。バックスラッシュ `\\\` と、括弧内のカンマ `,` です。前者を *明示的な行連結*、後者を *暗黙的な行連結* とも呼びます。行連結は2行以上連続して指定することができます。バックスラッシュによるキャンセルは [コメント](#comment) を参照してください。
 </section>
 
 <section id="logicalLine">
@@ -255,7 +255,7 @@ Lury の字句解析器は連続した NewLine トークンを *出力しませ�
 
 ラインコメントは `#` から *改行文字およびファイル終端文字を除く* 行末までをコメント化します。ラインコメントを行末より前で終了することはできません。
 
-ラインキャンセルは行末の `\` で表現されます。結果的に `\` および行終端文字（改行文字）はコメントと同一視され、構文解析時には無視されます。`\` はファイル終端をキャンセルすることはできません。すなわち、ソースコードの末尾に `\` を記述することはできません。また、`\` と行終端文字の間に空白文字を入れることはできません。
+ラインキャンセルは行末の `\\\` で表現されます。結果的に `\\\` および行終端文字（改行文字）はコメントと同一視され、構文解析時には無視されます。`\\\` はファイル終端をキャンセルすることはできません。すなわち、ソースコードの末尾に `\\\` を記述することはできません。また、`\\\` と行終端文字の間に空白文字を入れることはできません。
 
 </section>
 </section>
@@ -326,7 +326,7 @@ println('finish')                   # [ 0 ]
 - **WYSIWYG文字列中のインデント**: 文字列中に行頭のインデントが出現しても、それは WYSIWYG文字列の一部とみなされます。
 - **ブロックコメント中のインデント**:ブロックコメントの一部としてみなされ、構文解析時には無視されます。
 - **ラインキャンセルの次行のインデント**: [LineCancel](#LineCancel) は物理行を接続するため、次の行のインデントは行頭のインデントとみなされず、単なる空白文字とみなされます。
-- **括弧中のカンマで終わる行の次行のインデント**: ラインキャンセルの場合と同様に、単なる空白文字とみなされます。ここでの括弧とは リスト `<span class="bracket-left"></span><span class="bracket-right"></span>`、ハッシュまたはセット `{}` 、そして丸括弧またはタプル `()` です。
+- **括弧中のカンマで終わる行の次行のインデント**: ラインキャンセルの場合と同様に、単なる空白文字とみなされます。ここでの括弧とは リスト `\[\]`、ハッシュまたはセット `{}` 、そして丸括弧またはタプル `()` です。
 
 以下は、上記の例外を実際のソースコードで表した例です。いずれの行もインデントと解釈されず、オフサイドルールは適用されません。
 
@@ -339,12 +339,12 @@ text = <span class="backquote"></span>これはWYSIWYG文字列です。
     コメント中のインデントです。
 ###
 
-judge = text != nil and \
+judge = text != nil and \\\
         text.length > 0
 
-list = [ 1, 2, 3,
+list = \[ 1, 2, 3,
          4, 5, 6,
-         7, 8, 9 ]
+         7, 8, 9 \]
 ```
 
 </section>
@@ -355,7 +355,7 @@ list = [ 1, 2, 3,
 
 ```text
 <a class="grammar" regex="_|\\p\{Lu\}|(?:\\p\{Ll\})|\\p\{Lt\}|(?:\\p\{Lm\})|\\p\{Lo\}|(?:\\p\{Nl\})|[\u25A0-\u27BF]|\uD83C[\uDF00-\uDFF7]|\uD83D[\uDC00-\uDE4F\uDE80-\uDEF3]">IdentifierStart</a>:
-  "<span class="underline"></span>"
+  "\_"
   \p{Lu}
   \p{Ll}
   \p{Lt}
@@ -375,7 +375,7 @@ list = [ 1, 2, 3,
   \p{Pc}
 
 <a class="grammar" regex="IdentifierStart(?:IdentifierContinue)*|\$">Identifier</a>:
-  IdentifierStart IdentifierContinue<span class="asterisk"></span>
+  IdentifierStart IdentifierContinue\*
   $
 ```
 
@@ -478,7 +478,7 @@ Lury でのリテラル (literal、即値) とはソースコード上で直接�
 
 ```text
 <a class="grammar" regex="'(?:StringCharactersWithoutSinglequote)%2a'">StringLiteral</a>:
-  "'" StringCharactersWithoutSinglequote<span class="asterisk"></span> "'"
+  "'" StringCharactersWithoutSinglequote\* "'"
 
 <a class="grammar" regex="StringCharacters|%22|%60">StringCharactersWithoutSinglequote</a>:
   StringCharacters
@@ -489,9 +489,9 @@ Lury でのリテラル (literal、即値) とはソースコード上で直接�
   EscapeSequence
   すべてのUnicode文字(NewLine, 正規表現 `\\.` を除く)
 
-<a class="grammar" regex="\\(?:LineTerminator)|\\\\|\\'|\\%22|\\a|\\b|\\f|\\n|\\r|\\t|\\v|\\(?:OctalDigit){1,3}|\\x(?:HexadecimalDigit){2}|\\u(?:HexadecimalDigit){4}|\\U(?:HexadecimalDigit){8}">EscapeSequence</a>:
+<a class="grammar" regex="\\(?:LineTerminator)|\\{1}|\\'|\\%22|\\a|\\b|\\f|\\n|\\r|\\t|\\v|\\(?:OctalDigit){1,3}|\\x(?:HexadecimalDigit){2}|\\u(?:HexadecimalDigit){4}|\\U(?:HexadecimalDigit){8}">EscapeSequence</a>:
   "\" LineTerminator
-  "\\"
+  "\\\"
   "\'"
   "\""
   "\a"
@@ -521,7 +521,7 @@ Lury の文字列リテラルにプレフィクスはありません。
 
 ```text
 <a class="grammar" regex="%22(?:EmbedStringCharactersWithoutSinglequote)%2a%22">EmbedStringLiteral</a>:
-  """ EmbedStringCharactersWithoutSinglequote<span class="asterisk"></span> """
+  """ EmbedStringCharactersWithoutSinglequote\* """
 
 <a class="grammar" regex="EmbedStringCharacters|'|%60">EmbedStringCharactersWithoutSinglequote</a>:
   StringCharacters
@@ -542,14 +542,14 @@ Lury の文字列リテラルにプレフィクスはありません。
 
 ```text
 <a class="grammar" regex="%60(?:WysiwygStringCharacters)%2a%60">WysiwygStringLiteral</a>:
-  "<span class="backquote"></span>" WysiwygStringCharacters<span class="asterisk"></span> "<span class="backquote"></span>"
+  "\`" WysiwygStringCharacters\* "\`"
 
 <a class="grammar" regex="%60%60|[^%60]">WysiwygStringCharacters</a>:
-  "<span class="backquote"></span><span class="backquote"></span>"
-  すべてのUnicode文字("<span class="backquote"></span>"を除く)
+  "\`\\\`"
+  すべてのUnicode文字("\`"を除く)
 ```
 
-WYSIWYG文字列は `<span class="backquote"></span>` で囲まれた Unicode文字列をそのまま文字列として扱うことが出来ます。これは、改行文字も含まれます。`'` および `"` も記述ができ、`\` もそのまま記述ができます。エスケープシーケンスは記述できません。また、式の埋め込みはできません。
+WYSIWYG文字列は `<span class="backquote"></span>` で囲まれた Unicode文字列をそのまま文字列として扱うことが出来ます。これは、改行文字も含まれます。`'` および `"` も記述ができ、`\\\` もそのまま記述ができます。エスケープシーケンスは記述できません。また、式の埋め込みはできません。
 
 WYSIWYG文字列リテラルはヒアドキュメントなどで文書をそのまま読み込みたいとき、もしくは正規表現のようにエスケープシーケンスを用いると表記が煩雑になってしまう場合に効果を発揮するでしょう。
 
@@ -576,28 +576,28 @@ WYSIWYG文字列リテラルはヒアドキュメントなどで文書をその�
   HexadecimalInteger
 
 <a class="grammer" regex="Digit(?:DecimalDigits)*">DecimalInteger</a>:
-  Digit DecimalDigits<span class="asterisk"></span>
+  Digit DecimalDigits\*
 
 <a class="grammer" regex="%5f?Digit">DecimalDigits</a>:
-  "<span class="underline"></span>"? Digit
+  "\_"? Digit
 
 <a class="grammer" regex="0[bB](?:BinaryDigits)+">BinaryInteger</a>:
-  "0" ("b" | "B") BinaryDigits BinaryDigits<span class="asterisk"></span>
+  "0" ("b" | "B") BinaryDigits BinaryDigits\*
 
 <a class="grammer" regex="%5f?BinaryDigit">BinaryDigits</a>:
-  "<span class="underline"></span>"? BinaryDigit
+  "\_"? BinaryDigit
 
 <a class="grammer" regex="0[oO](?:OctalDigits)+">OctalInteger</a>:
-  "0" ("o" | "O") OctalDigits OctalDigits<span class="asterisk"></span>
+  "0" ("o" | "O") OctalDigits OctalDigits\*
 
 <a class="grammer" regex="%5f?OctalDigit">OctalDigits</a>:
-  "<span class="underline"></span>"? OctalDigit
+  "\_"? OctalDigit
 
 <a class="grammer" regex="0[xX](?:HexadecimalDigits)+">HexadecimalInteger</a>:
-  "0" ("x" | "X") HexadecimalDigits HexadecimalDigits<span class="asterisk"></span>
+  "0" ("x" | "X") HexadecimalDigits HexadecimalDigits\*
 
 <a class="grammer" regex="%5f?HexadecimalDigit">HexadecimalDigits</a>:
-  "<span class="underline"></span>"? HexadecimalDigit
+  "\_"? HexadecimalDigit
 
 <a class="grammer" regex="[0-9]">Digit</a>:
   "0" ... "9"
@@ -681,10 +681,10 @@ WYSIWYG文字列リテラルはヒアドキュメントなどで文書をその�
     **!**a       **not** a
 
 冪乗演算子
-    a **<span class="asterisk"></span><span class="asterisk"></span>** b
+    a **\*\*** b
 
 乗法演算子
-    a **<span class="asterisk"></span>** b    a __/__ b    a **//** b   a __%__ b
+    a **\*** b    a __/__ b    a **//** b   a __%__ b
     a **~** b
 
 加法演算子
@@ -740,7 +740,7 @@ nil合体演算子
 以下に Lury で使われるデリミタの一覧を示します。デリミタは複数のトークンを区切るための記号です。
 
 ```
-(       )       <span class="bracket-left"></span>       <span class="bracket-right"></span>       {       }
+(       )       \[       \]       {       }
 ;       ->      @
 ```
 
