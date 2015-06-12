@@ -280,6 +280,33 @@ _比較演算_ (comparison operation) は 2 つの項に対する比較演算で
 
 </section>
 
+<section id="boolean">
+#### 4.2.9. 論理演算
+
+```
+bool\_not\_expression : comparison\_expression
+                    | 'not' bool\_not\_expression
+                    | '!' bool\_not\_expression
+
+bool\_and\_expression : bool\_not\_expression
+                    | bool\_and\_expression 'and' bool\_not\_expression
+                    | bool\_and\_expression '&amp;&amp;' bool\_not\_expression
+
+bool\_or\_expression  : bool\_and\_expression
+                    | bool\_or\_expression 'or' bool\_and\_expression
+                    | bool\_or\_expression '||' bool\_and\_expression
+```
+
+_論理演算_ (boolean operation) は 1 つもしくは 2 つの項に対するビット演算です。それぞれの項はブール型でなくてはなりません。
+
+演算子 `not` および `!` は否定 (NOT) の演算です。`true` を `false` に、`false` を `true` に変えます。結合性は 右 (←) です。
+
+演算子 `and` および `&amp;&amp;` は短絡評価ありの論理積 (AND) の演算です。式 `a and b` は、`a` の評価結果が `false` ならば `false` を、`true` ならば `b` の評価結果を返します。
+
+演算子 `or` および `||` は短絡評価ありの論理和 (OR) の演算です。式 `a or b` は、`a` の評価結果が `true` ならば `true` を、`false` ならば `b` の評価結果を返します。
+
+</section>
+
 </section>
 
 __ (work in progress) __
