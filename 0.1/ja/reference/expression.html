@@ -307,6 +307,27 @@ _論理演算_ (boolean operation) は 1 つもしくは 2 つの項に対する
 
 </section>
 
+<section id="conditional">
+#### 4.2.10. 条件式
+
+```
+conditional\_expression : bool\_or\_expression
+                       | bool\_or\_expression '?' expression ':' conditional\_expression
+                       | expression 'if' bool\_or\_expression 'else' conditional\_expression
+```
+
+_条件式_ (conditional expression) は 3 つの項に対する演算式です。三項演算式とも呼ばれます。結合性はすべて 右 (←) です。
+
+演算子 `?` と `:` は組で用いられ、式 `C ? x : y` は条件 `C` が `true` のとき `x` の評価値を、`false` のとき `y` の評価値を返します。C言語における `?` `:` と同じ意味を持ちます。
+
+演算子 `if` と `else` も同様に組で用いられ、前述の `?` と `:` と同じ意味を持ちます。しかし前述のそれとは記述順序が異なります。式 `C ? x : y` に対応する式は `x if C else y` となります。
+
+これら 2 つは記述順序が異なるのみで、意味的、処理的に同一の効果を持ちます。実際に `x` と `y` はどちらか片方が 1 回のみ評価されます。
+
+条件式は入れ子構造にすることができますが、入れ子となった条件式は可読性に劣りやすいためこれを避けることを推奨します。
+
+</section>
+
 </section>
 
 __ (work in progress) __
