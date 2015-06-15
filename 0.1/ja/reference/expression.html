@@ -328,6 +328,33 @@ _条件式_ (conditional expression) は 3 つの項に対する演算式です�
 
 </section>
 
+<section id="assignment">
+#### 4.2.11. 代入式
+
+```
+assignment\_expression : conditional\_expression
+                      | conditional\_expression '=' assignment\_expression
+                      | conditional\_expression '+=' assignment\_expression
+                      | conditional\_expression '-=' assignment\_expression
+                      | conditional\_expression '\*=' assignment\_expression
+                      | conditional\_expression '/=' assignment\_expression
+                      | conditional\_expression '//=' assignment\_expression
+                      | conditional\_expression '\*\*=' assignment\_expression
+                      | conditional\_expression '%=' assignment\_expression
+                      | conditional\_expression '&amp;=' assignment\_expression
+                      | conditional\_expression '|=' assignment\_expression
+                      | conditional\_expression '^=' assignment\_expression
+                      | conditional\_expression '~=' assignment\_expression
+                      | conditional\_expression '&lt;&lt;=' assignment\_expression
+                      | conditional\_expression '&gt;&gt;=' assignment\_expression
+```
+
+_代入式_ (assignment expression) は 2 つの項に対する演算式です。結合性はすべて 右 (←) です。
+
+代入演算子は左辺が示す _場所_ に右辺値を代入します。式の値は代入後の左辺値となります。
+
+</section>
+
 </section>
 
 __ (work in progress) __
