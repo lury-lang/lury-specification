@@ -374,6 +374,22 @@ _代入式_ (assignment expression) は 2 つの項に対する演算式です�
 
 </section>
 
+<section id="expression">
+### 4.4. カンマ式と式
+
+```
+comma\_expression : assignment\_expression
+                 | assignment\_expression ',' comma\_expression
+
+expression       : comma\_expression
+```
+
+_カンマ式_ (commma expression) はこのバージョンでは実装されません。カンマ式の2番目の文法を使用した場合は文法エラーとなります。
+
+_式_ (expression) はこのバージョンではカンマ式と同一ですが、将来のバージョンのために区別されています。
+
+</section>
+
 __ (work in progress) __
 
 <section id="cite">
