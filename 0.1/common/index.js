@@ -100,6 +100,7 @@ function place_markdownChar () {
   $('.backquote').text('`');
   $('.asterisk').text('*');
   $('.underline').text('_');
+  $('.varticalline').text('|');
 }
 
 function moveToHash () {
@@ -118,7 +119,8 @@ function replace_escape () {
         .replace(/\\\]/g, '<span class="bracket-right"></span>')
         .replace(/\\`/g, '<span class="backquote"></span>')
         .replace(/\\\*/g, '<span class="asterisk"></span>')
-        .replace(/\\_/g, '<span class="underline"></span>'));
+        .replace(/\\_/g, '<span class="underline"></span>')
+        .replace(/\\\|/g, '<span class="varticalline"></span>'));
 }
 
 $(function(){
