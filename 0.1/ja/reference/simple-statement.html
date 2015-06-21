@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>5. 単純文 - Lury Specification 0.1</title>
+  <script src="../../common/loader.js"></script>
+  <script type="text/javascript">loader_load('../../')</script>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-main markdown">
+
+## 5. 単純文
+
+```
+simple\_statement : pass\_statement
+                 | expression\_statement
+                 | return\_statement
+                 | break\_statement
+                 | continue\_statement
+                 | import\_statement
+```
+
+_単純文 (simple statement)_ は単一の論理行で完結する _文 (statement)_ のことです。Lury では 1 つの単純文は 1 つの論理行上でのみ記述できます。複数の単純文を単一の論理行に記述することはできません。
+
+
+<section id="pass">
+### 5.1. pass 文
+
+```
+pass\_statement : 'pass'
+```
+
+_pass 文_ は空の複合文を記述するための文です。Lury では空の複合文の表現に_何も記述しない_ことは文法上不可能なため、pass 文を用います。この文は、意味的に正しい場合に限り、全ての複合文と組み合わせて使用が可能です。
+
+この文は何も実行しません。
+
+当然ながら、pass 文と他の単純文を同じブロックに記述することはできません。pass 文を複数記述することもできません。
+
+</section>
+
+<section id="cite">
+### 参考文献
+
+</section>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
