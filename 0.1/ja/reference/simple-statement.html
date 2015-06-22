@@ -40,8 +40,21 @@ _pass 文_ は空の複合文を記述するための文です。Lury では空�
 
 </section>
 
+<section id="expression">
+### 5.2. 式文
+
+```
+expression\_statement : expression
+```
+
+_式文 (expression statement)_ は、式の処理そのものを実行します。演算、判定、代入、関数の呼び出しなどの操作を含みます。式文は全体でただ一つの値を持ちます。値を返さない関数を呼び出した場合の値は `nil` となります。
+
+</section>
+
 <section id="cite">
 ### 参考文献
+
+- [7. 単純文 (simple statement) — Python 3.4.3 ドキュメント](http://docs.python.jp/3.4/reference/simple_stmts.html)
 
 </section>
 
