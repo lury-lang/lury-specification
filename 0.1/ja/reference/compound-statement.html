@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>6. 複合文 - Lury Specification 0.1</title>
+  <script src="../../common/loader.js"></script>
+  <script type="text/javascript">loader_load('../../')</script>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-main markdown">
+
+## 6. 複合文
+
+```
+compound\_statement : if\_statement
+                   | while\_statement
+                   | function\_definition
+                   | class\_definition
+
+suite              : statement\_list NewLine
+                   | NewLine Indent statements Dedent
+
+statements         : statement
+                   | statement statements
+
+statement          : statement\_list NewLine
+                   | compound\_statement
+
+statement\_list     : simple\_statement 
+                   | simple\_statement simple\_statements
+
+simple\_statements  : ';'
+                   | ';' simple\_statement simple\_statements
+```
+
+_複合文 (compound statement)_ は 1 行以上の論理行にまたがる文のことです。複合文は 2 種類の書き方があり、セミコロン `;` を使った記述と、インデントを使った記述があります。
+
+セミコロンによる記述は [単純文](simple-statement.html) をセミコロンで繋ぐことで、複数個記述することができます。行末のセミコロンは任意です。
+
+インデントによる記述は [オフサイドルール](lexical.html#indent) によってスコープが定まります。スコープ内に定義された変数の寿命と有報範囲は同じスコープ内でのみ有効です。
+
+__(work in progress)__
+
+<section id="cite">
+### 参考文献
+
+- [8. 複合文 (compound statement) — Python 3.4.3 ドキュメント](http://docs.python.jp/3.4/reference/compound_stmts.html)
+
+</section>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
