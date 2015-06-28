@@ -41,6 +41,28 @@ _複合文 (compound statement)_ は 1 行以上の論理行にまたがる文�
 
 インデントによる記述は [オフサイドルール](lexical.html#indent) によってスコープが定まります。スコープ内に定義された変数の寿命と有報範囲は同じスコープ内でのみ有効です。
 
+<section id="if">
+### 6.1. if 文
+
+```
+if\_statement    : 'if' expression ':' suite
+                | 'if' expression ':' suite elif\_statements
+
+elif\_statements : 'elif' expression ':' suite
+                | 'elif' expression ':' suite elif\_statements
+                | else\_statement
+
+else\_statement  : 'else' ':' suite
+```
+
+_if 文_ は条件分岐を行うための文です。被評価式 expression を条件とし、`true` であれば if 文内の suite で示される処理行い、`false` でありかつ elif もしくは else ブロックが存在するならばそのブロックについても同様に条件分岐を行います。
+
+条件に合致しなかったブロックの suite は処理されません。
+
+elif ブロックはいくつでも記述が可能です。一方、else ブロックは多くとも 1 つのみ記述が可能で、それは必ず if 文の最後に記述しなければなりません。
+
+</section>
+
 __(work in progress)__
 
 <section id="cite">
