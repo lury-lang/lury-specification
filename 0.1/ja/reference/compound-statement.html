@@ -63,6 +63,22 @@ elif ブロックはいくつでも記述が可能です。一方、else ブロ�
 
 </section>
 
+<section id="while">
+### 6.2. while 文
+
+```
+while\_statement : 'while' expression ':' suite
+                | 'while' expression ':' suite else\_statements
+
+else\_statement  : 'else' ':' suite
+```
+
+_while 文_ は反復処理を行うための文です。被評価式 expression を条件とし、`true` である限りブロック内の処理を反復処理します。最初に while 文に遭遇したとき、expression の値が `false` である場合はブロック内を一度も実行しません。
+
+while 文の else ブロックは _expression が `false` である場合に while 文を脱出したとき_ に限り実行されます。[break 文](simple-statement.html#break) や [return 文](simple-statement.html#return) による脱出時は else ブロックは実行されません。一方で前述したような、最初から expression の値が `false` であった場合は else ブロックは実行されます。
+
+</section>
+
 __(work in progress)__
 
 <section id="cite">
