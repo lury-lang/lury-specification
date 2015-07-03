@@ -81,6 +81,28 @@ while 文の else ブロックは _expression が `false` である場合に whi
 
 </section>
 
+<section id="function">
+### 6.3. 関数定義
+
+```
+function\_statement : 'def' function\_name '(' parameter\_list ')' ':' suite
+                   | 'def' function\_name ':' suite
+
+function\_name      : identifier\_all
+                   | function\_name '.' identifier\_all
+
+parameter\_list     : parameter
+                   | parameter\_list ',' parameter
+
+parameter          : identifier\_all
+```
+
+関数定義は関数を定義するための文です。キーワード `def` から始まり、括弧で囲われたパラメータ引数（仮引数）と実行内容を記述します。このうち、括弧と引数は省略が可能です。
+
+関数定義では関数は実行されません。定義ののち、関数呼び出しによって実行が可能です。
+
+</section>
+
 __(work in progress)__
 
 <section id="cite">
