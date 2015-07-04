@@ -103,7 +103,25 @@ parameter          : identifier\_all
 
 </section>
 
-__(work in progress)__
+<section id="class">
+### 6.4. クラス定義
+
+```
+class\_statement  : 'class' class\_name '(' inheritance\_list ')' ':' suite
+                 | 'class' class\_name ':' suite
+
+class\_name       : identifier\_all
+
+inheritance\_list : object\_name
+                 | inheritance\_list ',' object\_name
+
+object\_name      : identifier_all
+                 | object\_name '.' identifier_all
+```
+
+クラス定義はクラスを定義するための文です。キーワード `class` から始まり、括弧で他のクラスの名前を指定してそのクラスを継承することができます。継承をしない場合は括弧を省略できますが、暗黙的に `Object` クラスを継承します。
+
+</section>
 
 <section id="cite">
 ### 参考文献
