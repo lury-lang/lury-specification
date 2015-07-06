@@ -3,6 +3,8 @@
 
 _The Specification of Lury Programming Language_
 
+Go to: http://lury-lang.github.io/lury-specification/0.1/ja/reference/
+
 ## License
 ### Lury
 
