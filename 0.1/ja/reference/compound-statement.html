@@ -83,16 +83,16 @@ while 文の else ブロックは _expression が `false` である場合に whi
 ### 6.3. 関数定義
 
 ```
-function\_statement : 'def' function\_name '(' parameter\_list ')' ':' suite
-                   | 'def' function\_name ':' suite
+function\_definition : 'def' function\_name '(' parameter\_list ')' ':' suite
+                    | 'def' function\_name ':' suite
 
-function\_name      : identifier\_all
-                   | function\_name '.' identifier\_all
+function\_name       : identifier\_all
+                    | function\_name '.' identifier\_all
 
-parameter\_list     : parameter
-                   | parameter\_list ',' parameter
+parameter\_list      : parameter
+                    | parameter\_list ',' parameter
 
-parameter          : identifier\_all
+parameter           : identifier\_all
 ```
 
 関数定義は関数を定義するための文です。キーワード `def` から始まり、括弧で囲われたパラメータ引数（仮引数）と実行内容を記述します。このうち、括弧と引数は省略が可能です。
@@ -105,16 +105,16 @@ parameter          : identifier\_all
 ### 6.4. クラス定義
 
 ```
-class\_statement  : 'class' class\_name '(' inheritance\_list ')' ':' suite
-                 | 'class' class\_name ':' suite
+class\_definition  : 'class' class\_name '(' inheritance\_list ')' ':' suite
+                  | 'class' class\_name ':' suite
 
-class\_name       : identifier\_all
+class\_name        : identifier\_all
 
-inheritance\_list : object\_name
-                 | inheritance\_list ',' object\_name
+inheritance\_list  : object\_name
+                  | inheritance\_list ',' object\_name
 
-object\_name      : identifier_all
-                 | object\_name '.' identifier_all
+object\_name       : identifier\_all
+                  | object\_name '.' identifier\_all
 ```
 
 クラス定義はクラスを定義するための文です。キーワード `class` から始まり、括弧で他のクラスの名前を指定してそのクラスを継承することができます。継承をしない場合は括弧を省略できますが、暗黙的に `Object` クラスを継承します。
