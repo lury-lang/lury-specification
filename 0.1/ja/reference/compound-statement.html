@@ -71,8 +71,6 @@ elif ブロックはいくつでも記述が可能です。一方、else ブロ�
 ```
 while\_statement : 'while' expression ':' suite
                 | 'while' expression ':' suite else\_statements
-
-else\_statement  : 'else' ':' suite
 ```
 
 _while 文_ は反復処理を行うための文です。被評価式 expression を条件とし、`true` である限りブロック内の処理を反復処理します。最初に while 文に遭遇したとき、expression の値が `false` である場合はブロック内を一度も実行しません。
