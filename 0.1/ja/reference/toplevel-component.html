@@ -19,8 +19,8 @@
 ### 7.1. ファイル入力
 
 ```
-program       :
-              | program\_lines
+program       : EndOfFile
+              | program\_lines EndOfFile
 
 program\_lines : program\_line
               | program\_line program\_lines
