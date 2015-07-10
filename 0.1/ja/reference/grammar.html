@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>8. 完全な文法 - Lury Specification 0.1</title>
+  <script src="../../common/loader.js"></script>
+  <script type="text/javascript">loader_load('../../')</script>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-main markdown">
+
+## 8. 完全な文法
+
+以下はパーサジェネレータに入力される Lury の完全な文法です。(BNF 文法)
+
+```
+program
+    :
+    | program\_lines
+
+program\_lines
+    : program\_line
+    | program\_line program\_lines
+
+program\_line
+    : statement
+    | NewLine
+
+
+statement
+    : statement\_list NewLine
+    | compound\_statement
+
+statement\_list
+    : simple\_statement
+    | simple\_statement simple\_statements
+
+simple\_statements
+    : ';'
+    | ';' simple\_statement simple\_statements
+
+compound\_statement
+    : if\_statement
+    | while\_statement
+    | function\_definition
+    | class\_definition
+
+suite
+    : statement\_list NewLine
+    | NewLine Indent statements Dedent
+
+statements
+    : statement
+    | statement statements
+
+
+if\_statement
+    : KeywordIf expression ':' suite
+    | KeywordIf expression ':' suite elif\_statements
+
+elif\_statements
+    : KeywordElif expression ':' suite
+    | KeywordElif expression ':' suite elif\_statements
+    | else\_statement
+
+else\_statement
+    : KeywordElse ':' suite
+
+while\_statement
+    : KeywordWhile expression ':' suite
+    | KeywordWhile expression ':' suite else\_statement
+
+function\_definition
+    : KeywordDef function\_name '(' parameter\_list ')' ':' suite
+    | KeywordDef function\_name ':' suite
+
+function\_name
+    : identifier\_all
+    | function\_name '.' identifier\_all
+
+parameter\_list
+    : parameter
+    | parameter\_list ',' parameter
+
+parameter
+    : identifier\_all
+
+class\_definition
+    : KeywordClass class\_name '(' inheritance\_list ')' ':' suite
+    | KeywordClass class\_name ':' suite
+
+class\_name
+    : identifier\_all
+
+inheritance\_list
+    : object\_name
+    | inheritance\_list ',' object\_name
+
+object\_name
+    : identifier\_all
+    | object\_name '.' identifier\_all
+
+
+simple\_statement
+    : pass\_statement
+    | expression\_statement
+    | return\_statement
+    | break\_statement
+    | continue\_statement
+    | import\_statement
+
+pass\_statement
+    : KeywordPass
+
+expression\_statement
+    : expression
+
+return\_statement
+    : KeywordReturn
+    | KeywordReturn expression
+
+break\_statement
+    : KeywordBreak
+
+continue\_statement
+    : KeywordContinue
+
+import\_statement
+    : KeywordImport import\_names
+    | KeywordPublic KeywordImport import\_names
+
+import\_names
+    : import\_name
+    | import\_names ',' import\_name
+
+import\_name
+    : module\_name
+
+module\_name
+    : identifier\_all
+    | module\_name '.' identifier\_all
+
+identifier\_all
+    : Identifier
+    | contextual\_keyword
+
+contextual\_keyword
+    : IdentifierGet
+    | IdentifierSet
+    | IdentifierFile
+    | IdentifierLine
+    | IdentifierExit
+    | IdentifierSuccess
+    | IdentifierFailure
+
+
+expression
+    : comma\_expression
+
+comma\_expression
+    : assignment\_expression
+    | assignment\_expression ',' comma\_expression
+
+assignment\_expression 
+    : conditional\_expression
+    | conditional\_expression '=' assignment\_expression
+    | conditional\_expression AssignmentAdd assignment\_expression
+    | conditional\_expression AssignmentSub assignment\_expression
+    | conditional\_expression AssignmentMultiply assignment\_expression
+    | conditional\_expression AssignmentDivide assignment\_expression
+    | conditional\_expression AssignmentIntDivide assignment\_expression
+    | conditional\_expression AssignmentPower assignment\_expression
+    | conditional\_expression AssignmentModulo assignment\_expression
+    | conditional\_expression AssignmentAnd assignment\_expression
+    | conditional\_expression AssignmentOr assignment\_expression
+    | conditional\_expression AssignmentXor assignment\_expression
+    | conditional\_expression AssignmentConcat assignment\_expression
+    | conditional\_expression AssignmentLeftShift assignment\_expression
+    | conditional\_expression AssignmentRightShift assignment\_expression
+
+conditional\_expression
+    : bool\_or\_expression
+    | bool\_or\_expression '?' bool\_or\_expression ':' bool\_or\_expression
+    | bool\_or\_expression KeywordIf bool\_or\_expression KeywordElse bool\_or\_expression
+
+bool\_or\_expression
+    : bool\_and\_expression
+    | bool\_or\_expression KeywordOr bool\_and\_expression
+    | bool\_or\_expression OrShort bool\_and\_expression
+
+bool\_and\_expression
+    : bool\_not\_expression
+    | bool\_and\_expression KeywordAnd bool\_not\_expression
+    | bool\_and\_expression AndShort bool\_not\_expression
+
+bool\_not\_expression
+    : comparison\_expression
+    | KeywordNot bool\_not\_expression
+    | '!' bool\_not\_expression
+
+comparison\_expression
+    : or\_expression
+    | or\_expression comparison\_operator or\_expression
+
+comparison\_operator
+    : '&lt;'
+    | '&gt;'
+    | Equal
+    | LessThan
+    | MoreThan
+    | NotEqual
+    | KeywordIs
+    | IsNot
+    | KeywordIs KeywordNot
+
+or\_expression
+    : xor\_expression
+    | or\_expression '\|' xor\_expression
+
+xor\_expression
+    : and\_expression
+    | xor\_expression '^' and\_expression
+
+and\_expression
+    : shift\_expression
+    | and\_expression '&amp;' shift\_expression
+
+shift\_expression
+    : addition\_expression
+    | shift\_expression LeftShift addition\_expression
+    | shift\_expression RightShift addition\_expression
+
+addition\_expression
+    : multiplication\_expression
+    | addition\_expression '+' multiplication\_expression
+    | addition\_expression '-' multiplication\_expression
+    | addition\_expression '~' multiplication\_expression
+
+multiplication\_expression 
+    : unary\_expression
+    | multiplication\_expression '\*' unary\_expression
+    | multiplication\_expression IntDivide unary\_expression
+    | multiplication\_expression '/' unary\_expression
+    | multiplication\_expression '%' unary\_expression
+
+unary\_expression
+    : power\_expression
+    | Increment unary\_expression
+    | Decrement unary\_expression
+    | '-' unary\_expression
+    | '+' unary\_expression
+    | '~' unary\_expression
+
+power\_expression
+    : postfix\_expression
+    | power\_expression Power postfix\_expression
+
+postfix\_expression
+    : primary
+    | postfix\_expression '.' identifier\_all
+    | postfix\_expression Increment
+    | postfix\_expression Decrement
+    | postfix\_expression '(' ')'
+    | postfix\_expression '(' argument\_list ')'
+
+argument\_list
+    : argument
+    | argument ',' argument\_list
+
+argument
+    : expression
+    | named\_argument
+
+named\_argument
+    : identifier\_all ':' expression
+
+primary
+    : identifier\_all
+    | literal
+    | KeywordTrue
+    | KeywordFalse
+    | KeywordNil
+    | KeywordThis
+    | KeywordSuper
+    | '(' expression ')'
+
+literal
+    : StringLiteral
+    | EmbedStringLiteral
+    | WysiwygStringLiteral
+    | ImaginaryNumber
+    | FloatNumber
+    | Integer
+```
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
