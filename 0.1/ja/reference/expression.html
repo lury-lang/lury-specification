@@ -133,7 +133,6 @@ unary\_expression : power\_expression
                  | '-' unary\_expression
                  | '+' unary\_expression
                  | '~' unary\_expression
-                 | new\_expression
 ```
 
 単項演算はただ一つの項を持つ演算です。結合性は _右_ (←) です。
@@ -145,27 +144,8 @@ unary\_expression : power\_expression
 ビット反転はその整数値のビットを反転させます。数値が整数型ではない場合は実行時エラーとなります。
 </section>
 
-<section id="new">
-#### 4.2.4. new 式
-
-```
-new\_expression : 'new' class\_name
-               | 'new' class\_name new\_argument
-
-new\_argument   : '(' ')'
-               | '(' arguments ')'
-
-class\_name     : identifier\_all
-               | class\_name '.' identifier\_all
-```
-
-_new 式_ はクラスのコンストラクタを呼び出し、インスタンスを初期化してそれを返す式です。class\_name で用いることができるのはクラス名もしくは完全修飾されたクラス名（モジュール名を含む）です。演算子 `new` に結合性はありません。
-
-コンストラクタとなる関数には引数を与えることができます。コンストラクタの呼び出しは、単に関数呼び出しの一種と考えることができます。
-</section>
-
 <section id="binary_arithmetic">
-#### 4.2.5. 二項算術演算
+#### 4.2.4. 二項算術演算
 
 ```
 multiplication\_expression : unary\_expression
@@ -195,7 +175,7 @@ _連結_ (concatenation) は演算子 `~` で表される 2 つの要素に対�
 </section>
 
 <section id="shift">
-#### 4.2.6. シフト演算
+#### 4.2.5. シフト演算
 
 ```
 shift\_expression : addition\_expression
@@ -212,7 +192,7 @@ Lury におけるシフトは算術シフトです。符号ビットを考慮す
 </section>
 
 <section id="binary_bitwise">
-#### 4.2.7. 二項ビット演算
+#### 4.2.6. 二項ビット演算
 
 ```
 and\_expression : shift\_expression
@@ -236,7 +216,7 @@ _二項ビット演算_ (binary bitwise operation) は 2 つの項に対する�
 </section>
 
 <section id="comparison">
-#### 4.2.8. 比較演算
+#### 4.2.7. 比較演算
 
 ```
 comparison\_expression : or\_expression
@@ -279,7 +259,7 @@ _比較演算_ (comparison operation) は 2 つの項に対する比較演算で
 </section>
 
 <section id="boolean">
-#### 4.2.9. 論理演算
+#### 4.2.8. 論理演算
 
 ```
 bool\_not\_expression : comparison\_expression
@@ -306,7 +286,7 @@ _論理演算_ (boolean operation) は 1 つもしくは 2 つの項に対する
 </section>
 
 <section id="conditional">
-#### 4.2.10. 条件式
+#### 4.2.9. 条件式
 
 ```
 conditional\_expression : bool\_or\_expression
@@ -327,7 +307,7 @@ _条件式_ (conditional expression) は 3 つの項に対する演算式です�
 </section>
 
 <section id="assignment">
-#### 4.2.11. 代入式
+#### 4.2.10. 代入式
 
 ```
 assignment\_expression : conditional\_expression
@@ -354,7 +334,7 @@ _代入式_ (assignment expression) は 2 つの項に対する演算式です�
 </section>
 
 <section id="implicit_typeconversion">
-#### 4.2.12. 暗黙的な型変換
+#### 4.2.11. 暗黙的な型変換
 
 数値型の二項演算では、それぞれの項の型が異なる場合、より表現範囲の広い型に暗黙的に型の変換を行います。例えば `2 + 3.0` という演算では、整数型 (Integer) よりも浮動小数点数型(Floating) が扱う範囲が広いため、この式の型は 浮動小数点数型 となります。
 
@@ -419,7 +399,6 @@ expr5 = expr1 + (expr2 - expr3) / expr4
 2        | +            | 符号非反転          | 右(←) | No           | +a
 2        | -            | 符号反転            | 右(←) | No           | -a
 2        | ~            | ビット反転          | 右(←) | No           | ~a
-2        | new          | インスタンス生成    | n/a    | No           | new a
 3        | \*           | 乗算                | 左(→) | Yes          | a \* b
 3        | //           | 切り捨て除算        | 左(→) | Yes          | a // b
 3        | /            | 除算                | 左(→) | Yes          | a / b
