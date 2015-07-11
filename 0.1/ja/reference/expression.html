@@ -290,8 +290,8 @@ _論理演算_ (boolean operation) は 1 つもしくは 2 つの項に対する
 
 ```
 conditional\_expression : bool\_or\_expression
-                       | bool\_or\_expression '?' expression ':' conditional\_expression
-                       | expression 'if' bool\_or\_expression 'else' conditional\_expression
+                       | bool\_or\_expression '?' bool\_or\_expression ':' bool\_or\_expression
+                       | bool\_or\_expression 'if' bool\_or\_expression 'else' bool\_or\_expression
 ```
 
 _条件式_ (conditional expression) は 3 つの項に対する演算式です。三項演算式とも呼ばれます。結合性はすべて 右 (←) です。
