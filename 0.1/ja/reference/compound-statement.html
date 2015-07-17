@@ -119,6 +119,26 @@ object\_name       : identifier\_all
 
 クラス定義はクラスを定義するための文です。キーワード `class` から始まり、括弧で他のクラスの名前を指定してそのクラスを継承することができます。継承をしない場合は括弧を省略できますが、暗黙的に `Object` クラスを継承します。
 
+これは、次のようなクラス定義は
+
+```
+class Foo:
+  pass
+
+class Bar(Foo):
+  pass
+```
+
+実際には以下のように、クラス `Foo` はクラス `Object` を継承するよう暗黙的に宣言されます。
+
+```
+class Foo(Object):
+  pass
+
+class Bar(Foo):
+  pass
+```
+
 </section>
 
 <section id="cite">
