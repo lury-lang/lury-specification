@@ -84,7 +84,7 @@ postfix\_expression : primary
 argument\_list      : argument
                    | argument ',' argument\_list
 
-argument           : expression
+argument           : assignment_expression
                    | named\_argument
 
 named\_argument     : identifier\_all ':' expression
