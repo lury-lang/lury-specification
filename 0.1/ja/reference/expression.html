@@ -54,7 +54,7 @@ literal : StringLiteral
 
 _リテラル_ (literal) では文字列や数値の記述した値そのものを表すオブジェクトを生成します。これらは全て変更不能（イミュータブル）です。
 
-トークン `StringLiteral`、`EmbedStringLiteral` そして `WysiwygStringLiteral` は String 型に、`ImaginaryNumber`、`FloatNumber` そして `Integer` はそれぞれ、Number 型から派生した Imaginary 型、Float 型、Integer 型となります。
+トークン `StringLiteral`、`EmbedStringLiteral` そして `WysiwygStringLiteral` は String 型に、`ImaginaryNumber`、`FloatNumber` そして `Integer` はそれぞれ、Number 型から派生した Complex 型、Real 型、Integer 型となります。
 
 数値はその値によって丸め誤差、オーバーフローやアンダーフローが起こりうることに注意してください。これは_表記上の値_と、_実際の値_と異なる場合があることを意味します。（__注__: 次期バージョンにて Number の派生クラスは最大値と最小値を取得できるよう機能が追加されます。）
 
