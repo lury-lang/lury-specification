@@ -46,6 +46,7 @@ compound\_statement
     | while\_statement
     | function\_definition
     | class\_definition
+    | unittest\_statement
 
 suite
     : statement\_list NewLine
@@ -101,6 +102,9 @@ inheritance\_list
 object\_name
     : identifier\_all
     | object\_name '.' identifier\_all
+
+unittest\_statement
+    : 'unittest' ':' suite
 
 
 simple\_statement
