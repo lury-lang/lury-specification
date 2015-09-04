@@ -258,8 +258,12 @@ unary\_expression
     | '~' unary\_expression
 
 power\_expression
+    : callref\_expression
+    | power\_expression Power callref\_expression
+
+callref\_expression
     : postfix\_expression
-    | power\_expression Power postfix\_expression
+    | KeywordRef postfix\_expression
 
 postfix\_expression
     : primary

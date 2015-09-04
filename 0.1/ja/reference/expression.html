@@ -104,12 +104,41 @@ _名前付き引数_ (named argument) は、名前と仮引数値をコロン `:
 実引数リストの順番は、呼び出される仮引数の順番と一致している必要があります。名前付き引数の順番は任意に決めることができます。また、通常の実引数と名前付き引数は混在可能です。ただし、通常の実引数と名前付き引数で同一の仮引数を指定することはできません。
 </section>
 
-<section id="power">
-#### 4.2.2. 冪乗演算
+<section id="callref">
+#### 4.2.2. 呼出参照演算式
 
 ```
-power\_expression : postfix\_expression
-                 | postfix\_expression '**' unary\_expression
+callref\_expression : postfix\_expression
+                   | KeywordRef postfix\_expression
+```
+
+呼出参照演算式は実引数無しの関数を呼び出すための式、またはオブジェクトを直接的に参照するための式です。結合性は _右_ (←) です。
+
+1 番目の規則は実引数無しの関数を呼び出すためのものです。`postfix\_expression` が __左辺値かつ関数型 (Function) である場合のみ__ 呼び出しが実行されます。関数が実引数なしで呼び出し可能であるかはチェックされません。
+
+2 番目の規則はオブジェクトを直接的に参照するためのものです。`postfix\_expression` は必ず左辺値でなくてはなりません。
+
+オブジェクトの参照は、たとえば関数オブジェクトを参照したい場合に用います。
+
+```
+def foo:
+  return 'called foo'
+
+bar = foo       # 関数 foo が呼ばれ、返り値が bar に代入される
+bar()           # 実行時エラー: bar は呼び出し可能ではない
+
+baz = ref foo   # baz に関数 foo の参照が代入される
+baz()           # 関数 foo が呼ばれる
+```
+
+</section>
+
+<section id="power">
+#### 4.2.3. 冪乗演算
+
+```
+power\_expression : callref\_expression
+                 | power\_expression Power callref\_expression
 ```
 
 冪乗演算式は _冪乗演算_ (power operator) を行う二項演算です。結合性は _右_ (←) です。
@@ -124,7 +153,7 @@ Lury ではゼロのゼロ乗 (0<sup>0</sup>) は `1` として処理します�
 </section>
 
 <section id="unary">
-#### 4.2.3. 単項算術演算と単項ビット演算
+#### 4.2.4. 単項算術演算と単項ビット演算
 
 ```
 unary\_expression : power\_expression
@@ -145,7 +174,7 @@ unary\_expression : power\_expression
 </section>
 
 <section id="binary_arithmetic">
-#### 4.2.4. 二項算術演算
+#### 4.2.5. 二項算術演算
 
 ```
 multiplication\_expression : unary\_expression
@@ -175,7 +204,7 @@ _連結_ (concatenation) は演算子 `~` で表される 2 つの要素に対�
 </section>
 
 <section id="shift">
-#### 4.2.5. シフト演算
+#### 4.2.6. シフト演算
 
 ```
 shift\_expression : addition\_expression
@@ -192,7 +221,7 @@ Lury におけるシフトは算術シフトです。符号ビットを考慮す
 </section>
 
 <section id="binary_bitwise">
-#### 4.2.6. 二項ビット演算
+#### 4.2.7. 二項ビット演算
 
 ```
 and\_expression : shift\_expression
@@ -216,7 +245,7 @@ _二項ビット演算_ (binary bitwise operation) は 2 つの項に対する�
 </section>
 
 <section id="comparison">
-#### 4.2.7. 比較演算
+#### 4.2.8. 比較演算
 
 ```
 comparison\_expression : or\_expression
@@ -259,7 +288,7 @@ _比較演算_ (comparison operation) は 2 つの項に対する比較演算で
 </section>
 
 <section id="boolean">
-#### 4.2.8. 論理演算
+#### 4.2.9. 論理演算
 
 ```
 bool\_not\_expression : comparison\_expression
@@ -286,7 +315,7 @@ _論理演算_ (boolean operation) は 1 つもしくは 2 つの項に対する
 </section>
 
 <section id="conditional">
-#### 4.2.9. 条件式
+#### 4.2.10. 条件式
 
 ```
 conditional\_expression : bool\_or\_expression
@@ -307,7 +336,7 @@ _条件式_ (conditional expression) は 3 つの項に対する演算式です�
 </section>
 
 <section id="assignment">
-#### 4.2.10. 代入式
+#### 4.2.11. 代入式
 
 ```
 assignment\_expression : conditional\_expression
@@ -334,7 +363,7 @@ _代入式_ (assignment expression) は 2 つの項に対する演算式です�
 </section>
 
 <section id="implicit_typeconversion">
-#### 4.2.11. 暗黙的な型変換
+#### 4.2.12. 暗黙的な型変換
 
 数値型の二項演算では、それぞれの項の型が異なる場合、より表現範囲の広い型に暗黙的に型の変換を行います。例えば `2 + 3.0` という演算では、整数型 (Integer) よりも浮動小数点数型(Floating) が扱う範囲が広いため、この式の型は 浮動小数点数型 となります。
 
@@ -351,7 +380,7 @@ _代入式_ (assignment expression) は 2 つの項に対する演算式です�
 </section>
 
 <section id="expression">
-### 4.4. カンマ式と式
+### 4.3. カンマ式と式
 
 ```
 comma\_expression : assignment\_expression
@@ -367,7 +396,7 @@ _式_ (expression) はこのバージョンではカンマ式と同一ですが�
 </section>
 
 <section id="order">
-### 4.5. 評価順序
+### 4.4. 評価順序
 
 代入演算子を除き、二項演算子はすべて左から右の項の順序で値が評価されます。代入演算子は右から左の項の順序で値が評価されます。
 
@@ -382,7 +411,7 @@ expr5 = expr1 + (expr2 - expr3) / expr4
 </section>
 
 <section id="priority">
-### 4.6. 演算子の優先順位
+### 4.5. 演算子の優先順位
 
 以下は演算子の優先順位の表です。順位が高いほど、文法的に優先して処理されます。順位が同一の演算子が連続した場合は結合性に従い処理されます。
 
@@ -393,6 +422,7 @@ expr5 = expr1 + (expr2 - expr3) / expr4
 1        | ++           | 後置インクリメント  | 右(←) | No           | a++
 1        | --           | 後置デクリメント    | 右(←) | No           | a--
 1        | ()           | 関数呼び出し演算子  | n/a    | No           | a(b)
+2        | ref          | 参照演算子          | n/a    | No           | ref a
 2        | \*\*         | 冪乗                | 右(←) | Yes          | a \*\* b
 2        | ++           | 前置インクリメント  | 右(←) | No           | ++a
 2        | --           | 前置デクリメント    | 右(←) | No           | --a
