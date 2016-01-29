@@ -79,12 +79,12 @@ postfix\_expression : primary
                    | postfix\_expression '++'
                    | postfix\_expression '--'
                    | postfix\_expression '(' ')'
-                   | postfix\_expression '(' argument_list ')'
+                   | postfix\_expression '(' argument\_list ')'
 
 argument\_list      : argument
                    | argument ',' argument\_list
 
-argument           : assignment_expression
+argument           : assignment\_expression
                    | named\_argument
 
 named\_argument     : identifier\_all ':' expression
