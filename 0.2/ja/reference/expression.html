@@ -15,7 +15,6 @@
 
 この章では Lury の __式 (expression)__ について解説します。
 
-<section id="primary">
 ### 4.1. 原始式
 
 _原始式_ (primary) は演算を含まない、式の基本的な要素です。
@@ -31,16 +30,12 @@ primary : identifier\_all
         | '(' expression ')'
 ```
 
-<section id="identifier">
 #### 4.1.1. 識別子
 
 _識別子_ (identifier) はオブジェクトの名前を表現するために用います。構文解析における _identifier\_all_ はトークン Identifier とコンテキストキーワードを包括するものです。
 
 トークン Identifier についての詳細は [2.5. 識別子](lexical.html#identifier) を参照してください。
 
-</section>
-
-<section id="literal">
 #### 4.1.2. リテラル
 
 ```
@@ -58,10 +53,7 @@ _リテラル_ (literal) では文字列や数値の記述した値そのもの�
 
 数値はその値によって丸め誤差、オーバーフローやアンダーフローが起こりうることに注意してください。これは_表記上の値_と、_実際の値_と異なる場合があることを意味します。（__注__: 次期バージョンにて Number の派生クラスは最大値と最小値を取得できるよう機能が追加されます。）
 
-</section>
-</section>
 
-<section id="operation">
 ### 4.2. 演算式
 
 Lury における _演算_ (operation) は、_演算子_ (operator) によって1つ以上のデータから別のデータを生成、もしくは元のデータを変換することを指します。演算の種類は生成、算術演算、ビット演算、論理演算、条件演算、代入そしてその他に分類できます。
@@ -70,7 +62,6 @@ Lury の演算子は 単項演算子、二項演算子、三項演算子 の3つ
 
 演算と演算子はある特定の型に対してのみ、正常に動作します。要求する型以外が項として渡されたとき、実行時エラーが発生します。また、演算の出力の型は入力となる項の型によって変化します。
 
-<section id="postfix">
 #### 4.2.1. 後置演算式
 
 ```
@@ -102,9 +93,7 @@ _属性参照_ (attribute reference) はオブジェクトの属性 (attribute) 
 _名前付き引数_ (named argument) は、名前と仮引数値をコロン `:` で結合したものです。呼び出される関数に存在する仮引数名のみ使用することができます。同名の名前付き引数を複数回指定することはできません。
 
 実引数リストの順番は、呼び出される仮引数の順番と一致している必要があります。名前付き引数の順番は任意に決めることができます。また、通常の実引数と名前付き引数は混在可能です。ただし、通常の実引数と名前付き引数で同一の仮引数を指定することはできません。
-</section>
 
-<section id="callref">
 #### 4.2.2. 呼出参照演算式
 
 ```
@@ -131,9 +120,6 @@ baz = ref foo   # baz に関数 foo の参照が代入される
 baz()           # 関数 foo が呼ばれる
 ```
 
-</section>
-
-<section id="power">
 #### 4.2.3. 冪乗演算
 
 ```
@@ -150,9 +136,7 @@ power\_expression : callref\_expression
 Lury ではゼロのゼロ乗 (0<sup>0</sup>) は `1` として処理します。
 
 基数がゼロで冪数が負の数であるときは実行時エラーが発生します。数値型以外のオブジェクトに対してこの演算は実行時エラーが発生します。
-</section>
 
-<section id="unary">
 #### 4.2.4. 単項算術演算と単項ビット演算
 
 ```
@@ -171,9 +155,7 @@ unary\_expression : power\_expression
 負符号はその数値の符号を反転します。正の値は負の値に、負の値は正の値になります。ただし、整数のゼロに付けられた場合は値に変化は起こりません。正符号はその数値の符号を変化させません。
 
 ビット反転はその整数値のビットを反転させます。数値が整数型ではない場合は実行時エラーとなります。
-</section>
 
-<section id="binary_arithmetic">
 #### 4.2.5. 二項算術演算
 
 ```
@@ -201,9 +183,6 @@ _加算_ (addition) は演算子 `+` で表される 2 つの値に対する和�
 
 _連結_ (concatenation) は演算子 `~` で表される 2 つの要素に対する連結要素を求める演算です。文字列の連結に用いられます。それ以外の型に用いると実行時エラーとなります。
 
-</section>
-
-<section id="shift">
 #### 4.2.6. シフト演算
 
 ```
@@ -218,9 +197,6 @@ _シフト演算_ (shifting operation) は 2 つの項に対する演算です�
 
 Lury におけるシフトは算術シフトです。符号ビットを考慮するシフト、いわゆる論理シフトとは異なります。
 
-</section>
-
-<section id="binary_bitwise">
 #### 4.2.7. 二項ビット演算
 
 ```
@@ -242,9 +218,6 @@ _二項ビット演算_ (binary bitwise operation) は 2 つの項に対する�
 
 演算子 `|` はビットの論理和 (OR) の演算です。
 
-</section>
-
-<section id="comparison">
 #### 4.2.8. 比較演算
 
 ```
@@ -285,9 +258,6 @@ _比較演算_ (comparison operation) は 2 つの項に対する比較演算で
   - `a is b` は `a` と `b` は同一であると判定します。
   - `a is T` は オブジェクト `a` は クラス `T` のインスタンスであると判定します。
 
-</section>
-
-<section id="boolean">
 #### 4.2.9. 論理演算
 
 ```
@@ -312,9 +282,6 @@ _論理演算_ (boolean operation) は 1 つもしくは 2 つの項に対する
 
 演算子 `or` および `||` は短絡評価ありの論理和 (OR) の演算です。式 `a or b` は、`a` の評価結果が `true` ならば `true` を、`false` ならば `b` の評価結果を返します。結合性は 左 (→) です。
 
-</section>
-
-<section id="conditional">
 #### 4.2.10. 条件式
 
 ```
@@ -333,9 +300,6 @@ _条件式_ (conditional expression) は 3 つの項に対する演算式です�
 
 条件式は入れ子構造にすることができますが、入れ子となった条件式は可読性に劣りやすいためこれを避けることを推奨します。
 
-</section>
-
-<section id="assignment">
 #### 4.2.11. 代入式
 
 ```
@@ -360,9 +324,6 @@ _代入式_ (assignment expression) は 2 つの項に対する演算式です�
 
 代入演算子は左辺が示す _場所_ に右辺値を代入します。式の値は代入後の左辺値となります。
 
-</section>
-
-<section id="implicit_typeconversion">
 #### 4.2.12. 暗黙的な型変換
 
 数値型の二項演算では、それぞれの項の型が異なる場合、より表現範囲の広い型に暗黙的に型の変換を行います。例えば `2 + 3.0` という演算では、整数型 (Integer) よりも浮動小数点数型(Floating) が扱う範囲が広いため、この式の型は 浮動小数点数型 となります。
@@ -375,11 +336,7 @@ _代入式_ (assignment expression) は 2 つの項に対する演算式です�
 
 暗黙的な型変換が行われる二項演算子は以下の通りです: `\*\*` `\*` `//` `/` `%` `+` `-` `&lt;` `&gt;` `==` `&lt;=` `&gt;=` `!=` `=` `\*\*=` `\*=` `//=` `/=` `%=` `+=` `-=`.
 
-</section>
 
-</section>
-
-<section id="expression">
 ### 4.3. カンマ式と式
 
 ```
@@ -393,9 +350,7 @@ _カンマ式_ (commma expression) はこのバージョンでは実装されま
 
 _式_ (expression) はこのバージョンではカンマ式と同一ですが、将来のバージョンのために区別されています。
 
-</section>
 
-<section id="order">
 ### 4.4. 評価順序
 
 代入演算子を除き、二項演算子はすべて左から右の項の順序で値が評価されます。代入演算子は右から左の項の順序で値が評価されます。
@@ -408,9 +363,7 @@ expr1.expr2(expr3, expr4)
 expr5 = expr1 + (expr2 - expr3) / expr4
 ```
 
-</section>
 
-<section id="priority">
 ### 4.5. 演算子の優先順位
 
 以下は演算子の優先順位の表です。順位が高いほど、文法的に優先して処理されます。順位が同一の演算子が連続した場合は結合性に従い処理されます。
@@ -475,18 +428,42 @@ expr5 = expr1 + (expr2 - expr3) / expr4
 13       | ,            | カンマ演算子        | 左(→) | No           | a, b
 |
 
-</section>
 
-<section id="cite">
 ### 参考文献
 
 - [6. 式 (expression) — Python 3.4.3 ドキュメント](http://docs.python.jp/3.4/reference/expressions.html)
 - [式 - プログラミング言語 D (日本語訳)](http://www.kmonos.net/alang/d/expression.html)
 
-</section>
 
       </div>
     </div>
   </div>
+ <script type="text/javascript">
+    $(function() {
+      build_header_nav([
+        {id: '4-1-', name: 'primary', children: [
+          {id: '4-1-1-', name: 'identifier'},
+          {id: '4-1-2-', name: 'literal'}
+        ]},
+        {id: '4-2-', name: 'operation', children: [
+          {id: '4-2-1-', name: 'postfix'},
+          {id: '4-2-2-', name: 'callref'},
+          {id: '4-2-3-', name: 'power'},
+          {id: '4-2-4-', name: 'unary'},
+          {id: '4-2-5-', name: 'binary_arithmetic'},
+          {id: '4-2-6-', name: 'shift'},
+          {id: '4-2-7-', name: 'binary_bitwise'},
+          {id: '4-2-8-', name: 'comparison'},
+          {id: '4-2-9-', name: 'boolean'},
+          {id: '4-2-10-', name: 'conditional'},
+          {id: '4-2-11-', name: 'assignment'},
+          {id: '4-2-12-', name: 'implicit_typeconversion'}
+        ]},
+        {id: '4-3-', name: 'expression'},
+        {id: '4-4-', name: 'order'},
+        {id: '4-5-', name: 'priority'}
+      ]);
+    });
+  </script>
 </body>
 </html>
