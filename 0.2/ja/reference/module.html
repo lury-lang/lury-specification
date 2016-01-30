@@ -15,8 +15,6 @@
 
 _モジュール (module)_ は 0 個以上のクラスを含む集合のことです。Lury におけるモジュールはプログラムを格納する集合としてはクラスよりも大きな、最大の集合です。
 
-
-<section id="modulesystem">
 ### 3.1. モジュールシステム
 
 モジュールはソースコードと一対一で対応し、名前によって区別されます。そのモジュール名はソースコードのファイル名またはファイルパスに由来します。ただし、ファイルパスからディレクトリ区切り文字 (`/` または `\`) と拡張子は除去されます。
@@ -25,7 +23,6 @@ _モジュール (module)_ は 0 個以上のクラスを含む集合のこと�
 
 ソースコードのファイル名が `sample.lr` であったとき、モジュール名は `sample` となります。またファイルがとあるディレクトリ内にある場合、例えば `program/sample.lr` であったとき、モジュール名は `program.sample` となります。
 
-<section id="namespace">
 #### 3.1.1. 名前空間
 
 モジュール名は 名前空間 (namespace) を構成します。すなわち、そのモジュール名と独立したスコープを持った名前空間となります。これにより、クラスや関数の名前の衝突を防止可能です。モジュール名はディレクトリによりドット `.` で区切られますが、入れ子構造ではありません。
@@ -36,9 +33,6 @@ _モジュール (module)_ は 0 個以上のクラスを含む集合のこと�
 
 モジュール名とクラス名をドット `.` で連結し、ただ一つのクラスを識別するための名前を _完全修飾名 (fully qualified name)_ と呼びます。例えばモジュール `sample.foo` に所属するクラス `Bar` の完全名は `sample.foo.Bar` となります。
 
-</section>
-
-<section id="modulenamelimit">
 #### 3.1.2. モジュール名の制限
 
 モジュールは名前を持ちます。名前に使われる文字と長さに制限はありませんが、Unicode として正しくデコードできる名前であり、名前は少なくとも 1 文字以上でなければなりません。しかし、モジュール名は以下の 2 つによって大きく制限されます。
@@ -49,10 +43,7 @@ __ファイルシステム上の制限__: Lury のモジュール名はファイ
 
 Lury の内部で用いられるモジュール名は、外部から指定できないことを条件に、以上の制限を受けません。
 
-</section>
-</section>
 
-<section id="importstatement">
 ### 3.2. import 文
 
 ```
@@ -83,7 +74,6 @@ import 文は他のモジュールを読み込む文です。また、読み込�
 
 import 文はモジュールのソースコードを_展開しません_。import 文で読み込まれたモジュールは別の名前空間とスコープを持ちます。同じモジュールを再度読みこむことはできませんが、この場合は単に無視されます。
 
-<section id="basicimport">
 #### 3.2.1. 基本 import
 
 基本形となる import 方式です。基本 import では、読み込まれたモジュールは外部に対して公開されません (_private な import_)。
@@ -111,9 +101,6 @@ def func\_c:
   pass
 ```
 
-</section>
-
-<section id="publicimport">
 #### 3.2.2. 公開 import
 
 公開 import は、import したことを外部に公開する import です (_public な import_)。以下の例ではモジュール A はモジュール B を import していますが、モジュール B にてモジュール C を公開 import しているため、モジュール A でも新たな import なしでモジュール C にアクセスできます。
@@ -140,19 +127,27 @@ def func\_c:
   pass
 ```
 
-</section>
-
-</section>
-
-<section id="cite">
 ### 参考文献
 
 - [モジュール - プログラミング言語 D (日本語訳)](http://www.kmonos.net/alang/d/module.html)
 
-</section>
 
       </div>
     </div>
   </div>
+  <script type="text/javascript">
+    $(function() {
+      build_header_nav([
+        {id: '3-1-', name: 'modulesystem', children: [
+          {id: '3-1-1-', name: 'namespace'},
+          {id: '3-1-2-', name: 'modulenamelimit'}
+        ]},
+        {id: '3-2-import-', name: 'importstatement', children: [
+          {id: '3-2-1-import', name: 'basicimport'},
+          {id: '3-2-2-import', name: 'logicalLine'}
+        ]}
+      ]);
+    });
+  </script>
 </body>
 </html>
