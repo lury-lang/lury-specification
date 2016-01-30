@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>7. トップレベル要素 - Lury Specification 0.1</title>
+  <script src="../../common/loader.js"></script>
+  <script type="text/javascript">loader_load('../../')</script>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-main markdown">
+
+## 7. トップレベル要素
+
+トップレベル要素は、Lury の文法で最も上位に用いられる文法です。
+
+<section id="program">
+### 7.1. ファイル入力
+
+```
+program       :
+              | program\_lines
+
+program\_lines : program\_line
+              | program\_lines program\_line
+
+program\_line  : statement
+              | NewLine
+```
+
+文法 `program` は Lury プログラムが記述されたファイルを読み込む際に最初に用いられる文法です。ファイル入力の場合、全ての文法は 文法 `program` に入れ子となります。
+
+空のファイルを受け付けるために、`program` は唯一 _空_ (くう) の状態に遷移することを許されています。_空_ は 0 バイトの入力を意味します。また、改行だけが記述されたプログラムも、文法的には正しい入力とみなされます。
+
+まとめると、文法的に正しい Lury プログラムは、文（単純文と複合文）と改行 （空行）が 0 回以上繰り返したものとなります。
+
+</section>
+
+<section id="cite">
+### 参考文献
+
+- [9. トップレベル要素 — Python 3.4.3 ドキュメント](http://docs.python.jp/3.4/reference/toplevel_components.html)
+
+</section>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>

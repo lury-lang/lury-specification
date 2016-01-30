@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>5. 単純文 - Lury Specification 0.1</title>
+  <script src="../../common/loader.js"></script>
+  <script type="text/javascript">loader_load('../../')</script>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-main markdown">
+
+## 5. 単純文
+
+```
+simple\_statement : pass\_statement
+                 | expression\_statement
+                 | return\_statement
+                 | break\_statement
+                 | continue\_statement
+                 | import\_statement
+```
+
+_単純文 (simple statement)_ は単一の論理行で完結する _文 (statement)_ のことです。Lury では 1 つの単純文は 1 つの論理行上でのみ記述できます。複数の単純文を単一の論理行に記述することはできません。
+
+
+<section id="pass">
+### 5.1. pass 文
+
+```
+pass\_statement : 'pass'
+```
+
+_pass 文_ は空の複合文を記述するための文です。Lury では空の複合文の表現に_何も記述しない_ことは文法上不可能なため、pass 文を用います。この文は、意味的に正しい場合に限り、全ての複合文と組み合わせて使用が可能です。
+
+この文は何も実行しません。
+
+当然ながら、pass 文と他の単純文を同じブロックに記述することはできません。pass 文を複数記述することもできません。
+
+</section>
+
+<section id="expression">
+### 5.2. 式文
+
+```
+expression\_statement : expression
+```
+
+_式文 (expression statement)_ は、式の処理そのものを実行します。演算、判定、代入、関数の呼び出しなどの操作を含みます。式文は全体でただ一つの値を持ちます。値を返さない関数を呼び出した場合の値は `nil` となります。
+
+</section>
+
+<section id="return">
+### 5.3. return 文
+
+```
+return\_statement : 'return'
+                 | 'return' expression
+```
+
+_return 文 (return statement)_ は、関数を脱出して値を呼び出し元に返却する文です。
+
+脱出する関数は、return 文が記述された _直接の_ 関数 1 つのみです。より外側の関数を脱出したり、入れ子となった複数の関数を脱出することはできません。また、関数内以外に記述された場合は実行時エラーとなります。
+
+同じブロックにおいて、return 文以降の処理は実行されません。それ以降に処理が記述されていてもエラーとはなりませんが、処理系はこれを警告することができます。
+
+return 文では 2 種類の記述方法があり、式を指定する方法と指定しない方法です。前者は式が一回のみ評価され、その評価値が呼び出し元に返却されます。式を指定しない場合は常に `nil` が評価されたものとして呼び出し元に返却されます。
+
+関数を return 文を使わずに終了した場合は関数の最終行に `return` が記述されたものとして処理が進行します。すなわち、return 文を使わず終了する関数は常に値 `nil` を返却します。
+
+</section>
+
+<section id="break">
+### 5.4. break 文
+
+```
+break\_statement : 'break'
+```
+
+_break 文 (break statement)_ は、反復文を脱出する文です。
+
+脱出に関しては [return 文](#return) と効果はほぼ同一です。return 文が関数の脱出を目的とするのに対して、break 文は while 文などの反復文の脱出を目的とします。
+
+break 文は return 文とは異なり、値を評価、返却しません。
+
+</section>
+
+<section id="continue">
+### 5.5. continue 文
+
+```
+continue\_statement : 'continue'
+```
+
+_continue 文 (continue statement)_ は反復文において、現在の反復処理を中断し、次の反復処理に遷移する文です。
+
+中断できる反復文は continue 文が記述された _直接の_ 反復文 1 つのみです。より外側の反復文を脱出したり、入れ子となった複数の反復文を脱出することはできません。また、反復文内以外に記述された場合は実行時エラーとなります。
+
+</section>
+
+<section id="import">
+### 5.6. import 文
+
+_「[3.2. import文](module.html#importstatement)」を参照してください。_
+
+</section>
+
+<section id="cite">
+### 参考文献
+
+- [7. 単純文 (simple statement) — Python 3.4.3 ドキュメント](http://docs.python.jp/3.4/reference/simple_stmts.html)
+
+</section>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>

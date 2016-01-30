@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>4. 式 - Lury Specification 0.1</title>
+  <script src="../../common/loader.js"></script>
+  <script type="text/javascript">loader_load('../../')</script>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-main markdown">
+
+## 4. 式
+
+この章では Lury の __式 (expression)__ について解説します。
+
+<section id="primary">
+### 4.1. 原始式
+
+_原始式_ (primary) は演算を含まない、式の基本的な要素です。
+
+```
+primary : identifier\_all
+        | literal
+        | 'true'
+        | 'false'
+        | 'nil'
+        | 'this'
+        | 'super'
+        | '(' expression ')'
+```
+
+<section id="identifier">
+#### 4.1.1. 識別子
+
+_識別子_ (identifier) はオブジェクトの名前を表現するために用います。構文解析における _identifier\_all_ はトークン Identifier とコンテキストキーワードを包括するものです。
+
+トークン Identifier についての詳細は [2.5. 識別子](lexical.html#identifier) を参照してください。
+
+</section>
+
+<section id="literal">
+#### 4.1.2. リテラル
+
+```
+literal : StringLiteral
+        | EmbedStringLiteral
+        | WysiwygStringLiteral
+        | ImaginaryNumber
+        | FloatNumber
+        | Integer
+```
+
+_リテラル_ (literal) では文字列や数値の記述した値そのものを表すオブジェクトを生成します。これらは全て変更不能（イミュータブル）です。
+
+トークン `StringLiteral`、`EmbedStringLiteral` そして `WysiwygStringLiteral` は String 型に、`ImaginaryNumber`、`FloatNumber` そして `Integer` はそれぞれ、Number 型から派生した Complex 型、Real 型、Integer 型となります。
+
+数値はその値によって丸め誤差、オーバーフローやアンダーフローが起こりうることに注意してください。これは_表記上の値_と、_実際の値_と異なる場合があることを意味します。（__注__: 次期バージョンにて Number の派生クラスは最大値と最小値を取得できるよう機能が追加されます。）
+
+</section>
+</section>
+
+<section id="operation">
+### 4.2. 演算式
+
+Lury における _演算_ (operation) は、_演算子_ (operator) によって1つ以上のデータから別のデータを生成、もしくは元のデータを変換することを指します。演算の種類は生成、算術演算、ビット演算、論理演算、条件演算、代入そしてその他に分類できます。
+
+Lury の演算子は 単項演算子、二項演算子、三項演算子 の3つです。一部の演算子は単項と二項とで同じ記号を用いますが、両者の演算は全く異なります。
+
+演算と演算子はある特定の型に対してのみ、正常に動作します。要求する型以外が項として渡されたとき、実行時エラーが発生します。また、演算の出力の型は入力となる項の型によって変化します。
+
+<section id="postfix">
+#### 4.2.1. 後置演算式
+
+```
+postfix\_expression : primary
+                   | postfix\_expression '.' identifier\_all
+                   | postfix\_expression '++'
+                   | postfix\_expression '--'
+                   | postfix\_expression '(' ')'
+                   | postfix\_expression '(' argument\_list ')'
+
+argument\_list      : argument
+                   | argument ',' argument\_list
+
+argument           : assignment\_expression
+                   | named\_argument
+
+named\_argument     : identifier\_all ':' expression
+```
+
+_属性参照_ (attribute reference) はオブジェクトの属性 (attribute) を参照します。属性は _メンバ_ (member) とも呼ばれます。ドット演算子を介して、オブジェクトに含まれる属性にアクセスします。
+
+属性参照が後置演算式中で単独で使用された場合、なおかつ指し示すオブジェクトが Function 型である場合はその関数が引数なしで実行されます。
+
+
+関数について、呼び出し側で実行に必要なデータを渡し、関数側で受け取ることができます。このようなデータを __引数__ と呼び、呼び出し側での引数を __実引数__ (argument)、関数側の引数を __仮引数__ (parameter) と区別して呼びます。
+
+関数呼び出しは関数名と丸括弧 `()` に挟まれた実引数リストによって構成されています。実引数を必要としない場合、実引数リストは空にすることができ、さらに丸括弧も省略可能です。
+
+_名前付き引数_ (named argument) は、名前と仮引数値をコロン `:` で結合したものです。呼び出される関数に存在する仮引数名のみ使用することができます。同名の名前付き引数を複数回指定することはできません。
+
+実引数リストの順番は、呼び出される仮引数の順番と一致している必要があります。名前付き引数の順番は任意に決めることができます。また、通常の実引数と名前付き引数は混在可能です。ただし、通常の実引数と名前付き引数で同一の仮引数を指定することはできません。
+</section>
+
+<section id="callref">
+#### 4.2.2. 呼出参照演算式
+
+```
+callref\_expression : postfix\_expression
+                   | KeywordRef postfix\_expression
+```
+
+呼出参照演算式は実引数無しの関数を呼び出すための式、またはオブジェクトを直接的に参照するための式です。結合性は _右_ (←) です。
+
+1 番目の規則は実引数無しの関数を呼び出すためのものです。`postfix\_expression` が __左辺値かつ関数型 (Function) である場合のみ__ 呼び出しが実行されます。関数が実引数なしで呼び出し可能であるかはチェックされません。
+
+2 番目の規則はオブジェクトを直接的に参照するためのものです。`postfix\_expression` は必ず左辺値でなくてはなりません。
+
+オブジェクトの参照は、たとえば関数オブジェクトを参照したい場合に用います。
+
+```
+def foo:
+  return 'called foo'
+
+bar = foo       # 関数 foo が呼ばれ、返り値が bar に代入される
+bar()           # 実行時エラー: bar は呼び出し可能ではない
+
+baz = ref foo   # baz に関数 foo の参照が代入される
+baz()           # 関数 foo が呼ばれる
+```
+
+</section>
+
+<section id="power">
+#### 4.2.3. 冪乗演算
+
+```
+power\_expression : callref\_expression
+                 | power\_expression Power callref\_expression
+```
+
+冪乗演算式は _冪乗演算_ (power operator) を行う二項演算です。結合性は _右_ (←) です。
+
+単項演算子よりも優先順位が高いため、たとえば `-1 \*\* 2` の結果は `-1` となります。括弧をつけてわかりやすくすると、`-(1 \*\* 2)` となります。
+
+二項が同じ型かつ冪数が正の数であるとき、冪乗の結果は二項と同じ型となります。基数が整数で冪数が負の数であるとき、結果は数値に依らず浮動小数点数となります。基数が負の数で冪数が浮動小数点数であるとき、結果は数値に依らず複素数になります。
+
+Lury ではゼロのゼロ乗 (0<sup>0</sup>) は `1` として処理します。
+
+基数がゼロで冪数が負の数であるときは実行時エラーが発生します。数値型以外のオブジェクトに対してこの演算は実行時エラーが発生します。
+</section>
+
+<section id="unary">
+#### 4.2.4. 単項算術演算と単項ビット演算
+
+```
+unary\_expression : power\_expression
+                 | '++' unary\_expression
+                 | '--' unary\_expression
+                 | '-' unary\_expression
+                 | '+' unary\_expression
+                 | '~' unary\_expression
+```
+
+単項演算はただ一つの項を持つ演算です。結合性は _右_ (←) です。
+
+インクリメントおよびデクリメントは値を返す前にその数値に 1 (1.0) を加算または減算します。
+
+負符号はその数値の符号を反転します。正の値は負の値に、負の値は正の値になります。ただし、整数のゼロに付けられた場合は値に変化は起こりません。正符号はその数値の符号を変化させません。
+
+ビット反転はその整数値のビットを反転させます。数値が整数型ではない場合は実行時エラーとなります。
+</section>
+
+<section id="binary_arithmetic">
+#### 4.2.5. 二項算術演算
+
+```
+multiplication\_expression : unary\_expression
+                          | multiplication\_expression '\*' unary\_expression
+                          | multiplication\_expression '//' unary\_expression
+                          | multiplication\_expression '/' unary\_expression
+                          | multiplication\_expression '%' unary\_expression
+
+addition\_expression       : multiplication\_expression
+                          | addition\_expression '+' multiplication\_expression
+                          | addition\_expression '-' multiplication\_expression
+                          | addition\_expression '~' multiplication\_expression
+```
+
+_二項算術演算_ (binary arithmetic operation) は 2 つの項に対する演算です。加算よりも乗算が数学的に計算の優先順位が高いことを反映しています。これに含まれる全ての演算子の結合性は 左 (→) です。
+
+_乗算_ (multiplication) は演算子 `\*` で表される、2 つの値に対する積を求める演算です。
+
+_除算_ (division) は演算子 `/` で表される 2 つの値に対する _実数の商_ を求める演算です。演算子 `//` で表される除算は 2 つの値に対する _整数の商_ を求める演算です。一例を示すと、`10 / 3` `10 // 3` `10.0 / 3.0` `10.0 // 3.0` の結果は `3.333333333` (Real型) `3` (Integer型) `3.333333333` (Real型) `3.0` (Real型) となり、`10.0 / 3.5` `10.0 // 3.5` の結果は `2.857142857` (Real型) `2.0` (Real型) となります。二項がどちらも整数型の場合にゼロ除算を行うと、実行時エラーとなります。
+
+_剰余_ (remainder) は演算子 `%` で表される 2 つの値に対する除算の余りを求める演算です。
+
+_加算_ (addition) は演算子 `+` で表される 2 つの値に対する和を求める演算です。
+
+_連結_ (concatenation) は演算子 `~` で表される 2 つの要素に対する連結要素を求める演算です。文字列の連結に用いられます。それ以外の型に用いると実行時エラーとなります。
+
+</section>
+
+<section id="shift">
+#### 4.2.6. シフト演算
+
+```
+shift\_expression : addition\_expression
+                          | shift\_expression '&lt;&lt;' addition\_expression
+                          | shift\_expression '&gt;&gt;' addition\_expression
+```
+
+_シフト演算_ (shifting operation) は 2 つの項に対する演算です。`a &lt;&lt; b` の結果は値 a のビットを左に b 回シフトしたものとなります。`a &gt;&gt; b` の結果は値 a のビットを右に b 回シフトしたものとなります。結合性は 左 (→) です。
+
+2 つの項は整数型でなくてはなりません。それ以外の型は実行時エラーとなります。
+
+Lury におけるシフトは算術シフトです。符号ビットを考慮するシフト、いわゆる論理シフトとは異なります。
+
+</section>
+
+<section id="binary_bitwise">
+#### 4.2.7. 二項ビット演算
+
+```
+and\_expression : shift\_expression
+               | and\_expression '&amp;' shift\_expression
+
+xor\_expression : and\_expression
+               | xor\_expression '^' and\_expression
+
+or\_expression  : xor\_expression
+               | or\_expression '|' xor\_expression
+```
+
+_二項ビット演算_ (binary bitwise operation) は 2 つの項に対するビット演算です。結合性はすべて 左 (→) です。それぞれの項は整数でなくてはなりません。
+
+演算子 `&amp;` はビットの論理積 (AND) の演算です。
+
+演算子 `^` はビットの排他的論理和 (XOR) の演算です。
+
+演算子 `|` はビットの論理和 (OR) の演算です。
+
+</section>
+
+<section id="comparison">
+#### 4.2.8. 比較演算
+
+```
+comparison\_expression : or\_expression
+                      | or\_expression comparison\_operator or\_expression
+
+comparison\_operator   : '&lt;'
+                      | '&gt;'
+                      | '=='
+                      | '&lt;='
+                      | '&gt;='
+                      | '!='
+                      | 'is'
+                      | '!is'
+                      | 'is' 'not'
+```
+
+_比較演算_ (comparison operation) は 2 つの項に対する比較演算です。比較演算子の結合性はすべて 左 (→) です。比較演算子での演算結果は全てブール型となり、ブール型のリテラル `true` または `false` のどちらかの値を返します。
+
+比較される 2 つの項は同じ型である必要があります。
+
+比較演算式は項と演算子をいくつでも連鎖することができます。例えば比較演算式 `x &lt; y &lt;= z` は `x &lt; y and y &lt;= z` と同じ意味を持ちます。数学的に正しくないとされる書式、例えば `x &lt; y &gt; z` のような比較演算式も、Lury では `x &lt; y and y &gt; z` として扱われ、正しい比較演算式です。しかしながら、_各項は高々 1 回のみ評価される_ 点に注意してください。さらに比較演算式の部分式は短絡評価されるため、全く評価されない場合もあり得ることも注意してください。
+
+比較演算子の演算はそれぞれの型によって異なります。
+
+- **`==` および `!=`**
+  - 2 つのオブジェクトが _同じ値_ を持っているかを判定します(__同値性__)。
+  - _同じ値_ の定義は型によって異なります。
+  - `a == b` は `a` と `b` は同値であると判定します。
+- **`&lt;` および `&gt;`**
+  - 2 つのオブジェクトの大小関係または前後関係を判定します。
+  - `a &lt; b` は `a` よりも `b` が大きい（後である）と判定します。
+- **`&lt;=` および `&gt;=`**
+  - 2 つのオブジェクトの同値性、大小関係または前後関係を判定します。
+  - `a &lt;= b` は `a` よりも `b` が大きい（後である）か同値であると判定します。これは `a &lt; b or a == b` と同じ意味を持ちます。
+- **`is`、`!is` および `is not`**
+  - 2 つのオブジェクトが _同じオブジェクト_ であるか、そのクラスのインスタンスかを判定します(__同一性__)。
+  - `a is b` は `a` と `b` は同一であると判定します。
+  - `a is T` は オブジェクト `a` は クラス `T` のインスタンスであると判定します。
+
+</section>
+
+<section id="boolean">
+#### 4.2.9. 論理演算
+
+```
+bool\_not\_expression : comparison\_expression
+                    | 'not' bool\_not\_expression
+                    | '!' bool\_not\_expression
+
+bool\_and\_expression : bool\_not\_expression
+                    | bool\_and\_expression 'and' bool\_not\_expression
+                    | bool\_and\_expression '&amp;&amp;' bool\_not\_expression
+
+bool\_or\_expression  : bool\_and\_expression
+                    | bool\_or\_expression 'or' bool\_and\_expression
+                    | bool\_or\_expression '||' bool\_and\_expression
+```
+
+_論理演算_ (boolean operation) は 1 つもしくは 2 つの項に対するビット演算です。それぞれの項はブール型でなくてはなりません。また、全ての演算結果はブール型です。
+
+演算子 `not` および `!` は否定 (NOT) の演算です。`true` を `false` に、`false` を `true` に変えます。結合性は 右 (←) です。
+
+演算子 `and` および `&amp;&amp;` は短絡評価ありの論理積 (AND) の演算です。式 `a and b` は、`a` の評価結果が `false` ならば `false` を、`true` ならば `b` の評価結果を返します。結合性は 左 (→) です。
+
+演算子 `or` および `||` は短絡評価ありの論理和 (OR) の演算です。式 `a or b` は、`a` の評価結果が `true` ならば `true` を、`false` ならば `b` の評価結果を返します。結合性は 左 (→) です。
+
+</section>
+
+<section id="conditional">
+#### 4.2.10. 条件式
+
+```
+conditional\_expression : bool\_or\_expression
+                       | bool\_or\_expression '?' bool\_or\_expression ':' bool\_or\_expression
+                       | bool\_or\_expression 'if' bool\_or\_expression 'else' bool\_or\_expression
+```
+
+_条件式_ (conditional expression) は 3 つの項に対する演算式です。三項演算式とも呼ばれます。結合性はすべて 右 (←) です。
+
+演算子 `?` と `:` は組で用いられ、式 `C ? x : y` は条件 `C` が `true` のとき `x` の評価値を、`false` のとき `y` の評価値を返します。C言語における `?` `:` と同じ意味を持ちます。
+
+演算子 `if` と `else` も同様に組で用いられ、前述の `?` と `:` と同じ意味を持ちます。しかし前述のそれとは記述順序が異なります。式 `C ? x : y` に対応する式は `x if C else y` となります。
+
+これら 2 つは記述順序が異なるのみで、意味的、処理的に同一の効果を持ちます。実際に `x` と `y` はどちらか片方が 1 回のみ評価されます。
+
+条件式は入れ子構造にすることができますが、入れ子となった条件式は可読性に劣りやすいためこれを避けることを推奨します。
+
+</section>
+
+<section id="assignment">
+#### 4.2.11. 代入式
+
+```
+assignment\_expression : conditional\_expression
+                      | conditional\_expression '=' assignment\_expression
+                      | conditional\_expression '+=' assignment\_expression
+                      | conditional\_expression '-=' assignment\_expression
+                      | conditional\_expression '\*=' assignment\_expression
+                      | conditional\_expression '/=' assignment\_expression
+                      | conditional\_expression '//=' assignment\_expression
+                      | conditional\_expression '\*\*=' assignment\_expression
+                      | conditional\_expression '%=' assignment\_expression
+                      | conditional\_expression '&amp;=' assignment\_expression
+                      | conditional\_expression '|=' assignment\_expression
+                      | conditional\_expression '^=' assignment\_expression
+                      | conditional\_expression '~=' assignment\_expression
+                      | conditional\_expression '&lt;&lt;=' assignment\_expression
+                      | conditional\_expression '&gt;&gt;=' assignment\_expression
+```
+
+_代入式_ (assignment expression) は 2 つの項に対する演算式です。結合性はすべて 右 (←) です。
+
+代入演算子は左辺が示す _場所_ に右辺値を代入します。式の値は代入後の左辺値となります。
+
+</section>
+
+<section id="implicit_typeconversion">
+#### 4.2.12. 暗黙的な型変換
+
+数値型の二項演算では、それぞれの項の型が異なる場合、より表現範囲の広い型に暗黙的に型の変換を行います。例えば `2 + 3.0` という演算では、整数型 (Integer) よりも浮動小数点数型(Floating) が扱う範囲が広いため、この式の型は 浮動小数点数型 となります。
+
+複素数型は浮動小数点数型よりも広く、浮動小数点型は整数型よりも広い範囲を持ちます。
+
+比較演算式もこの原則に従います。例えば `2 &lt; 3.0` という式は、まず整数 `2` が浮動小数点型に暗黙的型変換され、`3.0` と比較されます。ただし `is` 演算子とその否定演算子は型変換を行いません。
+
+暗黙的な型変換が失敗する場合は、実行時エラーとなります。例えば `'test' &lt; 5` という式は、文字列型が含まれるため、直接な型変換ができず実行時エラーとなります。
+
+暗黙的な型変換が行われる二項演算子は以下の通りです: `\*\*` `\*` `//` `/` `%` `+` `-` `&lt;` `&gt;` `==` `&lt;=` `&gt;=` `!=` `=` `\*\*=` `\*=` `//=` `/=` `%=` `+=` `-=`.
+
+</section>
+
+</section>
+
+<section id="expression">
+### 4.3. カンマ式と式
+
+```
+comma\_expression : assignment\_expression
+                 | assignment\_expression ',' comma\_expression
+
+expression       : comma\_expression
+```
+
+_カンマ式_ (commma expression) はこのバージョンでは実装されません。カンマ式の2番目の文法を使用した場合は文法エラーとなります。
+
+_式_ (expression) はこのバージョンではカンマ式と同一ですが、将来のバージョンのために区別されています。
+
+</section>
+
+<section id="order">
+### 4.4. 評価順序
+
+代入演算子を除き、二項演算子はすべて左から右の項の順序で値が評価されます。代入演算子は右から左の項の順序で値が評価されます。
+
+以下のプログラムの各行の式の評価順序は、変数の添字の数値と同じものとなります。
+
+```
+expr1 + expr2 * (expr3 - expr4)
+expr1.expr2(expr3, expr4)
+expr5 = expr1 + (expr2 - expr3) / expr4
+```
+
+</section>
+
+<section id="priority">
+### 4.5. 演算子の優先順位
+
+以下は演算子の優先順位の表です。順位が高いほど、文法的に優先して処理されます。順位が同一の演算子が連続した場合は結合性に従い処理されます。
+
+
+優先順位 | 記号         | 名称                | 結合性 | 暗黙的型変換 | 例
+--------:|:------------:|---------------------|:------:|:------------:|----
+1        | .            | ドット演算子        | 左(→) | No           | a.b
+1        | ++           | 後置インクリメント  | 右(←) | No           | a++
+1        | --           | 後置デクリメント    | 右(←) | No           | a--
+1        | ()           | 関数呼び出し演算子  | n/a    | No           | a(b)
+2        | ref          | 参照演算子          | n/a    | No           | ref a
+2        | \*\*         | 冪乗                | 右(←) | Yes          | a \*\* b
+2        | ++           | 前置インクリメント  | 右(←) | No           | ++a
+2        | --           | 前置デクリメント    | 右(←) | No           | --a
+2        | +            | 符号非反転          | 右(←) | No           | +a
+2        | -            | 符号反転            | 右(←) | No           | -a
+2        | ~            | ビット反転          | 右(←) | No           | ~a
+3        | \*           | 乗算                | 左(→) | Yes          | a \* b
+3        | //           | 整数除算            | 左(→) | Yes          | a // b
+3        | /            | 除算                | 左(→) | Yes          | a / b
+3        | %            | 剰余算              | 左(→) | Yes          | a % b
+4        | +            | 加算                | 左(→) | Yes          | a + b
+4        | -            | 減算                | 左(→) | Yes          | a - b
+4        | ~            | 配列結合            | 左(→) | Yes          | a ~ b
+5        | &lt;&lt;     | 左シフト            | 左(→) | No           | a &lt;&lt; b
+5        | &gt;&gt;     | 右シフト            | 左(→) | No           | a &gt;&gt; b
+6.0      | &amp;        | 論理積(AND)         | 左(→) | No           | a &amp; b
+6.1      | ^            | 排他的論理和(XOR)   | 左(→) | No           | a ^ b
+6.2      | \|           | 論理和(OR)          | 左(→) | No           | a \| b
+7        | ==           | 等価(同値性)        | 左(→) | Yes          | a == b
+7        | !=           | 非等価(同値性)      | 左(→) | Yes          | a != b
+7        | &lt;         | より小さい          | 左(→) | Yes          | a &lt; b
+7        | &gt;         | より大きい          | 左(→) | Yes          | a &gt; b
+7        | &lt;=        | 以下                | 左(→) | Yes          | a &lt;= b
+7        | &gt;=        | 以上                | 左(→) | Yes          | a =&gt; b
+7        | is           | 等価(同一性)        | 左(→) | No           | a is b
+7        | !is          | 非等価(同一性)      | 左(→) | No           | a !is b
+7        | is not       | 非等価(同一性)      | 左(→) | No           | a is not b
+8        | !            | 否定(NOT)           | 右(←) | No           | !a
+8        | not          | 否定(NOT)           | 右(←) | No           | not a
+9        | &amp;&amp;   | 論理積(短絡評価)    | 左(→) | No           | a &amp;&amp; b
+9        | and          | 論理積(短絡評価)    | 左(→) | No           | a and b
+10       | \|\|         | 論理和(短絡評価)    | 左(→) | No           | a \|\| b
+10       | or           | 論理和(短絡評価)    | 左(→) | No           | a or b
+11       | ? :          | 条件演算子          | 右(←) | No           | a ? b : c
+11       | if else      | 後置if式            | 右(←) | No           | b if a else c
+12       | =            | 代入                | 右(←) | Yes          | a = b
+12       | \*\*=        | 冪乗代入            | 右(←) | Yes          | a \*\*= b
+12       | \*=          | 乗算代入            | 右(←) | Yes          | a \*= b
+12       | /=           | 除算代入            | 右(←) | Yes          | a /= b
+12       | //=          | 切り捨て除算代入    | 右(←) | Yes          | a //= b
+12       | %=           | 剰余算代入          | 右(←) | Yes          | a %= b
+12       | +=           | 加算代入            | 右(←) | Yes          | a += b
+12       | -=           | 減算代入            | 右(←) | Yes          | a -= b
+12       | ~=           | 配列結合代入        | 右(←) | No           | a ~= b
+12       | \|=          | 論理和代入          | 右(←) | No           | a \|= b
+12       | &amp;=       | 論理積代入          | 右(←) | No           | a &amp;= b
+12       | ^=           | 排他的論理和代入    | 右(←) | No           | a ^= b
+12       | &lt;&lt;=    | 左シフト代入        | 右(←) | No           | a &lt;&lt;= b
+12       | &gt;&gt;=    | 右シフト代入        | 右(←) | No           | a &gt;&gt;= b
+13       | ,            | カンマ演算子        | 左(→) | No           | a, b
+|
+
+</section>
+
+<section id="cite">
+### 参考文献
+
+- [6. 式 (expression) — Python 3.4.3 ドキュメント](http://docs.python.jp/3.4/reference/expressions.html)
+- [式 - プログラミング言語 D (日本語訳)](http://www.kmonos.net/alang/d/expression.html)
+
+</section>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
