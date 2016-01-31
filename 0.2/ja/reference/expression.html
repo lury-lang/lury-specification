@@ -20,7 +20,7 @@
 _原始式_ (primary) は演算を含まない、式の基本的な要素です。
 
 ```
-primary : identifier\_all
+primary : identifier_all
         | literal
         | 'true'
         | 'false'
@@ -32,7 +32,7 @@ primary : identifier\_all
 
 #### 4.1.1. 識別子
 
-_識別子_ (identifier) はオブジェクトの名前を表現するために用います。構文解析における _identifier\_all_ はトークン Identifier とコンテキストキーワードを包括するものです。
+_識別子_ (identifier) はオブジェクトの名前を表現するために用います。構文解析における *identifier_all* はトークン Identifier とコンテキストキーワードを包括するものです。
 
 トークン Identifier についての詳細は [2.5. 識別子](lexical.html#identifier) を参照してください。
 
@@ -65,20 +65,20 @@ Lury の演算子は 単項演算子、二項演算子、三項演算子 の3つ
 #### 4.2.1. 後置演算式
 
 ```
-postfix\_expression : primary
-                   | postfix\_expression '.' identifier\_all
-                   | postfix\_expression '++'
-                   | postfix\_expression '--'
-                   | postfix\_expression '(' ')'
-                   | postfix\_expression '(' argument\_list ')'
+postfix_expression : primary
+                   | postfix_expression '.' identifier_all
+                   | postfix_expression '++'
+                   | postfix_expression '--'
+                   | postfix_expression '(' ')'
+                   | postfix_expression '(' argument_list ')'
 
-argument\_list      : argument
-                   | argument ',' argument\_list
+argument_list      : argument
+                   | argument ',' argument_list
 
-argument           : assignment\_expression
-                   | named\_argument
+argument           : assignment_expression
+                   | named_argument
 
-named\_argument     : identifier\_all ':' expression
+named_argument     : identifier_all ':' expression
 ```
 
 _属性参照_ (attribute reference) はオブジェクトの属性 (attribute) を参照します。属性は _メンバ_ (member) とも呼ばれます。ドット演算子を介して、オブジェクトに含まれる属性にアクセスします。
@@ -97,15 +97,15 @@ _名前付き引数_ (named argument) は、名前と仮引数値をコロン `:
 #### 4.2.2. 呼出参照演算式
 
 ```
-callref\_expression : postfix\_expression
-                   | KeywordRef postfix\_expression
+callref_expression : postfix_expression
+                   | KeywordRef postfix_expression
 ```
 
 呼出参照演算式は実引数無しの関数を呼び出すための式、またはオブジェクトを直接的に参照するための式です。結合性は _右_ (←) です。
 
-1 番目の規則は実引数無しの関数を呼び出すためのものです。`postfix\_expression` が __左辺値かつ関数型 (Function) である場合のみ__ 呼び出しが実行されます。関数が実引数なしで呼び出し可能であるかはチェックされません。
+1 番目の規則は実引数無しの関数を呼び出すためのものです。`postfix_expression` が __左辺値かつ関数型 (Function) である場合のみ__ 呼び出しが実行されます。関数が実引数なしで呼び出し可能であるかはチェックされません。
 
-2 番目の規則はオブジェクトを直接的に参照するためのものです。`postfix\_expression` は必ず左辺値でなくてはなりません。
+2 番目の規則はオブジェクトを直接的に参照するためのものです。`postfix_expression` は必ず左辺値でなくてはなりません。
 
 オブジェクトの参照は、たとえば関数オブジェクトを参照したい場合に用います。
 
@@ -123,13 +123,13 @@ baz()           # 関数 foo が呼ばれる
 #### 4.2.3. 冪乗演算
 
 ```
-power\_expression : callref\_expression
-                 | power\_expression Power callref\_expression
+power_expression : callref_expression
+                 | power_expression Power callref_expression
 ```
 
 冪乗演算式は _冪乗演算_ (power operator) を行う二項演算です。結合性は _右_ (←) です。
 
-単項演算子よりも優先順位が高いため、たとえば `-1 \*\* 2` の結果は `-1` となります。括弧をつけてわかりやすくすると、`-(1 \*\* 2)` となります。
+単項演算子よりも優先順位が高いため、たとえば `-1 ** 2` の結果は `-1` となります。括弧をつけてわかりやすくすると、`-(1 ** 2)` となります。
 
 二項が同じ型かつ冪数が正の数であるとき、冪乗の結果は二項と同じ型となります。基数が整数で冪数が負の数であるとき、結果は数値に依らず浮動小数点数となります。基数が負の数で冪数が浮動小数点数であるとき、結果は数値に依らず複素数になります。
 
@@ -140,12 +140,12 @@ Lury ではゼロのゼロ乗 (0<sup>0</sup>) は `1` として処理します�
 #### 4.2.4. 単項算術演算と単項ビット演算
 
 ```
-unary\_expression : power\_expression
-                 | '++' unary\_expression
-                 | '--' unary\_expression
-                 | '-' unary\_expression
-                 | '+' unary\_expression
-                 | '~' unary\_expression
+unary_expression : power_expression
+                 | '++' unary_expression
+                 | '--' unary_expression
+                 | '-' unary_expression
+                 | '+' unary_expression
+                 | '~' unary_expression
 ```
 
 単項演算はただ一つの項を持つ演算です。結合性は _右_ (←) です。
@@ -159,21 +159,21 @@ unary\_expression : power\_expression
 #### 4.2.5. 二項算術演算
 
 ```
-multiplication\_expression : unary\_expression
-                          | multiplication\_expression '\*' unary\_expression
-                          | multiplication\_expression '//' unary\_expression
-                          | multiplication\_expression '/' unary\_expression
-                          | multiplication\_expression '%' unary\_expression
+multiplication_expression : unary_expression
+                          | multiplication_expression '*' unary_expression
+                          | multiplication_expression '//' unary_expression
+                          | multiplication_expression '/' unary_expression
+                          | multiplication_expression '%' unary_expression
 
-addition\_expression       : multiplication\_expression
-                          | addition\_expression '+' multiplication\_expression
-                          | addition\_expression '-' multiplication\_expression
-                          | addition\_expression '~' multiplication\_expression
+addition_expression       : multiplication_expression
+                          | addition_expression '+' multiplication_expression
+                          | addition_expression '-' multiplication_expression
+                          | addition_expression '~' multiplication_expression
 ```
 
 _二項算術演算_ (binary arithmetic operation) は 2 つの項に対する演算です。加算よりも乗算が数学的に計算の優先順位が高いことを反映しています。これに含まれる全ての演算子の結合性は 左 (→) です。
 
-_乗算_ (multiplication) は演算子 `\*` で表される、2 つの値に対する積を求める演算です。
+_乗算_ (multiplication) は演算子 `*` で表される、2 つの値に対する積を求める演算です。
 
 _除算_ (division) は演算子 `/` で表される 2 つの値に対する _実数の商_ を求める演算です。演算子 `//` で表される除算は 2 つの値に対する _整数の商_ を求める演算です。一例を示すと、`10 / 3` `10 // 3` `10.0 / 3.0` `10.0 // 3.0` の結果は `3.333333333` (Real型) `3` (Integer型) `3.333333333` (Real型) `3.0` (Real型) となり、`10.0 / 3.5` `10.0 // 3.5` の結果は `2.857142857` (Real型) `2.0` (Real型) となります。二項がどちらも整数型の場合にゼロ除算を行うと、実行時エラーとなります。
 
@@ -186,9 +186,9 @@ _連結_ (concatenation) は演算子 `~` で表される 2 つの要素に対�
 #### 4.2.6. シフト演算
 
 ```
-shift\_expression : addition\_expression
-                          | shift\_expression '&lt;&lt;' addition\_expression
-                          | shift\_expression '&gt;&gt;' addition\_expression
+shift_expression : addition_expression
+                          | shift_expression '&lt;&lt;' addition_expression
+                          | shift_expression '&gt;&gt;' addition_expression
 ```
 
 _シフト演算_ (shifting operation) は 2 つの項に対する演算です。`a &lt;&lt; b` の結果は値 a のビットを左に b 回シフトしたものとなります。`a &gt;&gt; b` の結果は値 a のビットを右に b 回シフトしたものとなります。結合性は 左 (→) です。
@@ -200,14 +200,14 @@ Lury におけるシフトは算術シフトです。符号ビットを考慮す
 #### 4.2.7. 二項ビット演算
 
 ```
-and\_expression : shift\_expression
-               | and\_expression '&amp;' shift\_expression
+and_expression : shift_expression
+               | and_expression '&amp;' shift_expression
 
-xor\_expression : and\_expression
-               | xor\_expression '^' and\_expression
+xor_expression : and_expression
+               | xor_expression '^' and_expression
 
-or\_expression  : xor\_expression
-               | or\_expression '|' xor\_expression
+or_expression  : xor_expression
+               | or_expression '|' xor_expression
 ```
 
 _二項ビット演算_ (binary bitwise operation) は 2 つの項に対するビット演算です。結合性はすべて 左 (→) です。それぞれの項は整数でなくてはなりません。
@@ -221,10 +221,10 @@ _二項ビット演算_ (binary bitwise operation) は 2 つの項に対する�
 #### 4.2.8. 比較演算
 
 ```
-comparison\_expression : or\_expression
-                      | or\_expression comparison\_operator or\_expression
+comparison_expression : or_expression
+                      | or_expression comparison_operator or_expression
 
-comparison\_operator   : '&lt;'
+comparison_operator   : '&lt;'
                       | '&gt;'
                       | '=='
                       | '&lt;='
@@ -261,17 +261,17 @@ _比較演算_ (comparison operation) は 2 つの項に対する比較演算で
 #### 4.2.9. 論理演算
 
 ```
-bool\_not\_expression : comparison\_expression
-                    | 'not' bool\_not\_expression
-                    | '!' bool\_not\_expression
+bool_not_expression : comparison_expression
+                    | 'not' bool_not_expression
+                    | '!' bool_not_expression
 
-bool\_and\_expression : bool\_not\_expression
-                    | bool\_and\_expression 'and' bool\_not\_expression
-                    | bool\_and\_expression '&amp;&amp;' bool\_not\_expression
+bool_and_expression : bool_not_expression
+                    | bool_and_expression 'and' bool_not_expression
+                    | bool_and_expression '&amp;&amp;' bool_not_expression
 
-bool\_or\_expression  : bool\_and\_expression
-                    | bool\_or\_expression 'or' bool\_and\_expression
-                    | bool\_or\_expression '||' bool\_and\_expression
+bool_or_expression  : bool_and_expression
+                    | bool_or_expression 'or' bool_and_expression
+                    | bool_or_expression '||' bool_and_expression
 ```
 
 _論理演算_ (boolean operation) は 1 つもしくは 2 つの項に対するビット演算です。それぞれの項はブール型でなくてはなりません。また、全ての演算結果はブール型です。
@@ -285,9 +285,9 @@ _論理演算_ (boolean operation) は 1 つもしくは 2 つの項に対する
 #### 4.2.10. 条件式
 
 ```
-conditional\_expression : bool\_or\_expression
-                       | bool\_or\_expression '?' bool\_or\_expression ':' bool\_or\_expression
-                       | bool\_or\_expression 'if' bool\_or\_expression 'else' bool\_or\_expression
+conditional_expression : bool_or_expression
+                       | bool_or_expression '?' bool_or_expression ':' bool_or_expression
+                       | bool_or_expression 'if' bool_or_expression 'else' bool_or_expression
 ```
 
 _条件式_ (conditional expression) は 3 つの項に対する演算式です。三項演算式とも呼ばれます。結合性はすべて 右 (←) です。
@@ -303,21 +303,21 @@ _条件式_ (conditional expression) は 3 つの項に対する演算式です�
 #### 4.2.11. 代入式
 
 ```
-assignment\_expression : conditional\_expression
-                      | conditional\_expression '=' assignment\_expression
-                      | conditional\_expression '+=' assignment\_expression
-                      | conditional\_expression '-=' assignment\_expression
-                      | conditional\_expression '\*=' assignment\_expression
-                      | conditional\_expression '/=' assignment\_expression
-                      | conditional\_expression '//=' assignment\_expression
-                      | conditional\_expression '\*\*=' assignment\_expression
-                      | conditional\_expression '%=' assignment\_expression
-                      | conditional\_expression '&amp;=' assignment\_expression
-                      | conditional\_expression '|=' assignment\_expression
-                      | conditional\_expression '^=' assignment\_expression
-                      | conditional\_expression '~=' assignment\_expression
-                      | conditional\_expression '&lt;&lt;=' assignment\_expression
-                      | conditional\_expression '&gt;&gt;=' assignment\_expression
+assignment_expression : conditional_expression
+                      | conditional_expression '=' assignment_expression
+                      | conditional_expression '+=' assignment_expression
+                      | conditional_expression '-=' assignment_expression
+                      | conditional_expression '*=' assignment_expression
+                      | conditional_expression '/=' assignment_expression
+                      | conditional_expression '//=' assignment_expression
+                      | conditional_expression '**=' assignment_expression
+                      | conditional_expression '%=' assignment_expression
+                      | conditional_expression '&amp;=' assignment_expression
+                      | conditional_expression '|=' assignment_expression
+                      | conditional_expression '^=' assignment_expression
+                      | conditional_expression '~=' assignment_expression
+                      | conditional_expression '&lt;&lt;=' assignment_expression
+                      | conditional_expression '&gt;&gt;=' assignment_expression
 ```
 
 _代入式_ (assignment expression) は 2 つの項に対する演算式です。結合性はすべて 右 (←) です。
@@ -334,16 +334,16 @@ _代入式_ (assignment expression) は 2 つの項に対する演算式です�
 
 暗黙的な型変換が失敗する場合は、実行時エラーとなります。例えば `'test' &lt; 5` という式は、文字列型が含まれるため、直接な型変換ができず実行時エラーとなります。
 
-暗黙的な型変換が行われる二項演算子は以下の通りです: `\*\*` `\*` `//` `/` `%` `+` `-` `&lt;` `&gt;` `==` `&lt;=` `&gt;=` `!=` `=` `\*\*=` `\*=` `//=` `/=` `%=` `+=` `-=`.
+暗黙的な型変換が行われる二項演算子は以下の通りです: `**` `*` `//` `/` `%` `+` `-` `&lt;` `&gt;` `==` `&lt;=` `&gt;=` `!=` `=` `**=` `*=` `//=` `/=` `%=` `+=` `-=`.
 
 
 ### 4.3. カンマ式と式
 
 ```
-comma\_expression : assignment\_expression
-                 | assignment\_expression ',' comma\_expression
+comma_expression : assignment_expression
+                 | assignment_expression ',' comma_expression
 
-expression       : comma\_expression
+expression       : comma_expression
 ```
 
 _カンマ式_ (commma expression) はこのバージョンでは実装されません。カンマ式の2番目の文法を使用した場合は文法エラーとなります。
@@ -376,13 +376,13 @@ expr5 = expr1 + (expr2 - expr3) / expr4
 1        | --           | 後置デクリメント    | 右(←) | No           | a--
 1        | ()           | 関数呼び出し演算子  | n/a    | No           | a(b)
 2        | ref          | 参照演算子          | n/a    | No           | ref a
-2        | \*\*         | 冪乗                | 右(←) | Yes          | a \*\* b
+2        | **           | 冪乗                | 右(←) | Yes          | a ** b
 2        | ++           | 前置インクリメント  | 右(←) | No           | ++a
 2        | --           | 前置デクリメント    | 右(←) | No           | --a
 2        | +            | 符号非反転          | 右(←) | No           | +a
 2        | -            | 符号反転            | 右(←) | No           | -a
 2        | ~            | ビット反転          | 右(←) | No           | ~a
-3        | \*           | 乗算                | 左(→) | Yes          | a \* b
+3        | *            | 乗算                | 左(→) | Yes          | a * b
 3        | //           | 整数除算            | 左(→) | Yes          | a // b
 3        | /            | 除算                | 左(→) | Yes          | a / b
 3        | %            | 剰余算              | 左(→) | Yes          | a % b
@@ -393,7 +393,7 @@ expr5 = expr1 + (expr2 - expr3) / expr4
 5        | &gt;&gt;     | 右シフト            | 左(→) | No           | a &gt;&gt; b
 6.0      | &amp;        | 論理積(AND)         | 左(→) | No           | a &amp; b
 6.1      | ^            | 排他的論理和(XOR)   | 左(→) | No           | a ^ b
-6.2      | \|           | 論理和(OR)          | 左(→) | No           | a \| b
+6.2      | <bar/>       | 論理和(OR)          | 左(→) | No           | a <bar/> b
 7        | ==           | 等価(同値性)        | 左(→) | Yes          | a == b
 7        | !=           | 非等価(同値性)      | 左(→) | Yes          | a != b
 7        | &lt;         | より小さい          | 左(→) | Yes          | a &lt; b
@@ -407,26 +407,25 @@ expr5 = expr1 + (expr2 - expr3) / expr4
 8        | not          | 否定(NOT)           | 右(←) | No           | not a
 9        | &amp;&amp;   | 論理積(短絡評価)    | 左(→) | No           | a &amp;&amp; b
 9        | and          | 論理積(短絡評価)    | 左(→) | No           | a and b
-10       | \|\|         | 論理和(短絡評価)    | 左(→) | No           | a \|\| b
+10       | <bar/><bar/> | 論理和(短絡評価)    | 左(→) | No           | a <bar/><bar/> b
 10       | or           | 論理和(短絡評価)    | 左(→) | No           | a or b
 11       | ? :          | 条件演算子          | 右(←) | No           | a ? b : c
 11       | if else      | 後置if式            | 右(←) | No           | b if a else c
 12       | =            | 代入                | 右(←) | Yes          | a = b
-12       | \*\*=        | 冪乗代入            | 右(←) | Yes          | a \*\*= b
-12       | \*=          | 乗算代入            | 右(←) | Yes          | a \*= b
+12       | **=          | 冪乗代入            | 右(←) | Yes          | a **= b
+12       | *=           | 乗算代入            | 右(←) | Yes          | a *= b
 12       | /=           | 除算代入            | 右(←) | Yes          | a /= b
 12       | //=          | 切り捨て除算代入    | 右(←) | Yes          | a //= b
 12       | %=           | 剰余算代入          | 右(←) | Yes          | a %= b
 12       | +=           | 加算代入            | 右(←) | Yes          | a += b
 12       | -=           | 減算代入            | 右(←) | Yes          | a -= b
 12       | ~=           | 配列結合代入        | 右(←) | No           | a ~= b
-12       | \|=          | 論理和代入          | 右(←) | No           | a \|= b
+12       | <bar/>=      | 論理和代入          | 右(←) | No           | a <bar/>= b
 12       | &amp;=       | 論理積代入          | 右(←) | No           | a &amp;= b
 12       | ^=           | 排他的論理和代入    | 右(←) | No           | a ^= b
 12       | &lt;&lt;=    | 左シフト代入        | 右(←) | No           | a &lt;&lt;= b
 12       | &gt;&gt;=    | 右シフト代入        | 右(←) | No           | a &gt;&gt;= b
 13       | ,            | カンマ演算子        | 左(→) | No           | a, b
-|
 
 
 ### 参考文献
@@ -438,7 +437,7 @@ expr5 = expr1 + (expr2 - expr3) / expr4
       </div>
     </div>
   </div>
- <script type="text/javascript">
+  <script type="text/javascript">
     $(function() {
       build_header_nav([
         {id: '4-1-', name: 'primary', children: [

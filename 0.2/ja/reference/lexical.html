@@ -17,21 +17,21 @@
 
 ### 2.1. トークン化
 
-字句解析器は可能な限り長いトークンを生成しようとします（最長一致）。たとえば `&gt;=` という入力は関係演算子 `&gt;=` という1つのトークンと解釈します。これを `&gt;`, `=` のように分割して解釈することはありません。
+字句解析器は可能な限り長いトークンを生成しようとします（最長一致）。たとえば `>=` という入力は関係演算子 `>=` という1つのトークンと解釈します。これを `>`, `=` のように分割して解釈することはありません。
 
 しかしながら、最長一致の例外となるトークンが範囲演算子 `..` および `...` です。例えば、2つの整数リテラルと範囲演算子を結んだものを `3..5` と表記すると、最長一致のみを用いた字句解析器は `3.` と `.5` という 2つの *正しい* 浮動小数点数リテラルのトークンに分割されてしまいます。Lury コンパイラでは、このような場合は `3` `..` `5` という 3つのトークンに *分割されなければなりません*。従って、`3..5` と `3. .5` は全く異なるトークンを生成することを意味します。これは演算子 `...` についても同様です。
 
 以下は、字句解析器が出力するトークンの一覧です。このうち、[コンテキストキーワード](#contextualKeyword)と[キーワード](#keyword) は実際には展開されて出力されます。
 
 ```text
-**Token**:
+Token:
   NewLine
   Indent
   Dedent
   EndOfFile
 
-  *ContextualKeyword*
-  *Keyword*
+  ContextualKeyword
+  Keyword
   Identifier
   $
 
@@ -95,8 +95,8 @@
 
   (
   )
-  \[
-  \]
+  [
+  ]
   {
   }
   ;
@@ -127,7 +127,6 @@ Lury コンパイラが有効なソースコードとして *認識しなくて�
  UTF-16LE   | `0xFF 0xFE`
  UTF-32BE   | `0x00 0x00 0xFE 0xFF`
  UTF-32LE   | `0xFE 0xFF 0x00 0x00`
- |
 
 C や C++ のコンパイラで一部サポートされているトライグラフ (digraph, trigraph) は Lury では *サポートしません*。
 
@@ -135,10 +134,10 @@ C や C++ のコンパイラで一部サポートされているトライグラ�
 #### 2.2.1. 文字集合
 
 ```text
-<a class="grammar" regex=".">Character</a>:
+Character:
   任意の Unicode 文字
 
-<a class="grammar" regex=".+">Characters</a>:
+Characters:
   Character
   Character Characters
 ```
@@ -148,7 +147,7 @@ Lury コンパイラはソースコードのコードセットを Unicode とし
 #### 2.2.2. ファイル終端
 
 ```text
-<a class="grammar" regex="EOF|\u0000|\u001a">EndOfFile</a>:
+EndOfFile:
   物理的なファイル終端
   \u0000
   \u001a
@@ -169,7 +168,7 @@ Lury ではブロックを行の構造で表現します。これは Python の�
 
 完全な *改行文字* の一覧は後述する [*LineTerminator*](#LineTerminator) と同じですが、混乱を避けるため、この単語と *行終端* という単語は字句解析時に用い、主にトークンの名前として用います。*改行文字* とは前述の通り、`\r`、`\n` または `\r\n` などのバイト列そのものを指す言葉としてここでは用います。
 
-Lury では行終端をキャンセルし、2つの物理行を1つの論理行へ連結可能なトークンが2つあります。バックスラッシュ `\\\` と、括弧内のカンマ `,` です。前者を *明示的な行連結*、後者を *暗黙的な行連結* とも呼びます。行連結は2行以上連続して指定することができます。バックスラッシュによるキャンセルは [コメント](#comment) を参照してください。
+Lury では行終端をキャンセルし、2つの物理行を1つの論理行へ連結可能なトークンが2つあります。バックスラッシュ `\` と、括弧内のカンマ `,` です。前者を *明示的な行連結*、後者を *暗黙的な行連結* とも呼びます。行連結は2行以上連続して指定することができます。バックスラッシュによるキャンセルは [コメント](#comment) を参照してください。
 
 #### 2.3.2. 論理行
 
@@ -178,14 +177,14 @@ Lury では行終端をキャンセルし、2つの物理行を1つの論理行�
 #### 2.3.3. 行終端
 
 ```text
-<a class="grammar" regex="\u000d|\u001a|(?:\u000d\u000a)|\u2028|\u2029">LineTerminator</a>:
+LineTerminator:
   \u000d
   \u000a
   \u000d \u000a
   \u2028
   \u2029
 
-<a class="grammar" regex="LineTerminator|EndOfFile">NewLine</a>:
+NewLine:
   LineTerminator
   EndOfFile
 ```
@@ -197,13 +196,13 @@ Lury の字句解析器は連続した NewLine トークンを *出力しませ�
 #### 2.3.4. 空白文字
 
 ```text
-<a class="grammar" regex="\u0020|\u0009|\u000b|\u000c">Space</a>:
+Space:
   \u0020
   \u0009
   \u000b
   \u000c
 
-<a class="grammar" regex="(?:Space)+">WhiteSpace</a>:
+WhiteSpace:
   Space
   Space WhiteSpace
 ```
@@ -219,16 +218,16 @@ Lury の字句解析器は連続した NewLine トークンを *出力しませ�
 #### 2.3.5. コメント
 
 ```text
-<a class="grammar" regex="###(?:Characters)###">BlockComment</a>:
+BlockComment:
   ### Characters ###
 
-<a class="grammar" regex="#(?:Characters)NewLine">LineComment</a>:
+LineComment:
   # Characters NewLine
 
-<a class="grammar" regex="\\(?:LineTerminator)">LineCancel</a>:
+LineCancel:
   \ LineTerminator
 
-<a class="grammar" regex="BlockComment|(?:LineComment)|LineCancel">Comment</a>:
+Comment:
   BlockComment
   LineComment
   LineCancel
@@ -238,12 +237,12 @@ Lury の字句解析器は連続した NewLine トークンを *出力しませ�
 
 ラインコメントは `#` から *改行文字およびファイル終端文字を除く* 行末までをコメント化します。ラインコメントを行末より前で終了することはできません。
 
-ラインキャンセルは行末の `\\\` で表現されます。結果的に `\\\` および行終端文字（改行文字）はコメントと同一視され、構文解析時には無視されます。`\\\` はファイル終端をキャンセルすることはできません。すなわち、ソースコードの末尾に `\\\` を記述することはできません。また、`\\\` と行終端文字の間に空白文字を入れることはできません。
+ラインキャンセルは行末の `\` で表現されます。結果的に `\` および行終端文字（改行文字）はコメントと同一視され、構文解析時には無視されます。`\` はファイル終端をキャンセルすることはできません。すなわち、ソースコードの末尾に `\` を記述することはできません。また、`\` と行終端文字の間に空白文字を入れることはできません。
 
 
 ### 2.4. インデント
 
-Lury では複合文の表現をインデントを用いた *オフサイドルール* によって行います。これは、C言語またはその子孫の言語でのブロック (`{` から `}`)に相当します。インデントは行頭の [空白文字](#whitespace) を用いて表現します。インデントのレベルには空白文字の文字数が採用され、文字の表示上の幅は考慮されません。例えば、タブ文字 `\t` は環境によって 2 文字以上のスペース ` ` の幅で表示されますが、Lury では 1 つの `\t` と 1 つの ` ` に差はありません。
+Lury では複合文の表現をインデントを用いた *オフサイドルール* によって行います。これは、C言語またはその子孫の言語でのブロック (`{` から `}`)に相当します。インデントは行頭の [空白文字](#whitespace) を用いて表現します。インデントのレベルには空白文字の文字数が採用され、文字の表示上の幅は考慮されません。例えば、タブ文字 `\t` は環境によって 2 文字以上のスペース ` &nbsp;` の幅で表示されますが、Lury では 1 つの `\t` と 1 つの ` &nbsp;` に差はありません。
 
 #### 2.4.1. オフサイドルール
 
@@ -300,28 +299,28 @@ println('finish')                   # [ 0 ]
 以下は、上記の例外を実際のソースコードで表した例です。いずれの行もインデントと解釈されず、オフサイドルールは適用されません。
 
 ```
-text = <span class="backquote"></span>これはWYSIWYG文字列です。
+text = `これはWYSIWYG文字列です。
   文字中のインデントです。
-<span class="backquote"></span>
+`
 
 ### これはブロックコメントです。
     コメント中のインデントです。
 ###
 
-judge = text != nil and \\\
+judge = text != nil and \
         text.length &gt; 0
 
-list = \[ 1, 2, 3,
+list = [ 1, 2, 3,
          4, 5, 6,
-         7, 8, 9 \]
+         7, 8, 9 ]
 ```
 
 
 ### 2.5. 識別子
 
 ```text
-<a class="grammar" regex="_|\\p\{Lu\}|(?:\\p\{Ll\})|\\p\{Lt\}|(?:\\p\{Lm\})|\\p\{Lo\}|(?:\\p\{Nl\})|[\u25A0-\u27BF]|\uD83C[\uDF00-\uDFF7]|\uD83D[\uDC00-\uDE4F\uDE80-\uDEF3]">IdentifierStart</a>:
-  "\_"
+IdentifierStart:
+  "_"
   \p{Lu}
   \p{Ll}
   \p{Lt}
@@ -333,15 +332,15 @@ list = \[ 1, 2, 3,
   \uD83D (\uDC00 ... \uDE4F)
   \uD83D (\uDE80 ... \uDEF3)
 
-<a class="grammar" regex="IdentifierStart|(?:\\p\{Mn\})|\\p\{Mc\}|(?:\\p\{Nd\})|\\p\{Pc\}">IdentifierContinue</a>:
+IdentifierContinue:
   IdentifierStart
   \p{Mn}
   \p{Mc}
   \p{Nd}
   \p{Pc}
 
-<a class="grammar" regex="IdentifierStart(?:IdentifierContinue)*|\$">Identifier</a>:
-  IdentifierStart IdentifierContinue\*
+Identifier:
+  IdentifierStart IdentifierContinue*
   $
 ```
 
@@ -353,7 +352,7 @@ list = \[ 1, 2, 3,
 ### 2.6. キーワード
 
 ```
-**Keyword**:
+Keyword:
   abstract      else          is            property      this
   and           enum          lazy          protected     throw
   break         extended      nameof        public        true
@@ -376,7 +375,6 @@ list = \[ 1, 2, 3,
  `get` および `set`                 | property 文 (プロパティ)の内部。ただし自動実装宣言、アクセサブロックでのみ有効
  `file` および `line`               | reflect 文 (リフレクション) の冒頭。内部の実行文は除外
  `exit`, `success` および `failure` | scope 文 (スコープガード) の冒頭。内部の実行文は除外
-|
 
 以上に示す識別子はあるコンテキスト (文脈) でキーワード化し、通常の識別子として使用することはできません。対象となるコンテキスト以外の場所であれば通常の識別子として使用することができます。
 
@@ -385,7 +383,7 @@ list = \[ 1, 2, 3,
 どのような文脈でコンテキストキーワードとするかは字句解析時よりも、構文解析時に判定する必要があるかもしれません。何れにせよ、コンパイラは誤ったコンテキストキーワードの使用時に何らかのエラーを出力しなければなりません。
 
 ```text
-**ContextualKeyword**:
+ContextualKeyword:
   IdentifierGet
   IdentifierSet
   IdentifierFile
@@ -394,25 +392,25 @@ list = \[ 1, 2, 3,
   IdentifierSuccess
   IdentifierFailure
 
-<a class="grammar" regex="get">IdentifierGet</a>:
+IdentifierGet:
   get
 
-<a class="grammar" regex="set">IdentifierSet</a>:
+IdentifierSet:
   set
 
-<a class="grammar" regex="file">IdentifierFile</a>:
+IdentifierFile:
   file
 
-<a class="grammar" regex="line">IdentifierLine</a>:
+IdentifierLine:
   line
 
-<a class="grammar" regex="exit">IdentifierExit</a>:
+IdentifierExit:
   exit
 
-<a class="grammar" regex="success">IdentifierSuccess</a>:
+IdentifierSuccess:
   success
 
-<a class="grammar" regex="failure">IdentifierFailure</a>:
+IdentifierFailure:
   failure
 ```
 
@@ -420,7 +418,7 @@ list = \[ 1, 2, 3,
 ### 2.7. リテラル
 
 ```text
-<a class="grammar" regex="StringLiteral|(?:EmbedStringLiteral)|WysiwygStringLiteral|(?:Integer)|FloatNumber|(?:ImaginaryNumber)">Literal</a>:
+Literal:
   StringLiteral
   EmbedStringLiteral
   WysiwygStringLiteral
@@ -436,21 +434,21 @@ Lury でのリテラル (literal、即値) とはソースコード上で直接�
 ### 2.7.1. 文字列リテラル
 
 ```text
-<a class="grammar" regex="'(?:StringCharactersWithoutSinglequote)%2a'">StringLiteral</a>:
-  "'" StringCharactersWithoutSinglequote\* "'"
+StringLiteral:
+  "'" StringCharactersWithoutSinglequote* "'"
 
-<a class="grammar" regex="StringCharacters|%22|%60">StringCharactersWithoutSinglequote</a>:
+StringCharactersWithoutSinglequote:
   StringCharacters
   """
-  "<span class="backquote"></span>"
+  "`"
 
-<a class="grammar" regex="EscapeSequence|.%2a">StringCharacters</a>:
+StringCharacters:
   EscapeSequence
-  すべてのUnicode文字(NewLine, 正規表現 `\\.` を除く)
+  すべてのUnicode文字(NewLine, 正規表現 `.` を除く)
 
-<a class="grammar" regex="\\(?:LineTerminator)|\\{1}|\\'|\\%22|\\a|\\b|\\f|\\n|\\r|\\t|\\v|\\x(?:HexadecimalDigit){1,4}|\\u(?:HexadecimalDigit){4}|\\U(?:HexadecimalDigit){8}">EscapeSequence</a>:
+EscapeSequence:
   "\" LineTerminator
-  "\\\\\\"
+  "\\"
   "\'"
   "\""
   "\a"
@@ -474,15 +472,15 @@ Lury の文字列リテラルにプレフィクスはありません。
 ### 2.7.2. 式埋め込み文字列リテラル
 
 ```text
-<a class="grammar" regex="%22(?:EmbedStringCharactersWithoutSinglequote)%2a%22">EmbedStringLiteral</a>:
-  """ EmbedStringCharactersWithoutSinglequote\* """
+EmbedStringLiteral:
+  """ EmbedStringCharactersWithoutSinglequote* """
 
-<a class="grammar" regex="EmbedStringCharacters|'|%60">EmbedStringCharactersWithoutSinglequote</a>:
+EmbedStringCharactersWithoutSinglequote:
   StringCharacters
   "'"
-  "<span class="backquote"></span>"
+  "`"
   "##"
-  "#{" すべてのUnicode文字(`"` および `}` を除く) "}"
+  "#{" すべてのUnicode文字(" および } を除く) "}"
 ```
 
 式埋め込み文字列リテラルは 2つの `"` で囲まれ記述されます。
@@ -492,15 +490,15 @@ Lury の文字列リテラルにプレフィクスはありません。
 ### 2.7.3. WYSIWYG 文字列リテラル
 
 ```text
-<a class="grammar" regex="%60(?:WysiwygStringCharacters)%2a%60">WysiwygStringLiteral</a>:
-  "\`" WysiwygStringCharacters\* "\`"
+WysiwygStringLiteral:
+  "`" WysiwygStringCharacters* "`"
 
-<a class="grammar" regex="%60%60|[^%60]">WysiwygStringCharacters</a>:
-  "\`\\\`"
-  すべてのUnicode文字("\`"を除く)
+WysiwygStringCharacters:
+  "\"
+  すべてのUnicode文字("`"を除く)
 ```
 
-WYSIWYG 文字列は `<span class="backquote"></span>` で囲まれた Unicode 文字列をそのまま文字列として扱うことが出来ます。これは、改行文字も含まれます。`'` および `"` も記述ができ、`\\\` もそのまま記述ができます。エスケープシーケンスは記述できません。また、式の埋め込みはできません。
+WYSIWYG 文字列は ` ` ` で囲まれた Unicode 文字列をそのまま文字列として扱うことが出来ます。これは、改行文字も含まれます。`'` および `"` も記述ができ、`\` もそのまま記述ができます。エスケープシーケンスは記述できません。また、式の埋め込みはできません。
 
 WYSIWYG 文字列リテラルはヒアドキュメントなどで文書をそのまま読み込みたいとき、もしくは正規表現のようにエスケープシーケンスを用いると表記が煩雑になってしまう場合に効果を発揮するでしょう。
 
@@ -515,47 +513,47 @@ WYSIWYG 文字列リテラルはヒアドキュメントなどで文書をその
 ### 2.7.5. 整数リテラル
 
 ```text
-<a class="grammar" regex="DecimalInteger|(?:BinaryInteger)|OctalInteger|(?:HexadecimalInteger)">Integer</a>:
+Integer:
   DecimalInteger
   BinaryInteger
   OctalInteger
   HexadecimalInteger
 
-<a class="grammer" regex="Digit(?:DecimalDigits)*">DecimalInteger</a>:
-  Digit DecimalDigits\*
+DecimalInteger:
+  Digit DecimalDigits*
 
-<a class="grammer" regex="%5f?Digit">DecimalDigits</a>:
-  "\_"? Digit
+DecimalDigits:
+  "_"? Digit
 
-<a class="grammer" regex="0[bB](?:BinaryDigits)+">BinaryInteger</a>:
-  "0" ("b" | "B") BinaryDigits BinaryDigits\*
+BinaryInteger:
+  "0" ("b" | "B") BinaryDigits BinaryDigits*
 
-<a class="grammer" regex="%5f?BinaryDigit">BinaryDigits</a>:
-  "\_"? BinaryDigit
+BinaryDigits:
+  "_"? BinaryDigit
 
-<a class="grammer" regex="0[oO](?:OctalDigits)+">OctalInteger</a>:
-  "0" ("o" | "O") OctalDigits OctalDigits\*
+OctalInteger:
+  "0" ("o" | "O") OctalDigits OctalDigits*
 
-<a class="grammer" regex="%5f?OctalDigit">OctalDigits</a>:
-  "\_"? OctalDigit
+OctalDigits:
+  "_"? OctalDigit
 
-<a class="grammer" regex="0[xX](?:HexadecimalDigits)+">HexadecimalInteger</a>:
-  "0" ("x" | "X") HexadecimalDigits HexadecimalDigits\*
+HexadecimalInteger:
+  "0" ("x" | "X") HexadecimalDigits HexadecimalDigits*
 
-<a class="grammer" regex="%5f?HexadecimalDigit">HexadecimalDigits</a>:
-  "\_"? HexadecimalDigit
+HexadecimalDigits:
+  "_"? HexadecimalDigit
 
-<a class="grammer" regex="[0-9]">Digit</a>:
+Digit:
   "0" ... "9"
 
-<a class="grammer" regex="[01]">BinaryDigit</a>:
+BinaryDigit:
   "0"
   "1"
 
-<a class="grammer" regex="[0-7]">OctalDigit</a>:
+OctalDigit:
   "0" ... "7"
 
-<a class="grammer" regex="digit|[a-fA-F]">HexadecimalDigit</a>:
+HexadecimalDigit:
   digit
   "a" ... "f"
   "A" ... "F"
@@ -566,25 +564,25 @@ WYSIWYG 文字列リテラルはヒアドキュメントなどで文書をその
 ### 2.7.6. 浮動小数点数リテラル
 
 ```text
-<a class="grammer" regex="PointFloat|(?:ExponentFloat)">FloatNumber</a>:
+FloatNumber:
   PointFloat
   ExponentFloat
 
-<a class="grammer" regex="(?:(?:FloatIntegerPart)?Fraction)|(?:FloatIntegerPart\.)">PointFloat</a>:
+PointFloat:
   FloatIntegerPart? Fraction
   FloatIntegerPart "."
 
-<a class="grammer" regex="(?:FloatIntegerPart(?:Exponent))|(?:PointFloat(?:Exponent))">ExponentFloat</a>:
+ExponentFloat:
   FloatIntegerPart Exponent
   PointFloat Exponent
 
-<a class="grammer" regex="(?:Digit)+">FloatIntegerPart</a>:
+FloatIntegerPart:
   DecimalInteger
 
-<a class="grammer" regex="\.(?:Digit)+">Fraction</a>:
+Fraction:
   "." DecimalInteger
 
-<a class="grammer" regex="[eE][+-]?(?:Digit)+">Exponent</a>:
+Exponent:
   [eE] [+-]? DecimalInteger
 ```
 
@@ -593,7 +591,7 @@ WYSIWYG 文字列リテラルはヒアドキュメントなどで文書をその
 ### 2.7.7. 虚数リテラル
 
 ```text
-<a class="grammar" regex="(?:FloatNumber|(?:FloatIntegerPart))i">ImaginaryNumber</a>:
+ImaginaryNumber:
   (FloatNumber | FloatIntegerPart) "i"
 ```
 
@@ -608,67 +606,66 @@ WYSIWYG 文字列リテラルはヒアドキュメントなどで文書をその
 
 ```
 プライマリ
-    **nameof**   **reflect**
-    a**.**b      a__..__b     a**...**b
+    nameof   reflect
+    a.b      a..b     a...b
 
 後置一項演算子
-    a**++**      a__--__
+    a++      a--
 
 前置一項演算子
-    **++**a      __--__a
-    **+**a       __-__a       **~**a
-    **!**a       **not** a
+    ++a      --a
+    +a       -a       ~a
+    !a       not a
 
 冪乗演算子
-    a **\*\*** b
+    a ** b
 
 乗法演算子
-    a **\*** b    a __/__ b    a **//** b   a __%__ b
-    a **~** b
+    a * b    a / b    a // b   a % b
+    a ~ b
 
 加法演算子
-    a **+** b    a __-__ b
-
+    a + b    a - b
 シフト演算子
-    a **&lt;&lt;** b   a __&gt;&gt;__ b
+    a &lt;&lt; b   a &gt;&gt; b
 
 関係演算子
-    a **==** b   a __!=__ b
-    a **&lt;** b    a __&gt;__ b    a **&lt;=** b    a __&gt;=__ b
-    a **is** b   a __!is__ b  a **not is** b
-    a **in** b   a __!in__ b  a **not in** b
+    a == b   a != b
+    a &lt; b    a &gt; b    a &lt;= b    a &gt;= b
+    a is b   a !is b  a not is b
+    a in b   a !in b  a not in b
 
 論理演算子
-    (AND) a **&amp;** b
-    (XOR) a **^** b
-    (OR)  a **|** b
+    (AND) a &amp; b
+    (XOR) a ^ b
+    (OR)  a | b
 
 論理演算子(短絡論理積)
-    a **&amp;&amp;** b   a **and** b
+    a &amp;&amp; b   a and b
 
 論理演算子(短絡論理和)
-    a **||** b   a **or** b
+    a || b   a or b
 
 条件演算子
-    a **?** b __:__ c
-    a **if** b __else__ c
-    a **unless** b __else__ c
+    a ? b : c
+    a if b else c
+    a unless b else c
 
 nil合体演算子
-    a **??** b
+    a ?? b
 
 ラムダ式
-    a **=&gt;** b
+    a =&gt; b
 
 代入演算子
-    a **=** b
-    a **+=** b   a __-=__ b   a **\*=** b   a __/=__ b
-    a **//=** b  a __%=__ b   a **~=** b   a __\*\*=__ b
-    a **|=** b   a __&amp;=__ b   a **^=** b
-    a **&lt;&lt;=** b  a __&gt;&gt;=__ b
+    a = b
+    a += b   a -= b   a *= b   a /= b
+    a //= b  a %= b   a ~= b   a **= b
+    a |= b   a &amp;= b   a ^= b
+    a &lt;&lt;= b  a &gt;&gt;= b
 
 カンマ演算子
-    a **,** b
+    a , b
 ```
 
 
@@ -677,7 +674,7 @@ nil合体演算子
 以下に Lury で使われるデリミタの一覧を示します。デリミタは複数のトークンを区切るための記号です。
 
 ```
-(       )       \[       \]       {       }
+(       )       [       ]       {       }
 ;       -&gt;      @
 ```
 

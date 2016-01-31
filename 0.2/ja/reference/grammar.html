@@ -18,39 +18,39 @@
 ```
 program
     :
-    | program\_lines
+    | program_lines
 
-program\_lines
-    : program\_line
-    | program\_lines program\_line
+program_lines
+    : program_line
+    | program_lines program_line
 
-program\_line
+program_line
     : statement
     | NewLine
 
 
 statement
-    : statement\_list NewLine
-    | compound\_statement
+    : statement_list NewLine
+    | compound_statement
 
-statement\_list
-    : simple\_statement
-    | simple\_statement simple\_statements
+statement_list
+    : simple_statement
+    | simple_statement simple_statements
 
-simple\_statements
+simple_statements
     : ';'
-    | ';' simple\_statement
-    | ';' simple\_statement simple\_statements
+    | ';' simple_statement
+    | ';' simple_statement simple_statements
 
-compound\_statement
-    : if\_statement
-    | while\_statement
-    | function\_definition
-    | class\_definition
-    | unittest\_statement
+compound_statement
+    : if_statement
+    | while_statement
+    | function_definition
+    | class_definition
+    | unittest_statement
 
 suite
-    : statement\_list NewLine
+    : statement_list NewLine
     | NewLine Indent statements Dedent
 
 statements
@@ -58,100 +58,100 @@ statements
     | statement statements
 
 
-if\_statement
+if_statement
     : KeywordIf expression ':' suite
-    | KeywordIf expression ':' suite elif\_statements
+    | KeywordIf expression ':' suite elif_statements
 
-elif\_statements
+elif_statements
     : KeywordElif expression ':' suite
-    | KeywordElif expression ':' suite elif\_statements
-    | else\_statement
+    | KeywordElif expression ':' suite elif_statements
+    | else_statement
 
-else\_statement
+else_statement
     : KeywordElse ':' suite
 
-while\_statement
+while_statement
     : KeywordWhile expression ':' suite
-    | KeywordWhile expression ':' suite else\_statement
+    | KeywordWhile expression ':' suite else_statement
 
-function\_definition
-    : KeywordDef function\_name '(' parameter\_list ')' ':' suite
-    | KeywordDef function\_name ':' suite
+function_definition
+    : KeywordDef function_name '(' parameter_list ')' ':' suite
+    | KeywordDef function_name ':' suite
 
-function\_name
-    : identifier\_all
-    | function\_name '.' identifier\_all
+function_name
+    : identifier_all
+    | function_name '.' identifier_all
 
-parameter\_list
+parameter_list
     : parameter
-    | parameter\_list ',' parameter
+    | parameter_list ',' parameter
 
 parameter
-    : identifier\_all
+    : identifier_all
 
-class\_definition
-    : KeywordClass class\_name '(' inheritance\_list ')' ':' suite
-    | KeywordClass class\_name ':' suite
+class_definition
+    : KeywordClass class_name '(' inheritance_list ')' ':' suite
+    | KeywordClass class_name ':' suite
 
-class\_name
-    : identifier\_all
+class_name
+    : identifier_all
 
-inheritance\_list
-    : object\_name
-    | inheritance\_list ',' object\_name
+inheritance_list
+    : object_name
+    | inheritance_list ',' object_name
 
-object\_name
-    : identifier\_all
-    | object\_name '.' identifier\_all
+object_name
+    : identifier_all
+    | object_name '.' identifier_all
 
-unittest\_statement
+unittest_statement
     : 'unittest' ':' suite
 
 
-simple\_statement
-    : pass\_statement
-    | expression\_statement
-    | return\_statement
-    | break\_statement
-    | continue\_statement
-    | import\_statement
+simple_statement
+    : pass_statement
+    | expression_statement
+    | return_statement
+    | break_statement
+    | continue_statement
+    | import_statement
 
-pass\_statement
+pass_statement
     : KeywordPass
 
-expression\_statement
+expression_statement
     : expression
 
-return\_statement
+return_statement
     : KeywordReturn
     | KeywordReturn expression
 
-break\_statement
+break_statement
     : KeywordBreak
 
-continue\_statement
+continue_statement
     : KeywordContinue
 
-import\_statement
-    : KeywordImport import\_names
-    | KeywordPublic KeywordImport import\_names
+import_statement
+    : KeywordImport import_names
+    | KeywordPublic KeywordImport import_names
 
-import\_names
-    : import\_name
-    | import\_names ',' import\_name
+import_names
+    : import_name
+    | import_names ',' import_name
 
-import\_name
-    : module\_name
+import_name
+    : module_name
 
-module\_name
-    : identifier\_all
-    | module\_name '.' identifier\_all
+module_name
+    : identifier_all
+    | module_name '.' identifier_all
 
-identifier\_all
+identifier_all
     : Identifier
-    | contextual\_keyword
+    | contextual_keyword
 
-contextual\_keyword
+contextual_keyword
     : IdentifierGet
     | IdentifierSet
     | IdentifierFile
@@ -162,54 +162,54 @@ contextual\_keyword
 
 
 expression
-    : comma\_expression
+    : comma_expression
 
-comma\_expression
-    : assignment\_expression
-    | assignment\_expression ',' comma\_expression
+comma_expression
+    : assignment_expression
+    | assignment_expression ',' comma_expression
 
-assignment\_expression
-    : conditional\_expression
-    | conditional\_expression '=' assignment\_expression
-    | conditional\_expression AssignmentAdd assignment\_expression
-    | conditional\_expression AssignmentSub assignment\_expression
-    | conditional\_expression AssignmentMultiply assignment\_expression
-    | conditional\_expression AssignmentDivide assignment\_expression
-    | conditional\_expression AssignmentIntDivide assignment\_expression
-    | conditional\_expression AssignmentPower assignment\_expression
-    | conditional\_expression AssignmentModulo assignment\_expression
-    | conditional\_expression AssignmentAnd assignment\_expression
-    | conditional\_expression AssignmentOr assignment\_expression
-    | conditional\_expression AssignmentXor assignment\_expression
-    | conditional\_expression AssignmentConcat assignment\_expression
-    | conditional\_expression AssignmentLeftShift assignment\_expression
-    | conditional\_expression AssignmentRightShift assignment\_expression
+assignment_expression
+    : conditional_expression
+    | conditional_expression '=' assignment_expression
+    | conditional_expression AssignmentAdd assignment_expression
+    | conditional_expression AssignmentSub assignment_expression
+    | conditional_expression AssignmentMultiply assignment_expression
+    | conditional_expression AssignmentDivide assignment_expression
+    | conditional_expression AssignmentIntDivide assignment_expression
+    | conditional_expression AssignmentPower assignment_expression
+    | conditional_expression AssignmentModulo assignment_expression
+    | conditional_expression AssignmentAnd assignment_expression
+    | conditional_expression AssignmentOr assignment_expression
+    | conditional_expression AssignmentXor assignment_expression
+    | conditional_expression AssignmentConcat assignment_expression
+    | conditional_expression AssignmentLeftShift assignment_expression
+    | conditional_expression AssignmentRightShift assignment_expression
 
-conditional\_expression
-    : bool\_or\_expression
-    | bool\_or\_expression '?' bool\_or\_expression ':' bool\_or\_expression
-    | bool\_or\_expression KeywordIf bool\_or\_expression KeywordElse bool\_or\_expression
+conditional_expression
+    : bool_or_expression
+    | bool_or_expression '?' bool_or_expression ':' bool_or_expression
+    | bool_or_expression KeywordIf bool_or_expression KeywordElse bool_or_expression
 
-bool\_or\_expression
-    : bool\_and\_expression
-    | bool\_or\_expression KeywordOr bool\_and\_expression
-    | bool\_or\_expression OrShort bool\_and\_expression
+bool_or_expression
+    : bool_and_expression
+    | bool_or_expression KeywordOr bool_and_expression
+    | bool_or_expression OrShort bool_and_expression
 
-bool\_and\_expression
-    : bool\_not\_expression
-    | bool\_and\_expression KeywordAnd bool\_not\_expression
-    | bool\_and\_expression AndShort bool\_not\_expression
+bool_and_expression
+    : bool_not_expression
+    | bool_and_expression KeywordAnd bool_not_expression
+    | bool_and_expression AndShort bool_not_expression
 
-bool\_not\_expression
-    : comparison\_expression
-    | KeywordNot bool\_not\_expression
-    | '!' bool\_not\_expression
+bool_not_expression
+    : comparison_expression
+    | KeywordNot bool_not_expression
+    | '!' bool_not_expression
 
-comparison\_expression
-    : or\_expression
-    | or\_expression comparison\_operator or\_expression
+comparison_expression
+    : or_expression
+    | or_expression comparison_operator or_expression
 
-comparison\_operator
+comparison_operator
     : '&lt;'
     | '&gt;'
     | Equal
@@ -220,73 +220,73 @@ comparison\_operator
     | IsNot
     | KeywordIs KeywordNot
 
-or\_expression
-    : xor\_expression
-    | or\_expression '\|' xor\_expression
+or_expression
+    : xor_expression
+    | or_expression '\|' xor_expression
 
-xor\_expression
-    : and\_expression
-    | xor\_expression '^' and\_expression
+xor_expression
+    : and_expression
+    | xor_expression '^' and_expression
 
-and\_expression
-    : shift\_expression
-    | and\_expression '&amp;' shift\_expression
+and_expression
+    : shift_expression
+    | and_expression '&amp;' shift_expression
 
-shift\_expression
-    : addition\_expression
-    | shift\_expression LeftShift addition\_expression
-    | shift\_expression RightShift addition\_expression
+shift_expression
+    : addition_expression
+    | shift_expression LeftShift addition_expression
+    | shift_expression RightShift addition_expression
 
-addition\_expression
-    : multiplication\_expression
-    | addition\_expression '+' multiplication\_expression
-    | addition\_expression '-' multiplication\_expression
-    | addition\_expression '~' multiplication\_expression
+addition_expression
+    : multiplication_expression
+    | addition_expression '+' multiplication_expression
+    | addition_expression '-' multiplication_expression
+    | addition_expression '~' multiplication_expression
 
-multiplication\_expression
-    : unary\_expression
-    | multiplication\_expression '\*' unary\_expression
-    | multiplication\_expression IntDivide unary\_expression
-    | multiplication\_expression '/' unary\_expression
-    | multiplication\_expression '%' unary\_expression
+multiplication_expression
+    : unary_expression
+    | multiplication_expression '\*' unary_expression
+    | multiplication_expression IntDivide unary_expression
+    | multiplication_expression '/' unary_expression
+    | multiplication_expression '%' unary_expression
 
-unary\_expression
-    : power\_expression
-    | Increment unary\_expression
-    | Decrement unary\_expression
-    | '-' unary\_expression
-    | '+' unary\_expression
-    | '~' unary\_expression
+unary_expression
+    : power_expression
+    | Increment unary_expression
+    | Decrement unary_expression
+    | '-' unary_expression
+    | '+' unary_expression
+    | '~' unary_expression
 
-power\_expression
-    : callref\_expression
-    | power\_expression Power callref\_expression
+power_expression
+    : callref_expression
+    | power_expression Power callref_expression
 
-callref\_expression
-    : postfix\_expression
-    | KeywordRef postfix\_expression
+callref_expression
+    : postfix_expression
+    | KeywordRef postfix_expression
 
-postfix\_expression
+postfix_expression
     : primary
-    | postfix\_expression '.' identifier\_all
-    | postfix\_expression Increment
-    | postfix\_expression Decrement
-    | postfix\_expression '(' ')'
-    | postfix\_expression '(' argument\_list ')'
+    | postfix_expression '.' identifier_all
+    | postfix_expression Increment
+    | postfix_expression Decrement
+    | postfix_expression '(' ')'
+    | postfix_expression '(' argument_list ')'
 
-argument\_list
+argument_list
     : argument
-    | argument ',' argument\_list
+    | argument ',' argument_list
 
 argument
-    : assignment\_expression
-    | named\_argument
+    : assignment_expression
+    | named_argument
 
-named\_argument
-    : identifier\_all ':' expression
+named_argument
+    : identifier_all ':' expression
 
 primary
-    : identifier\_all
+    : identifier_all
     | literal
     | KeywordTrue
     | KeywordFalse

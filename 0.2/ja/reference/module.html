@@ -47,21 +47,21 @@ Lury の内部で用いられるモジュール名は、外部から指定でき
 ### 3.2. import 文
 
 ```
-import\_statement   : 'import' import\_names
-                   | 'public' 'import' import\_names
+import_statement   : 'import' import_names
+                   | 'public' 'import' import_names
 
-import\_names       : import\_name
-                   | import\_names ',' import\_name
+import_names       : import_name
+                   | import_names ',' import_name
 
-import\_name        : module\_name
+import_name        : module_name
 
-module\_name        : identifier\_all
-                   | module\_name '.' identifier\_all
+module_name        : identifier_all
+                   | module_name '.' identifier_all
 
-identifier\_all     : Identifier
-                   | contextual\_keyword
+identifier_all     : Identifier
+                   | contextual_keyword
 
-contextual\_keyword : IdentifierGet
+contextual_keyword : IdentifierGet
                    | IdentifierSet
                    | IdentifierFile
                    | IdentifierLine
@@ -82,22 +82,22 @@ import 文はモジュールのソースコードを_展開しません_。impor
 # [A.lr]
 import B
 
-func\_b
+func_b
 
 if true:
   import C            # モジュール C はこのifブロック内でのみアクセス可能
-  func\_c
+  func_c
 ```
 
 ```
 # [B.lr]
-def func\_b:
+def func_b:
   pass
 ```
 
 ```
 # [C.lr]
-def func\_c:
+def func_c:
   pass
 ```
 
@@ -109,21 +109,21 @@ def func\_c:
 # [A.lr]
 import B
 
-func\_b
-func\_c
+func_b
+func_c
 ```
 
 ```
 # [B.lr]
 public import C
 
-def func\_b:
+def func_b:
   pass
 ```
 
 ```
 # [C.lr]
-def func\_c:
+def func_c:
   pass
 ```
 

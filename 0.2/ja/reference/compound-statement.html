@@ -14,27 +14,27 @@
 ## 6. 複合文
 
 ```
-compound\_statement : if\_statement
-                   | while\_statement
-                   | function\_definition
-                   | class\_definition
-                   | unittest\_statement
+compound_statement : if_statement
+                   | while_statement
+                   | function_definition
+                   | class_definition
+                   | unittest_statement
 
-suite              : statement\_list NewLine
+suite              : statement_list NewLine
                    | NewLine Indent statements Dedent
 
 statements         : statement
                    | statement statements
 
-statement          : statement\_list NewLine
-                   | compound\_statement
+statement          : statement_list NewLine
+                   | compound_statement
 
-statement\_list     : simple\_statement
-                   | simple\_statement simple\_statements
+statement_list     : simple_statement
+                   | simple_statement simple_statements
 
-simple\_statements  : ';'
-                   | ';' simple\_statement
-                   | ';' simple\_statement simple\_statements
+simple_statements  : ';'
+                   | ';' simple_statement
+                   | ';' simple_statement simple_statements
 ```
 
 _複合文 (compound statement)_ は 1 行以上の論理行にまたがる文のことです。複合文は 2 種類の書き方があり、セミコロン `;` を使った記述と、インデントを使った記述があります。
@@ -49,14 +49,14 @@ unittest 文を除き、複合文は _入れ子 (nest)_ にすることができ
 ### 6.1. if 文
 
 ```
-if\_statement    : 'if' expression ':' suite
-                | 'if' expression ':' suite elif\_statements
+if_statement    : 'if' expression ':' suite
+                | 'if' expression ':' suite elif_statements
 
-elif\_statements : 'elif' expression ':' suite
-                | 'elif' expression ':' suite elif\_statements
-                | else\_statement
+elif_statements : 'elif' expression ':' suite
+                | 'elif' expression ':' suite elif_statements
+                | else_statement
 
-else\_statement  : 'else' ':' suite
+else_statement  : 'else' ':' suite
 ```
 
 _if 文_ は条件分岐を行うための文です。被評価式 expression を条件とし、`true` であれば if 文内の suite で示される処理行い、`false` でありかつ elif もしくは else ブロックが存在するならばそのブロックについても同様に条件分岐を行います。
@@ -69,8 +69,8 @@ elif ブロックはいくつでも記述が可能です。一方、else ブロ�
 ### 6.2. while 文
 
 ```
-while\_statement : 'while' expression ':' suite
-                | 'while' expression ':' suite else\_statements
+while_statement : 'while' expression ':' suite
+                | 'while' expression ':' suite else_statements
 ```
 
 _while 文_ は反復処理を行うための文です。被評価式 expression を条件とし、`true` である限りブロック内の処理を反復処理します。最初に while 文に遭遇したとき、expression の値が `false` である場合はブロック内を一度も実行しません。
@@ -81,16 +81,16 @@ while 文の else ブロックは _expression が `false` である場合に whi
 ### 6.3. 関数定義
 
 ```
-function\_definition : 'def' function\_name '(' parameter\_list ')' ':' suite
-                    | 'def' function\_name ':' suite
+function_definition : 'def' function_name '(' parameter_list ')' ':' suite
+                    | 'def' function_name ':' suite
 
-function\_name       : identifier\_all
-                    | function\_name '.' identifier\_all
+function_name       : identifier_all
+                    | function_name '.' identifier_all
 
-parameter\_list      : parameter
-                    | parameter\_list ',' parameter
+parameter_list      : parameter
+                    | parameter_list ',' parameter
 
-parameter           : identifier\_all
+parameter           : identifier_all
 ```
 
 関数定義は関数を定義するための文です。キーワード `def` から始まり、括弧で囲われたパラメータ引数（仮引数）と実行内容を記述します。このうち、括弧と引数は省略が可能です。
@@ -101,16 +101,16 @@ parameter           : identifier\_all
 ### 6.4. クラス定義
 
 ```
-class\_definition  : 'class' class\_name '(' inheritance\_list ')' ':' suite
-                  | 'class' class\_name ':' suite
+class_definition  : 'class' class_name '(' inheritance_list ')' ':' suite
+                  | 'class' class_name ':' suite
 
-class\_name        : identifier\_all
+class_name        : identifier_all
 
-inheritance\_list  : object\_name
-                  | inheritance\_list ',' object\_name
+inheritance_list  : object_name
+                  | inheritance_list ',' object_name
 
-object\_name       : identifier\_all
-                  | object\_name '.' identifier\_all
+object_name       : identifier_all
+                  | object_name '.' identifier_all
 ```
 
 クラス定義はクラスを定義するための文です。キーワード `class` から始まり、括弧で他のクラスの名前を指定してそのクラスを継承することができます。継承をしない場合は括弧を省略できますが、暗黙的に `Object` クラスを継承します。
@@ -139,7 +139,7 @@ class Bar(Foo):
 ### 6.5. unittest 文
 
 ```
-unittest\_statement : 'unittest' ':' suite
+unittest_statement : 'unittest' ':' suite
 ```
 
 _unittest 文_ は単体テストを行うための文です。suite に単体テスト時に行われる処理内容を記述します。

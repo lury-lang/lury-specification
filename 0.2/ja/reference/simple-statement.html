@@ -14,12 +14,12 @@
 ## 5. 単純文
 
 ```
-simple\_statement : pass\_statement
-                 | expression\_statement
-                 | return\_statement
-                 | break\_statement
-                 | continue\_statement
-                 | import\_statement
+simple_statement : pass_statement
+                 | expression_statement
+                 | return_statement
+                 | break_statement
+                 | continue_statement
+                 | import_statement
 ```
 
 _単純文 (simple statement)_ は単一の論理行で完結する _文 (statement)_ のことです。Lury では 1 つの単純文は 1 つの論理行上でのみ記述できます。複数の単純文を単一の論理行に記述することはできません。
@@ -28,7 +28,7 @@ _単純文 (simple statement)_ は単一の論理行で完結する _文 (statem
 ### 5.1. pass 文
 
 ```
-pass\_statement : 'pass'
+pass_statement : 'pass'
 ```
 
 _pass 文_ は空の複合文を記述するための文です。Lury では空の複合文の表現に_何も記述しない_ことは文法上不可能なため、pass 文を用います。この文は、意味的に正しい場合に限り、全ての複合文と組み合わせて使用が可能です。
@@ -41,7 +41,7 @@ _pass 文_ は空の複合文を記述するための文です。Lury では空�
 ### 5.2. 式文
 
 ```
-expression\_statement : expression
+expression_statement : expression
 ```
 
 _式文 (expression statement)_ は、式の処理そのものを実行します。演算、判定、代入、関数の呼び出しなどの操作を含みます。式文は全体でただ一つの値を持ちます。値を返さない関数を呼び出した場合の値は `nil` となります。
@@ -50,7 +50,7 @@ _式文 (expression statement)_ は、式の処理そのものを実行します
 ### 5.3. return 文
 
 ```
-return\_statement : 'return'
+return_statement : 'return'
                  | 'return' expression
 ```
 
@@ -68,7 +68,7 @@ return 文では 2 種類の記述方法があり、式を指定する方法と�
 ### 5.4. break 文
 
 ```
-break\_statement : 'break'
+break_statement : 'break'
 ```
 
 _break 文 (break statement)_ は、反復文を脱出する文です。
@@ -81,7 +81,7 @@ break 文は return 文とは異なり、値を評価、返却しません。
 ### 5.5. continue 文
 
 ```
-continue\_statement : 'continue'
+continue_statement : 'continue'
 ```
 
 _continue 文 (continue statement)_ は反復文において、現在の反復処理を中断し、次の反復処理に遷移する文です。
