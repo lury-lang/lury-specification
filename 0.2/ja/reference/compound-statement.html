@@ -29,7 +29,7 @@ statements         : statement
 statement          : statement\_list NewLine
                    | compound\_statement
 
-statement\_list     : simple\_statement 
+statement\_list     : simple\_statement
                    | simple\_statement simple\_statements
 
 simple\_statements  : ';'
@@ -45,7 +45,7 @@ _複合文 (compound statement)_ は 1 行以上の論理行にまたがる文�
 
 unittest 文を除き、複合文は _入れ子 (nest)_ にすることができます。
 
-<section id="if">
+
 ### 6.1. if 文
 
 ```
@@ -65,9 +65,7 @@ _if 文_ は条件分岐を行うための文です。被評価式 expression �
 
 elif ブロックはいくつでも記述が可能です。一方、else ブロックは多くとも 1 つのみ記述が可能で、それは必ず if 文の最後に記述しなければなりません。
 
-</section>
 
-<section id="while">
 ### 6.2. while 文
 
 ```
@@ -79,9 +77,7 @@ _while 文_ は反復処理を行うための文です。被評価式 expression
 
 while 文の else ブロックは _expression が `false` である場合に while 文を脱出したとき_ に限り実行されます。[break 文](simple-statement.html#break) や [return 文](simple-statement.html#return) による脱出時は else ブロックは実行されません。一方で前述したような、最初から expression の値が `false` であった場合は else ブロックは実行されます。
 
-</section>
 
-<section id="function">
 ### 6.3. 関数定義
 
 ```
@@ -101,9 +97,7 @@ parameter           : identifier\_all
 
 関数定義では関数は実行されません。定義ののち、関数呼び出しによって実行が可能です。
 
-</section>
 
-<section id="class">
 ### 6.4. クラス定義
 
 ```
@@ -141,9 +135,7 @@ class Bar(Foo):
   pass
 ```
 
-</section>
 
-<section id="unittest">
 ### 6.5. unittest 文
 
 ```
@@ -158,17 +150,25 @@ unittest 文をユーザコードから呼び出すことはできません。
 
 unittest 文は unittest 文を直接的にも間接的にも入れ子にすることはできません。unittest 文を記述できる場所はクラス定義内のみで、任意の回数記述しても構いません。
 
-</section>
 
-<section id="cite">
 ### 参考文献
 
 - [8. 複合文 (compound statement) — Python 3.4.3 ドキュメント](http://docs.python.jp/3.4/reference/compound_stmts.html)
 
-</section>
 
       </div>
     </div>
   </div>
+  <script type="text/javascript">
+    $(function() {
+      build_header_nav([
+        {id: '6-1-if-', name: 'if'},
+        {id: '6-2-while-', name: 'while'},
+        {id: '6-3-', name: 'function'},
+        {id: '6-4-', name: 'class'},
+        {id: '6-5-unittest-', name: 'unittest'}
+      ]);
+    });
+  </script>
 </body>
 </html>
