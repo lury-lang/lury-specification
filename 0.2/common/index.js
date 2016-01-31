@@ -67,26 +67,6 @@ function build_nav(obj) {
   $('body').scrollspy({ target: 'nav.affix-nav' });
 }
 
-function build_regexLink() {
-  var service = 'http://regexper.com/#';
-  $('a[regex]').each(function() {
-    $(this).attr('href', service + encodeURIComponent($(this).attr('regex')))
-           .attr('target', '_blank');
-  });
-}
-
-function build_grammarAnchor() {
-  $('a.grammar').each(function() {
-    $(this).attr('name', $(this).text());
-  });
-}
-
-function build_header_nav(obj) {
-  build_parmaLink(obj);
-  build_nav(obj);
-  //moveToHash();
-}
-
 function build_parmaLink(obj) {
   var skippedFirst = false;
 
@@ -115,6 +95,12 @@ function moveToHash() {
   $("html, body").animate({scrollTop: p}, 0);
 }
 
+function build_header_nav(obj) {
+  build_parmaLink(obj);
+  build_nav(obj);
+  moveToHash();
+}
+
 function applyMarkdown() {
   var unescape_patch = function(html) {
     return html
@@ -136,9 +122,4 @@ $(function(){
   $('<div class="col-navigator"></div>').insertAfter('.col-main');
   $('.col-main').addClass('col-sm-9');
   $('.col-navigator').addClass('col-sm-3');
-
-  build_regexLink();
-  build_grammarAnchor();
-  //build_parmaLink();
-  //build_nav();
 });
