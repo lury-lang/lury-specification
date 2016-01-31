@@ -115,9 +115,23 @@ function moveToHash() {
   $("html, body").animate({scrollTop: p}, 0);
 }
 
+function applyMarkdown() {
+  var unescape_patch = function(html) {
+    return html
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'");
+  };
+
+  $('.markdown').each(function(){$(this).html(marked($(this).html())); });
+  $('code').each(function(){$(this).html(unescape_patch($(this).html())); });
+}
+
 $(function(){
   $('.container>.row:first').before(_(header, root_dir)).after(_(footer, root_dir));
-  $(".markdown").each(function(){$(this).html(marked($(this).html()))});
+  applyMarkdown();
 
   $('<div class="col-navigator"></div>').insertAfter('.col-main');
   $('.col-main').addClass('col-sm-9');

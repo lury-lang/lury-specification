@@ -56,6 +56,10 @@ video {
     display: block;
 }
 
+bar:before {
+    content: "|";
+}
+
 /**** Affix Navigation ****/
 
 .affix-nav {
