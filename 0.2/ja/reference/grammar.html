@@ -168,7 +168,7 @@ comma\_expression
     : assignment\_expression
     | assignment\_expression ',' comma\_expression
 
-assignment\_expression 
+assignment\_expression
     : conditional\_expression
     | conditional\_expression '=' assignment\_expression
     | conditional\_expression AssignmentAdd assignment\_expression
@@ -243,7 +243,7 @@ addition\_expression
     | addition\_expression '-' multiplication\_expression
     | addition\_expression '~' multiplication\_expression
 
-multiplication\_expression 
+multiplication\_expression
     : unary\_expression
     | multiplication\_expression '\*' unary\_expression
     | multiplication\_expression IntDivide unary\_expression
@@ -307,5 +307,10 @@ literal
       </div>
     </div>
   </div>
+  <script type="text/javascript">
+    $(function() {
+      build_header_nav([]);
+    });
+  </script>
 </body>
 </html>
