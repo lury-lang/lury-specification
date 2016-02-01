@@ -113,6 +113,19 @@ function applyMarkdown() {
 
   $('.markdown').each(function(){$(this).html(marked($(this).html())); });
   $('code').each(function(){$(this).html(unescape_patch($(this).html())); });
+
+  hljs.registerLanguage('lury', hljs_lury);
+  hljs.registerLanguage('bnf', hljs_bnf);
+
+  $('.lang-lury').each(function() {
+    $(this).html(hljs.highlight('lury', $(this).html()).value);
+  });
+  $('.lang-bnf').each(function() {
+    $(this).html(hljs.highlight('bnf', $(this).html()).value);
+  });
+
+
+  $('code').each(function(){$(this).html(unescape_patch($(this).html())); });
 }
 
 $(function(){
