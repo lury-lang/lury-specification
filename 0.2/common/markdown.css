@@ -1,42 +1,42 @@
 @charset "UTF-8";
 
-.markdown-body {
+.markdown {
     padding: 0 14px;
     text-align: left;
     word-wrap: break-word;
 }
 
-.markdown-body > *:first-child {
+.markdown > *:first-child {
     margin-top: 0;
 }
 
-.markdown-body h1 {
+.markdown h1 {
     border-bottom: 1px solid #DDDDDD;
     font-size: 2.5em;
 }
 
-.markdown-body h2 {
+.markdown h2 {
     border-bottom: 1px solid #EEEEEE;
     font-size: 2em;
 }
-.markdown-body h3 {
+.markdown h3 {
     font-size: 1.5em;
 }
 
-.markdown-body h4 {
+.markdown h4 {
     font-size: 1.2em;
 }
 
-.markdown-body h5 {
+.markdown h5 {
     font-size: 1em;
 }
 
-.markdown-body h6 {
+.markdown h6 {
     color: #777777;
     font-size: 1em;
 }
 
-.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6 {
+.markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6 {
     cursor: text;
     font-weight: bold;
     line-height: 1.7;
@@ -47,18 +47,20 @@
     position: relative;
 }
 
-.markdown-body img {
+.markdown img {
     border: 0 none;
 }
 
-.markdown-body p, .markdown-body blockquote, .markdown-body ul, .markdown-body ol, .markdown-body dl, .markdown-body table, .markdown-body pre {
+.markdown p, .markdown blockquote, .markdown ul, .markdown ol, .markdown dl, .markdown table, .markdown pre {
     margin: 15px 0;
 }
 
-.markdown-body .highlight pre, .markdown-body pre {
-    background-color: #F8F8F8;
-    border: 1px solid #DDDDDD;
-    border-radius: 3px;
+.markdown .highlight pre, .markdown pre {
+    /*background-color: #F8F8F8;*/
+    background-color: #fafbfc;
+    border: none;
+    border-left: 5px solid #2A5CAA;
+    /*border-radius: 3px;*/
     font-size: 13px;
     line-height: 19px;
     overflow: auto;
@@ -142,7 +144,7 @@ code, pre {
     min-height: 1px;
 }
 
-.markdown-body blockquote {
+.markdown blockquote {
     border-left: 4px solid #DDDDDD;
     color: #777777;
     padding: 0 15px;
@@ -152,26 +154,28 @@ b, strong {
     font-weight: bold;
 }
 
-.markdown-body a, .markdown-body a:visited {
+.markdown a, .markdown a:visited {
     color: #4890A8;
 }
 
-.markdown-body code {
-    white-space: nowrap;
-}
-.markdown-body code, .markdown-body tt {
-    background-color: #F8F8F8;
-    border: 1px solid #DDDDDD;
+.markdown code, .markdown tt {
     border-radius: 3px;
     margin: 0 2px;
     padding: 0 5px;
 }
 
-.markdown-body ul, .markdown-body ol {
+.markdown pre code {
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+}
+
+.markdown ul, .markdown ol {
     padding-left: 30px;
 }
 
-.markdown-body table {
+.markdown table {
     display: block;
     overflow: auto;
     width: 100%;
@@ -182,33 +186,36 @@ table {
     border-spacing: 0;
 }
 
-.markdown-body table tr {
-    background-color: #FFFFFF;
-    border-top: 1px solid #CCCCCC;
+.markdown table tr {
+    /*background-color: #FFFFFF;*/
+    border-bottom: 1px solid #CCCCCC;
 }
 
-.markdown-body table th, .markdown-body table td {
-    border: 1px solid #DDDDDD;
+.markdown table th, .markdown table td {
+    /*border: 1px solid #DDDDDD;*/
     padding: 6px 13px;
 }
-.markdown-body table th {
+.markdown table th {
+    background-color: #fafbfc;
     font-weight: bold;
+    border-bottom: 2px solid #CCCCCC;
 }
 
-.markdown-body table tr:nth-child(2n) {
-    background-color: #F8F8F8;
+.markdown table tr:nth-child(2n) {
+    background-color: #f9fafb;
+    background-color: rgba(212,221,228,.15);
 }
 
-.markdown-body ul ul, .markdown-body ul ol, .markdown-body ol ol, .markdown-body ol ul {
+.markdown ul ul, .markdown ul ol, .markdown ol ol, .markdown ol ul {
     margin-bottom: 0;
     margin-top: 0;
 }
 
-.markdown-body dl {
+.markdown dl {
     padding: 0;
 }
 
-.markdown-body dl dt {
+.markdown dl dt {
     font-size: 14px;
     font-style: italic;
     font-weight: bold;
@@ -216,7 +223,7 @@ table {
     padding: 0;
 }
 
-.markdown-body dl dd {
+.markdown dl dd {
     margin-bottom: 15px;
     padding: 0 15px;
 }
