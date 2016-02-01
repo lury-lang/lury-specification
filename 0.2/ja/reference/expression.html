@@ -19,7 +19,7 @@
 
 _原始式_ (primary) は演算を含まない、式の基本的な要素です。
 
-```
+```bnf
 primary : identifier_all
         | literal
         | 'true'
@@ -38,7 +38,7 @@ _識別子_ (identifier) はオブジェクトの名前を表現するために�
 
 #### 4.1.2. リテラル
 
-```
+```bnf
 literal : StringLiteral
         | EmbedStringLiteral
         | WysiwygStringLiteral
@@ -64,7 +64,7 @@ Lury の演算子は 単項演算子、二項演算子、三項演算子 の3つ
 
 #### 4.2.1. 後置演算式
 
-```
+```bnf
 postfix_expression : primary
                    | postfix_expression '.' identifier_all
                    | postfix_expression '++'
@@ -96,7 +96,7 @@ _名前付き引数_ (named argument) は、名前と仮引数値をコロン `:
 
 #### 4.2.2. 呼出参照演算式
 
-```
+```bnf
 callref_expression : postfix_expression
                    | KeywordRef postfix_expression
 ```
@@ -109,7 +109,7 @@ callref_expression : postfix_expression
 
 オブジェクトの参照は、たとえば関数オブジェクトを参照したい場合に用います。
 
-```
+```lury
 def foo:
   return 'called foo'
 
@@ -139,7 +139,7 @@ Lury ではゼロのゼロ乗 (0<sup>0</sup>) は `1` として処理します�
 
 #### 4.2.4. 単項算術演算と単項ビット演算
 
-```
+```bnf
 unary_expression : power_expression
                  | '++' unary_expression
                  | '--' unary_expression
@@ -158,7 +158,7 @@ unary_expression : power_expression
 
 #### 4.2.5. 二項算術演算
 
-```
+```bnf
 multiplication_expression : unary_expression
                           | multiplication_expression '*' unary_expression
                           | multiplication_expression '//' unary_expression
@@ -185,7 +185,7 @@ _連結_ (concatenation) は演算子 `~` で表される 2 つの要素に対�
 
 #### 4.2.6. シフト演算
 
-```
+```bnf
 shift_expression : addition_expression
                           | shift_expression '&lt;&lt;' addition_expression
                           | shift_expression '&gt;&gt;' addition_expression
@@ -199,7 +199,7 @@ Lury におけるシフトは算術シフトです。符号ビットを考慮す
 
 #### 4.2.7. 二項ビット演算
 
-```
+```bnf
 and_expression : shift_expression
                | and_expression '&amp;' shift_expression
 
@@ -220,7 +220,7 @@ _二項ビット演算_ (binary bitwise operation) は 2 つの項に対する�
 
 #### 4.2.8. 比較演算
 
-```
+```bnf
 comparison_expression : or_expression
                       | or_expression comparison_operator or_expression
 
@@ -260,7 +260,7 @@ _比較演算_ (comparison operation) は 2 つの項に対する比較演算で
 
 #### 4.2.9. 論理演算
 
-```
+```bnf
 bool_not_expression : comparison_expression
                     | 'not' bool_not_expression
                     | '!' bool_not_expression
@@ -284,7 +284,7 @@ _論理演算_ (boolean operation) は 1 つもしくは 2 つの項に対する
 
 #### 4.2.10. 条件式
 
-```
+```bnf
 conditional_expression : bool_or_expression
                        | bool_or_expression '?' bool_or_expression ':' bool_or_expression
                        | bool_or_expression 'if' bool_or_expression 'else' bool_or_expression
@@ -302,7 +302,7 @@ _条件式_ (conditional expression) は 3 つの項に対する演算式です�
 
 #### 4.2.11. 代入式
 
-```
+```bnf
 assignment_expression : conditional_expression
                       | conditional_expression '=' assignment_expression
                       | conditional_expression '+=' assignment_expression
@@ -339,7 +339,7 @@ _代入式_ (assignment expression) は 2 つの項に対する演算式です�
 
 ### 4.3. カンマ式と式
 
-```
+```bnf
 comma_expression : assignment_expression
                  | assignment_expression ',' comma_expression
 
@@ -357,7 +357,7 @@ _式_ (expression) はこのバージョンではカンマ式と同一ですが�
 
 以下のプログラムの各行の式の評価順序は、変数の添字の数値と同じものとなります。
 
-```
+```lury
 expr1 + expr2 * (expr3 - expr4)
 expr1.expr2(expr3, expr4)
 expr5 = expr1 + (expr2 - expr3) / expr4

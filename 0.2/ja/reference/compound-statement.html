@@ -13,7 +13,7 @@
 
 ## 6. 複合文
 
-```
+```bnf
 compound_statement : if_statement
                    | while_statement
                    | function_definition
@@ -48,7 +48,7 @@ unittest 文を除き、複合文は _入れ子 (nest)_ にすることができ
 
 ### 6.1. if 文
 
-```
+```bnf
 if_statement    : 'if' expression ':' suite
                 | 'if' expression ':' suite elif_statements
 
@@ -68,7 +68,7 @@ elif ブロックはいくつでも記述が可能です。一方、else ブロ�
 
 ### 6.2. while 文
 
-```
+```bnf
 while_statement : 'while' expression ':' suite
                 | 'while' expression ':' suite else_statements
 ```
@@ -80,7 +80,7 @@ while 文の else ブロックは _expression が `false` である場合に whi
 
 ### 6.3. 関数定義
 
-```
+```bnf
 function_definition : 'def' function_name '(' parameter_list ')' ':' suite
                     | 'def' function_name ':' suite
 
@@ -100,7 +100,7 @@ parameter           : identifier_all
 
 ### 6.4. クラス定義
 
-```
+```bnf
 class_definition  : 'class' class_name '(' inheritance_list ')' ':' suite
                   | 'class' class_name ':' suite
 
@@ -117,7 +117,7 @@ object_name       : identifier_all
 
 これは、次のようなクラス定義は
 
-```
+```lury
 class Foo:
   pass
 
@@ -127,7 +127,7 @@ class Bar(Foo):
 
 実際には以下のように、クラス `Foo` はクラス `Object` を継承するよう暗黙的に宣言されます。
 
-```
+```lury
 class Foo(Object):
   pass
 
@@ -138,7 +138,7 @@ class Bar(Foo):
 
 ### 6.5. unittest 文
 
-```
+```bnf
 unittest_statement : 'unittest' ':' suite
 ```
 

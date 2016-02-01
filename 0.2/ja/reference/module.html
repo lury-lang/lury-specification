@@ -46,7 +46,7 @@ Lury の内部で用いられるモジュール名は、外部から指定でき
 
 ### 3.2. import 文
 
-```
+```bnf
 import_statement   : 'import' import_names
                    | 'public' 'import' import_names
 
@@ -78,7 +78,7 @@ import 文はモジュールのソースコードを_展開しません_。impor
 
 基本形となる import 方式です。基本 import では、読み込まれたモジュールは外部に対して公開されません (_private な import_)。
 
-```
+```lury
 # [A.lr]
 import B
 
@@ -89,13 +89,13 @@ if true:
   func_c
 ```
 
-```
+```lury
 # [B.lr]
 def func_b:
   pass
 ```
 
-```
+```lury
 # [C.lr]
 def func_c:
   pass
@@ -105,7 +105,7 @@ def func_c:
 
 公開 import は、import したことを外部に公開する import です (_public な import_)。以下の例ではモジュール A はモジュール B を import していますが、モジュール B にてモジュール C を公開 import しているため、モジュール A でも新たな import なしでモジュール C にアクセスできます。
 
-```
+```lury
 # [A.lr]
 import B
 
@@ -113,7 +113,7 @@ func_b
 func_c
 ```
 
-```
+```lury
 # [B.lr]
 public import C
 
@@ -121,7 +121,7 @@ def func_b:
   pass
 ```
 
-```
+```lury
 # [C.lr]
 def func_c:
   pass
