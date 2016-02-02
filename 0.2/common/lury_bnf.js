@@ -11,8 +11,12 @@ function hljs_bnf(hljs) {
         begin: /\b\w+\s*:/
       },
       {
+        className: 'attr',
+        begin: /\b[A-Z]\w*\b/
+      },
+      {
         className: 'variable',
-        begin: /\b\w+\b/
+        begin: /\b[a-z_]\w*\b/
       },
       {
         className: 'string',
