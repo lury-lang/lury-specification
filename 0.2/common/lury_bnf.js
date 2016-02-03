@@ -6,6 +6,8 @@ Category: misc
 function hljs_bnf(hljs) {
   return {
     contains: [
+      hljs.C_BLOCK_COMMENT_MODE,
+      hljs.C_LINE_COMMENT_MODE,
       {
         className: 'title',
         begin: /\b\w+\s*:/
