@@ -16,6 +16,62 @@
 以下はパーサジェネレータに入力される Lury の完全な文法です。(BNF 記法)
 
 ```bnf
+/* Whitespace */
+%token NewLine Indent Dedent EndOfFile
+
+/* ContextualKeyword */
+%token IdentifierGet IdentifierSet IdentifierFile IdentifierLine IdentifierExit
+%token IdentifierSuccess IdentifierFailure
+
+/* Keyword */
+%token KeywordAbstract KeywordAnd KeywordBreak KeywordCase KeywordCatch KeywordClass
+%token KeywordContinue KeywordDef KeywordDefault KeywordDelete KeywordElif KeywordElse
+%token KeywordEnum KeywordExtended KeywordFalse KeywordFinally KeywordFor KeywordIf
+%token KeywordImport KeywordIn KeywordInterface KeywordInvariant KeywordIs KeywordLazy
+%token KeywordNameof KeywordNew KeywordNil KeywordNot KeywordOr KeywordOut KeywordOverride
+%token KeywordPass KeywordPrivate KeywordProperty KeywordProtected KeywordPublic
+%token KeywordRef KeywordReflect KeywordReturn KeywordScope KeywordSealed KeywordStatic
+%token KeywordSuper KeywordSwitch KeywordThis KeywordThrow KeywordTrue KeywordTry
+%token KeywordUnittest KeywordUnless KeywordUntil KeywordVar KeywordWhile KeywordWith
+%token KeywordYield
+
+/* Identifier */
+%token Identifier
+
+/* Literal */
+%token StringLiteral EmbedStringLiteral WysiwygStringLiteral
+%token ImaginaryNumber FloatNumber Integer
+
+/* Operator */
+%token RangeOpen RangeClose Increment AssignmentAdd Decrement AssignmentSub
+%token AnnotationReturn AssignmentConcat AssignmentPower Power AssignmentMultiply
+%token AssignmentIntDivide IntDivide AssignmentDivide AssignmentModulo AssignmentLeftShift
+%token LeftShift LessThan AssignmentRightShift RightShift MoreThan Equal Lambda NotEqual
+%token NotIn IsNot AndShort AssignmentAnd AssignmentXor OrShort AssignmentOr NilCoalesce
+
+
+%left  ','
+%right '=' AssignmentPower AssignmentMultiply AssignmentDivide AssignmentIntDivide AssignmentModulo AssignmentAdd AssignmentSub AssignmentConcat AssignmentOr AssignmentAnd AssignmentXor AssignmentLeftShift AssignmentRightShift
+%right '?' ':' KeywordIf KeywordElse
+%left  OrShort KeywordOr
+%left  AndShort KeywordAnd
+%right '!' KeywordNot
+%left  Equal NotEqual '&lt;' '&gt;' LessThan MoreThan KeywordIs IsNot
+%left  '|'
+%left  '^'
+%left  '&amp;'
+%left  LeftShift RightShift
+%left  '+' '-' '~'
+%left  '*' IntDivide '/' '%'
+%right Power
+%right Increment Decrement
+%left  '.'
+
+%start program
+
+%%
+
+/* top level */
 program
     :
     | program_lines
@@ -29,22 +85,26 @@ program_line
     | NewLine
 
 
+/* compound statement */
 statement
     : statement_list NewLine
     | compound_statement
 
 statement_list
     : simple_statement
-    | simple_statement simple_statements
+    | simple_statement simple_statements        /* right recursion */
 
 simple_statements
     : ';'
     | ';' simple_statement
-    | ';' simple_statement simple_statements
+    | ';' simple_statement simple_statements    /* right recursion */
 
 compound_statement
     : if_statement
+    | unless_statement
     | while_statement
+    | for_statement
+    | try_statement
     | function_definition
     | class_definition
     | unittest_statement
@@ -55,7 +115,7 @@ suite
 
 statements
     : statement
-    | statement statements
+    | statements statement
 
 
 if_statement
@@ -70,13 +130,37 @@ elif_statements
 else_statement
     : KeywordElse ':' suite
 
+unless_statement
+    : KeywordUnless expression ':' suite
+    | KeywordUnless expression ':' suite else_statement
+
 while_statement
     : KeywordWhile expression ':' suite
     | KeywordWhile expression ':' suite else_statement
 
+for_statement
+    : KeywordFor identifier_all KeywordIn expression ':' suite
+    | KeywordFor identifier_all KeywordIn expression ':' suite else_statement
+
+try_statement
+    : KeywordTry ':' suite catch_statement
+    | KeywordTry ':' suite finally_statement
+
+catch_statement
+    : KeywordCatch identifier_all KeywordCase class_name ':' suite
+    | KeywordCatch identifier_all KeywordCase class_name ':' suite catch_statement
+    | KeywordCatch identifier_all KeywordCase class_name ':' suite finally_statement
+
+finally_statement
+    : KeywordFinally ':' suite
+
 function_definition
-    : KeywordDef function_name '(' parameter_list ')' ':' suite
-    | KeywordDef function_name ':' suite
+    : KeywordDef function_name ':' suite
+    | KeywordDef function_name '(' ')' ':' suite
+    | KeywordDef function_name '(' parameter_list ')'':' suite
+    | annotation_list KeywordDef function_name ':' suite
+    | annotation_list KeywordDef function_name '(' ')' ':' suite
+    | annotation_list KeywordDef function_name '(' parameter_list ')'':' suite
 
 function_name
     : identifier_all
@@ -90,8 +174,10 @@ parameter
     : identifier_all
 
 class_definition
-    : KeywordClass class_name '(' inheritance_list ')' ':' suite
-    | KeywordClass class_name ':' suite
+    : KeywordClass class_name ':' suite
+    | KeywordClass class_name '(' inheritance_list ')' ':' suite
+    | annotation_list KeywordClass class_name ':' suite
+    | annotation_list KeywordClass class_name '(' inheritance_list ')' ':' suite
 
 class_name
     : identifier_all
@@ -104,10 +190,27 @@ object_name
     : identifier_all
     | object_name '.' identifier_all
 
+annotation_list
+    : annotation
+    | annotation_list annotation
+
+annotation
+    : '&lt;' annotation_params '&gt;' NewLine
+
+annotation_params
+    : annotation_param
+    | annotation_params ',' annotation_param
+
+annotation_param
+    : class_name
+    | class_name '(' ')'
+    | class_name '(' argument_list ')'
+
 unittest_statement
-    : 'unittest' ':' suite
+    : KeywordUnittest ':' suite
 
 
+/* simple statement */
 simple_statement
     : pass_statement
     | expression_statement
@@ -166,29 +269,40 @@ expression
 
 comma_expression
     : assignment_expression
-    | assignment_expression ',' comma_expression
+    | comma_expression ',' assignment_expression
 
 assignment_expression
+    : generator_expression
+    | assignment_expression '=' generator_expression
+    | assignment_expression AssignmentAdd generator_expression
+    | assignment_expression AssignmentSub generator_expression
+    | assignment_expression AssignmentMultiply generator_expression
+    | assignment_expression AssignmentDivide generator_expression
+    | assignment_expression AssignmentIntDivide generator_expression
+    | assignment_expression AssignmentPower generator_expression
+    | assignment_expression AssignmentModulo generator_expression
+    | assignment_expression AssignmentAnd generator_expression
+    | assignment_expression AssignmentOr generator_expression
+    | assignment_expression AssignmentXor generator_expression
+    | assignment_expression AssignmentConcat generator_expression
+    | assignment_expression AssignmentLeftShift generator_expression
+    | assignment_expression AssignmentRightShift generator_expression
+
+generator_expression
+    : lambda_expression
+    | lambda_expression KeywordFor identifier_all KeywordIn lambda_expression
+
+lambda_expression
     : conditional_expression
-    | conditional_expression '=' assignment_expression
-    | conditional_expression AssignmentAdd assignment_expression
-    | conditional_expression AssignmentSub assignment_expression
-    | conditional_expression AssignmentMultiply assignment_expression
-    | conditional_expression AssignmentDivide assignment_expression
-    | conditional_expression AssignmentIntDivide assignment_expression
-    | conditional_expression AssignmentPower assignment_expression
-    | conditional_expression AssignmentModulo assignment_expression
-    | conditional_expression AssignmentAnd assignment_expression
-    | conditional_expression AssignmentOr assignment_expression
-    | conditional_expression AssignmentXor assignment_expression
-    | conditional_expression AssignmentConcat assignment_expression
-    | conditional_expression AssignmentLeftShift assignment_expression
-    | conditional_expression AssignmentRightShift assignment_expression
+    | Lambda parameter '(' expression ')'
+    | Lambda '(' expression ')'
+    | Lambda parameter_list '(' expression ')'
 
 conditional_expression
     : bool_or_expression
     | bool_or_expression '?' bool_or_expression ':' bool_or_expression
     | bool_or_expression KeywordIf bool_or_expression KeywordElse bool_or_expression
+    | bool_or_expression KeywordUnless bool_or_expression KeywordElse bool_or_expression
 
 bool_or_expression
     : bool_and_expression
@@ -206,12 +320,12 @@ bool_not_expression
     | '!' bool_not_expression
 
 comparison_expression
-    : or_expression
-    | or_expression comparison_operator or_expression
+    : range_expression
+    | comparison_expression comparison_operator range_expression
 
 comparison_operator
-    : '&lt;'
-    | '&gt;'
+    : '&gt;'
+    | '&lt;'
     | Equal
     | LessThan
     | MoreThan
@@ -219,6 +333,11 @@ comparison_operator
     | KeywordIs
     | IsNot
     | KeywordIs KeywordNot
+
+range_expression
+    : or_expression
+    | or_expression RangeOpen or_expression
+    | or_expression RangeClose or_expression
 
 or_expression
     : xor_expression
@@ -273,10 +392,12 @@ postfix_expression
     | postfix_expression Decrement
     | postfix_expression '(' ')'
     | postfix_expression '(' argument_list ')'
+    | postfix_expression '[' ']'
+    | postfix_expression '[' argument_list ']'
 
 argument_list
     : argument
-    | argument ',' argument_list
+    | argument_list ',' argument
 
 argument
     : assignment_expression
@@ -294,6 +415,7 @@ primary
     | KeywordThis
     | KeywordSuper
     | '(' expression ')'
+    | '$'
 
 literal
     : StringLiteral
@@ -302,6 +424,53 @@ literal
     | ImaginaryNumber
     | FloatNumber
     | Integer
+    | list_literal
+    | tuple_literal
+    | hash_literal
+    | set_literal
+
+list_literal
+    : '[' ']'
+    | '[' list_element_list ']'
+
+list_element_list
+    : list_element
+    | list_element_list ',' list_element
+
+list_element
+    : expression
+
+tuple_literal
+    : '(' ')'
+    | '(' tuple_element_list ')'
+
+tuple_element_list
+    : tuple_element
+    | tuple_element_list ',' tuple_element
+
+tuple_element
+    : expression
+
+hash_literal
+    : '{' '}'
+    | '{' hash_element_list '}'
+
+hash_element_list
+    : hash_element
+    | hash_element_list ',' hash_element
+
+hash_element
+    : identifier_all ':' expression
+
+set_literal
+    : '{' set_element_list '}'
+
+set_element_list
+    : set_element
+    | set_element_list ',' set_element
+
+set_element
+    : expression
 ```
 
       </div>
