@@ -86,6 +86,7 @@ function_definition : 'def' function_name '(' parameter_list ')' ':' suite
 
 function_name       : identifier_all
                     | function_name '.' identifier_all
+                    | 'this'
 
 parameter_list      : parameter
                     | parameter_list ',' parameter
