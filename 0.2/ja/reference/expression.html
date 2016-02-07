@@ -28,6 +28,7 @@ primary : identifier_all
         | 'this'
         | 'super'
         | '(' expression ')'
+        | '$'
 ```
 
 #### 4.1.1. 識別子
@@ -45,6 +46,10 @@ literal : StringLiteral
         | ImaginaryNumber
         | FloatNumber
         | Integer
+        | list_literal
+        | tuple_literal
+        | hash_literal
+        | set_literal
 ```
 
 _リテラル_ (literal) では文字列や数値の記述した値そのものを表すオブジェクトを生成します。これらは全て変更不能（イミュータブル）です。
@@ -52,6 +57,70 @@ _リテラル_ (literal) では文字列や数値の記述した値そのもの�
 トークン `StringLiteral`、`EmbedStringLiteral` そして `WysiwygStringLiteral` は String 型に、`ImaginaryNumber`、`FloatNumber` そして `Integer` はそれぞれ、Number 型から派生した Complex 型、Real 型、Integer 型となります。
 
 数値はその値によって丸め誤差、オーバーフローやアンダーフローが起こりうることに注意してください。これは_表記上の値_と、_実際の値_と異なる場合があることを意味します。（__注__: 次期バージョンにて Number の派生クラスは最大値と最小値を取得できるよう機能が追加されます。）
+
+
+#### 4.1.3. リストリテラル
+
+```bnf
+list_literal      : '[' ']'
+                  | '[' list_element_list ']'
+
+list_element_list : list_element
+                  | list_element_list ',' list_element
+
+list_element      : expression
+```
+
+リストリテラルは _リスト_ (list) 構造を作るための専用の式です。リストはインデクスを指定して要素を読み書きできるデータ構造です。また、その長さも可変長です。列挙時の要素の並び順は必ず保持されます。
+
+リストリテラル `[]` は要素が一つもない、_空_ のリストを作ります。
+
+#### 4.1.4. タプルリテラル
+
+```bnf
+tuple_literal      : '(' ')'
+                   | '(' tuple_element_list ')'
+
+tuple_element_list : tuple_element
+                   | tuple_element_list ',' tuple_element
+
+tuple_element      : expression
+```
+
+タプルリテラルは _タプル_ (tuple) 構造を作るための専用の式です。タプルはリストと同様にインデクスを指定して要素を読み取ることができますが、書き込みや長さを変えることはできません（イミュータブル）。列挙時の要素の並び順は必ず保持されます。
+
+リストリテラルと同様に、タプルリテラル `()` は要素が一つもない、_空_ のタプルを作ります。
+
+#### 4.1.5. ハッシュリテラル
+
+```bnf
+hash_literal      : '{' '}'
+                  | '{' hash_element_list '}'
+
+hash_element_list : hash_element
+                  | hash_element_list ',' hash_element
+
+hash_element      : expression ':' expression
+```
+
+ハッシュリテラルは _ハッシュテーブル_ (hash table) 構造を作るための専用の式です。ハッシュテーブルは _ディクショナリ_、_辞書_ とも呼ばれます。ハッシュテーブルはインデクスを指定して要素を読み書きができますが、リストとタプルのインデクスが整数型である必要があるのに対し、ハッシュテーブルは任意のオブジェクトをキーとすることができます。キーのない要素を作ることはできませんが、`nil` をキーにすることができます。列挙時の要素の並び順は保証されません。
+
+ハッシュリテラル `{}` は _空_ のハッシュテーブルを表します（空のセットではありません）。
+
+#### 4.1.6. セットリテラル
+
+```bnf
+set_literal      : '{' set_element_list '}'
+
+set_element_list : set_element
+                 | set_element_list ',' set_element
+
+set_element      : expression
+```
+
+セットリテラルは _セット_ (set) 構造を作るための専用の式です。セットは _集合_ とも呼ばれます。セットは重複する要素を許さない、インデクスアクセスのできないコンテナです。列挙時の要素の並び順は保証されません。
+
+空のセット（空集合）は `{}` ではなく、組み込み関数 `set()` を用いて生成します。`{}` は空のハッシュテーブルを生成します。
 
 
 ### 4.2. 演算式
