@@ -295,9 +295,13 @@ generator_expression
 
 lambda_expression
     : conditional_expression
-    | Lambda parameter '(' expression ')'
-    | Lambda '(' expression ')'
-    | Lambda parameter_list '(' expression ')'
+    | Lambda parameter '(' lambda_body ')'
+    | Lambda '(' lambda_body ')'
+    | Lambda parameter_list '(' lambda_body ')'
+
+lambda_body
+    : expression
+    | KeywordPass
 
 conditional_expression
     : bool_or_expression
