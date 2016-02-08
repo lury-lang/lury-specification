@@ -370,28 +370,24 @@ _条件式_ (conditional expression) は 3 つの項に対する演算式です�
 条件式は入れ子構造にすることができますが、入れ子となった条件式は可読性に劣りやすいためこれを避けることを推奨します。
 
 #### 4.2.11. 代入式
+### 4.3. ラムダ式
 
 ```bnf
-assignment_expression : conditional_expression
-                      | conditional_expression '=' assignment_expression
-                      | conditional_expression '+=' assignment_expression
-                      | conditional_expression '-=' assignment_expression
-                      | conditional_expression '*=' assignment_expression
-                      | conditional_expression '/=' assignment_expression
-                      | conditional_expression '//=' assignment_expression
-                      | conditional_expression '**=' assignment_expression
-                      | conditional_expression '%=' assignment_expression
-                      | conditional_expression '&amp;=' assignment_expression
-                      | conditional_expression '|=' assignment_expression
-                      | conditional_expression '^=' assignment_expression
-                      | conditional_expression '~=' assignment_expression
-                      | conditional_expression '&lt;&lt;=' assignment_expression
-                      | conditional_expression '&gt;&gt;=' assignment_expression
+lambda_expression : conditional_expression
+                  | '=>' parameter '(' lambda_body ')'
+                  | '=>' '(' lambda_body ')'
+                  | '=>' parameter_list '(' lambda_body ')'
+
+lambda_body       : expression
+                  | 'pass'
 ```
 
-_代入式_ (assignment expression) は 2 つの項に対する演算式です。結合性はすべて 右 (←) です。
+_ラムダ式_ (lambda expression) は名前を持たない関数を定義するための式です。この式の型は `Function` 型となります。[関数定義文](compound-statement.html#function)と同じ機能を持ちますが、以下の点で異なります。
 
-代入演算子は左辺が示す _場所_ に右辺値を代入します。式の値は代入後の左辺値となります。
+* ラムダ式は _式_ です。`ref` を使わずに直接変数へ代入、関数の引数として記述できます。
+* ラムダ式の内部に記述できるのは[式](#expression)だけです。文は記述できません。
+  * ただし、空のラムダ式を記述するために `pass` を使うことができます。
+  * ラムダ式の内部にラムダ式を定義できます。
 
 #### 4.2.12. 暗黙的な型変換
 
