@@ -142,7 +142,7 @@ postfix_expression : primary
                    | postfix_expression '(' argument_list ')'
 
 argument_list      : argument
-                   | argument ',' argument_list
+                   | argument_list ',' argument
 
 argument           : assignment_expression
                    | named_argument
