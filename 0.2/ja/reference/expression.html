@@ -421,18 +421,34 @@ list(x * 2 for x in 0...5)
 ```
 
 
-### 4.3. カンマ式と式
+### 4.5. カンマ式
 
 ```bnf
-comma_expression : assignment_expression
-                 | assignment_expression ',' comma_expression
-
-expression       : comma_expression
+comma_expression : generator_expression
+                 | comma_expression ',' generator_expression
 ```
 
-_カンマ式_ (commma expression) はこのバージョンでは実装されません。カンマ式の2番目の文法を使用した場合は文法エラーとなります。
+_カンマ式_ (comma expression) は複数の式を結合、またはタプルを生成する式です。この式の型は `Tuple` 型となります。カンマ式とタプルリテラルは同じ文法で曖昧さを持ちますが、両者で生成されるタプルに差異はありません。
 
-_式_ (expression) はこのバージョンではカンマ式と同一ですが、将来のバージョンのために区別されています。
+カンマ式は必ず左の要素から評価されます。
+
+代入式と組み合わせると複数の変数に同じ値を代入することができます。これは多重代入と呼ばれます。
+
+```lury
+foo = 1, 3, 5       # (1, 3, 5)
+foo = (1, 3, 5)     # (1, 3, 5)
+
+a = b, c = 1, 3     # 多重代入: a = (1, 3), b = 1, c = 3
+a, b, c = 42        # 多重代入: a = 42, b = 42, c = 42
+a, b, c = 1, 3      # エラー: 左辺と右辺のタプル数が不正
+```
+
+
+```bnf
+
+```
+
+
 
 
 ### 4.4. 評価順序
