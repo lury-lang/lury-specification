@@ -294,11 +294,52 @@ _二項ビット演算_ (binary bitwise operation) は 2 つの項に対する�
 
 演算子 `|` はビットの論理和 (OR) の演算です。
 
-#### 4.2.8. 比較演算
+#### 4.2.8. 範囲式
 
 ```bnf
-comparison_expression : or_expression
-                      | or_expression comparison_operator or_expression
+range_expression : or_expression
+                 | or_expression '..' or_expression
+                 | or_expression '...' or_expression
+```
+
+_範囲式_ (range expression) はある整数値から整数値までの範囲を表すための式です。この式の型は整数値を列挙する何らかの型となります。
+
+2つの項はどちらも整数型でなくてはなりません。また、項の大小関係を逆転させることはできません。`a..b` は [a, b) = {x | a &lt;= x &lt; b} を表し（左閉右開区間）、`a...b` は [a, b] = {x | a &lt;= x &lt;= b} を表します（閉区間）。
+
+`a..a` はエラーとなり、`a...a` は一つの `a` のみ列挙します。
+
+リストまたはタプルに対して添字の引数として範囲式を用いると _スライス_ として任意の範囲を指定できます。リストに対しては配列演算として適用範囲を指定することもできます。
+
+```lury
+foo = 0..10       # 0以上10未満の整数値の範囲
+bar = 0...10      # 0以上10以下の整数値の範囲
+```
+
+```lury
+data = [3, 5, 11, 19, 23, 32, 42]
+
+foo = data[0..data.length]          # dataの全ての範囲の値を foo にコピー(スライス)
+bar = data[0..$]                    # 同上
+
+baz = data[0..$ // 2]               # dataの半分のデータを baz にコピー
+```
+
+```lury
+data = list(0..10)        # リスト [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] を生成
+
+# 以下、上記の data に対する配列演算
+
+data[] += 5                         # [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+data[0..$] += 5                     # [5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+data[0..$ // 2] += 5                # [0, 1, 2, 3, 4, 10, 11, 12, 13, 14]
+data[0..$ // 2] += data[$ // 2..$]  # [5, 6, 7, 8, 9, 5, 6, 7, 8, 9]
+```
+
+#### 4.2.9. 比較演算
+
+```bnf
+comparison_expression : range_expression
+                      | comparison_expression comparison_operator range_expression
 
 comparison_operator   : '&lt;'
                       | '&gt;'
