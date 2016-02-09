@@ -140,6 +140,8 @@ postfix_expression : primary
                    | postfix_expression '--'
                    | postfix_expression '(' ')'
                    | postfix_expression '(' argument_list ')'
+                   | postfix_expression '[' ']'
+                   | postfix_expression '[' argument_list ']'
 
 argument_list      : argument
                    | argument_list ',' argument
@@ -162,6 +164,11 @@ _属性参照_ (attribute reference) はオブジェクトの属性 (attribute) 
 _名前付き引数_ (named argument) は、名前と仮引数値をコロン `:` で結合したものです。呼び出される関数に存在する仮引数名のみ使用することができます。同名の名前付き引数を複数回指定することはできません。
 
 実引数リストの順番は、呼び出される仮引数の順番と一致している必要があります。名前付き引数の順番は任意に決めることができます。また、通常の実引数と名前付き引数は混在可能です。ただし、通常の実引数と名前付き引数で同一の仮引数を指定することはできません。
+
+
+コンテナへのアクセスは `[ ]` 内にキーとなる引数を添字として指定することで可能です。リストまたはタプルはそのインデクスとなる整数値を、ハッシュテーブルはキーとなるオブジェクトを指定します。
+
+添字として範囲式を指定したり、何も添字を指定しない場合は _スライス_ となり、[範囲演算](#range)が可能となります。
 
 #### 4.2.2. 呼出参照演算式
 
