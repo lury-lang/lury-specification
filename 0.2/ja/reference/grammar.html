@@ -266,28 +266,28 @@ contextual_keyword
 
 
 expression
-    : comma_expression
-
-comma_expression
     : assignment_expression
-    | comma_expression ',' assignment_expression
 
 assignment_expression
+    : comma_expression
+    | assignment_expression '=' comma_expression
+    | assignment_expression AssignmentAdd comma_expression
+    | assignment_expression AssignmentSub comma_expression
+    | assignment_expression AssignmentMultiply comma_expression
+    | assignment_expression AssignmentDivide comma_expression
+    | assignment_expression AssignmentIntDivide comma_expression
+    | assignment_expression AssignmentPower comma_expression
+    | assignment_expression AssignmentModulo comma_expression
+    | assignment_expression AssignmentAnd comma_expression
+    | assignment_expression AssignmentOr comma_expression
+    | assignment_expression AssignmentXor comma_expression
+    | assignment_expression AssignmentConcat comma_expression
+    | assignment_expression AssignmentLeftShift comma_expression
+    | assignment_expression AssignmentRightShift comma_expression
+
+comma_expression
     : generator_expression
-    | assignment_expression '=' generator_expression
-    | assignment_expression AssignmentAdd generator_expression
-    | assignment_expression AssignmentSub generator_expression
-    | assignment_expression AssignmentMultiply generator_expression
-    | assignment_expression AssignmentDivide generator_expression
-    | assignment_expression AssignmentIntDivide generator_expression
-    | assignment_expression AssignmentPower generator_expression
-    | assignment_expression AssignmentModulo generator_expression
-    | assignment_expression AssignmentAnd generator_expression
-    | assignment_expression AssignmentOr generator_expression
-    | assignment_expression AssignmentXor generator_expression
-    | assignment_expression AssignmentConcat generator_expression
-    | assignment_expression AssignmentLeftShift generator_expression
-    | assignment_expression AssignmentRightShift generator_expression
+    | comma_expression ',' generator_expression
 
 generator_expression
     : lambda_expression
