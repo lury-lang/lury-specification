@@ -524,9 +524,42 @@ _代入式_ (assignment expression) は 2 つの項に対する演算式です�
 
 代入演算子は左辺が示す _場所_ に右辺値を代入します。式の値は代入後の左辺値となります。
 
+
+### 4.7. 式
+
+```bnf
+expression : assignment_expression
 ```
 
+Lury の _式_ (expression) は代入式の規則が最初に適用されます。式が記述された文については[式文](simple-statement.html#expression)をご覧ください。
 
+式が記述できるのは以下の部分です。
+
+* [原子式](#primary)
+  * 各[コンテナリテラル](#literal)の要素
+* 関数またはラムダ式の引数
+* [式文](simple-statement.html#expression)
+* [return 文](simple-statement.html#return)
+* [yield 文](simple-statement.html#yield)
+* [throw 文](simple-statement.html#throw)
+* [if 文](compound-statement.html#if) の条件式
+  * elif 文 の条件式
+* [unless 文](compound-statement.html#unless) の条件式
+* [while 文](compound-statement.html#while) の条件式
+* [for 文](compound-statement.html#for) の被列挙式
+
+
+### 4.8. 暗黙的な型変換
+
+数値型の二項演算では、それぞれの項の型が異なる場合、より表現範囲の広い型に暗黙的に型の変換を行います。例えば `2 + 3.0` という演算では、整数型 (Integer) よりも浮動小数点数型(Floating) が扱う範囲が広いため、この式の型は 浮動小数点数型 となります。
+
+複素数型は浮動小数点数型よりも広く、浮動小数点型は整数型よりも広い範囲を持ちます。
+
+比較演算式もこの原則に従います。例えば `2 &lt; 3.0` という式は、まず整数 `2` が浮動小数点型に暗黙的型変換され、`3.0` と比較されます。ただし `is` 演算子とその否定演算子は型変換を行いません。
+
+暗黙的な型変換が失敗する場合は、実行時エラーとなります。例えば `'test' &lt; 5` という式は、文字列型が含まれるため、直接な型変換ができず実行時エラーとなります。
+
+暗黙的な型変換が行われる二項演算子は以下の通りです: `**` `*` `//` `/` `%` `+` `-` `&lt;` `&gt;` `==` `&lt;=` `&gt;=` `!=` `=` `**=` `*=` `//=` `/=` `%=` `+=` `-=`.
 
 
 ### 4.4. 評価順序
