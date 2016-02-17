@@ -577,7 +577,7 @@ expr5 = expr1 + (expr2 - expr3) / expr4
 
 ### 4.10. 演算子の優先順位
 
-以下は演算子の優先順位の表です。順位が高いほど、文法的に優先して処理されます。順位が同一の演算子が連続した場合は結合性に従い処理されます。
+以下は演算子の _優先順位_ (precedence)の表です。順位が高いほど、文法的に優先して処理されます。順位が同一の演算子が連続した場合は結合性に従い処理されます。
 
 
 優先順位 | 記号         | 名称                | 結合性 | 暗黙的型変換 | 例
@@ -679,7 +679,7 @@ expr5 = expr1 + (expr2 - expr3) / expr4
         {id: '4-7-', name: 'expression'},
         {id: '4-8-', name: 'implicit_typeconversion'},
         {id: '4-9-', name: 'order'},
-        {id: '4-10-', name: 'priority'}
+        {id: '4-10-', name: 'precedence'}
       ]);
     });
   </script>
