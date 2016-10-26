@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+- 0.12
+sudo: false
+script:
+- '[ "$TRAVIS_BRANCH" == develop ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && bash
+  ./deploy.sh'
+cache:
+  directories:
+  - node_modules
+env:
+  global:
+    secure: n6DYBF7ZNKunqaDxPvTs2EOno7YSeVB2YQuQEqCH+V4H2ZNDzLD+tMPZx0rk2AUujD7sOwSFaJUE/844vXVYfE4Uyp5cxhRPVDbGpVLH876kUa1tT4q3ZFM9ddYJuYTJYqG9JNcsb+MMyDci9dXixypoW1G/gtOx8Mi++9buSV4=
