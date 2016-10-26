@@ -15,8 +15,8 @@ cd _book
 #--------------------------
 
 git init
-git config user.email "noreply@example.com"
-git config user.name "Travis-CI"
+git config user.email "nanase@users.noreply.github.com"
+git config user.name "Nanase"
 git add .
 git commit -m "Deploy to GitHub Pages"
 git push --force --quiet "https://${GH_TOKEN}@github.com/lury-lang/lury-specification.git" master:gh-pages > /dev/null 2>&1
