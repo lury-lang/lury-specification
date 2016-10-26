@@ -9,7 +9,7 @@ node -v
 npm install gitbook-cli -g
 gitbook --version
 
-gitbook _book
+gitbook build
 cd _book
 
 #--------------------------
