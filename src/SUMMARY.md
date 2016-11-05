@@ -9,5 +9,6 @@
     * [トークン化戦略](language/lexical/tokenize.md)
     * [文字コード](language/lexical/encoding.md)
     * [行構造](language/lexical/line.md)
+    * [空白文字](language/lexical/whitespace.md)
   * [文法](language/grammar/index.md)
 * [ライブラリ](library/index.md)
