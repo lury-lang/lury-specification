@@ -10,5 +10,6 @@
     * [文字コード](language/lexical/encoding.md)
     * [行構造](language/lexical/line.md)
     * [空白文字](language/lexical/whitespace.md)
+    * [コメント](language/lexical/comment.md)
   * [文法](language/grammar/index.md)
 * [ライブラリ](library/index.md)
