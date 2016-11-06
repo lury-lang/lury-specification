@@ -1,0 +1,413 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>トークン化戦略 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="encoding.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../about/index.md">
+            
+                <span>
+            
+                    
+                    Luryについて
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../index.md">
+            
+                <span>
+            
+                    
+                    言語仕様
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../object_model/index.md">
+            
+                <span>
+            
+                    
+                    オブジェクトモデル
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1.1" data-path="../object_model/object.html">
+            
+                <a href="../object_model/object.html">
+            
+                    
+                    オブジェクト
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    字句構造
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.3.2.1" data-path="tokenize.html">
+            
+                <a href="tokenize.html">
+            
+                    
+                    トークン化戦略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.2" data-path="encoding.html">
+            
+                <a href="encoding.html">
+            
+                    
+                    文字コード
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.3" data-path="line.html">
+            
+                <a href="line.html">
+            
+                    
+                    行構造
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.4" data-path="whitespace.html">
+            
+                <a href="whitespace.html">
+            
+                    
+                    空白文字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.5" data-path="comment.html">
+            
+                <a href="comment.html">
+            
+                    
+                    コメント
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../grammar/index.md">
+            
+                <span>
+            
+                    
+                    文法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../../library/index.md">
+            
+                <span>
+            
+                    
+                    ライブラリ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >トークン化戦略</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x30C8;&#x30FC;&#x30AF;&#x30F3;&#x5316;&#x6226;&#x7565;">&#x30C8;&#x30FC;&#x30AF;&#x30F3;&#x5316;&#x6226;&#x7565;</h1>
+<p>Lury &#x306E;&#x30C8;&#x30FC;&#x30AF;&#x30F3;&#x5316;&#x306F; <strong>&#x6700;&#x9577;&#x4E00;&#x81F4;&#x6226;&#x7565;</strong> &#x306B;&#x3088;&#x3063;&#x3066;&#x884C;&#x308F;&#x308C;&#x307E;&#x3059;&#x3002;
+&#x3059;&#x306A;&#x308F;&#x3061;&#x3001;&#x5B57;&#x53E5;&#x89E3;&#x6790;&#x5668;&#x306F;&#x53EF;&#x80FD;&#x306A;&#x9650;&#x308A;&#x9577;&#x3044;&#x30C8;&#x30FC;&#x30AF;&#x30F3;&#x3092;&#x751F;&#x6210;&#x3057;&#x3088;&#x3046;&#x3068;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>&#x305F;&#x3068;&#x3048;&#x3070; <code>&gt;=</code> &#x3068;&#x3044;&#x3046;&#x5165;&#x529B;&#x306F;&#x95A2;&#x4FC2;&#x6F14;&#x7B97;&#x5B50; <code>&gt;=</code> &#x3068;&#x3044;&#x3046;1&#x3064;&#x306E;&#x30C8;&#x30FC;&#x30AF;&#x30F3;&#x3068;&#x89E3;&#x91C8;&#x3057;&#x307E;&#x3059;&#x3002;
+&#x30B3;&#x30F3;&#x30D1;&#x30A4;&#x30E9;&#x306F;&#x3001;&#x3053;&#x308C;&#x3092; <code>&gt;</code>, <code>=</code> &#x3068;&#x5206;&#x5272;&#x3057;&#x3066;&#x30C8;&#x30FC;&#x30AF;&#x30F3;&#x5316;&#x3057;&#x3066;&#x306F;&#x3044;&#x3051;&#x307E;&#x305B;&#x3093;&#x3002;</p>
+<h2 id="&#x6226;&#x7565;&#x306E;&#x4F8B;&#x5916;">&#x6226;&#x7565;&#x306E;&#x4F8B;&#x5916;</h2>
+<p>&#x6700;&#x9577;&#x4E00;&#x81F4;&#x6226;&#x7565;&#x306E;&#x4F8B;&#x5916;&#x3068;&#x306A;&#x308B;&#x30C8;&#x30FC;&#x30AF;&#x30F3;&#x304C;&#x7BC4;&#x56F2;&#x6F14;&#x7B97;&#x5B50; <code>..</code> &#x304A;&#x3088;&#x3073; <code>...</code> &#x3067;&#x3059;&#x3002;</p>
+<p>&#x4F8B;&#x3048;&#x3070;&#x3001;2&#x3064;&#x306E;&#x6574;&#x6570;&#x30EA;&#x30C6;&#x30E9;&#x30EB;&#x3068;&#x7BC4;&#x56F2;&#x6F14;&#x7B97;&#x5B50;&#x3092;&#x7D50;&#x3093;&#x3060;&#x3082;&#x306E;&#x3092; <code>3..5</code> &#x3068;&#x8868;&#x8A18;&#x3059;&#x308B;&#x3068;&#x3001;&#x6700;&#x9577;&#x4E00;&#x81F4;&#x6226;&#x7565;&#x306E;&#x307F;&#x3092;&#x7528;&#x3044;&#x305F;&#x5B57;&#x53E5;&#x89E3;&#x6790;&#x5668;&#x306F; <code>3.</code> &#x3068; <code>.5</code> &#x3068;&#x3044;&#x3046; 2&#x3064;&#x306E; <em>&#x6B63;&#x3057;&#x3044;</em> &#x6D6E;&#x52D5;&#x5C0F;&#x6570;&#x70B9;&#x6570;&#x30EA;&#x30C6;&#x30E9;&#x30EB;&#x306B;&#x5206;&#x5272;&#x3055;&#x308C;&#x3066;&#x3057;&#x307E;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>Lury &#x30B3;&#x30F3;&#x30D1;&#x30A4;&#x30E9;&#x306F;&#x3001;&#x3053;&#x306E;&#x3088;&#x3046;&#x306A;&#x5834;&#x5408;&#x306F; <code>3</code> <code>..</code> <code>5</code> &#x3068;&#x3044;&#x3046; 3&#x3064;&#x306E;&#x30C8;&#x30FC;&#x30AF;&#x30F3;&#x306B; <em>&#x5206;&#x5272;&#x3055;&#x308C;&#x306A;&#x3051;&#x308C;&#x3070;&#x306A;&#x308A;&#x307E;&#x305B;&#x3093;</em>&#x3002;
+&#x3057;&#x305F;&#x304C;&#x3063;&#x3066;&#x3001;<code>3..5</code> &#x3068; <code>3. .5</code> &#x306F;&#x5168;&#x304F;&#x7570;&#x306A;&#x308B;&#x30C8;&#x30FC;&#x30AF;&#x30F3;&#x3092;&#x751F;&#x6210;&#x3059;&#x308B;&#x3053;&#x3068;&#x3092;&#x610F;&#x5473;&#x3057;&#x307E;&#x3059;&#x3002;&#x3053;&#x308C;&#x306F;&#x6F14;&#x7B97;&#x5B50; <code>...</code> &#x306B;&#x3064;&#x3044;&#x3066;&#x3082;&#x540C;&#x69D8;&#x3067;&#x3059;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: 字句構造">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="encoding.html" class="navigation navigation-next " aria-label="Next page: 文字コード">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"トークン化戦略","level":"1.3.2.1","depth":3,"next":{"title":"文字コード","level":"1.3.2.2","depth":3,"path":"language/lexical/encoding.md","ref":"language/lexical/encoding.md","articles":[]},"previous":{"title":"字句構造","level":"1.3.2","depth":2,"path":"language/lexical/index.md","ref":"language/lexical/index.md","articles":[{"title":"トークン化戦略","level":"1.3.2.1","depth":3,"path":"language/lexical/tokenize.md","ref":"language/lexical/tokenize.md","articles":[]},{"title":"文字コード","level":"1.3.2.2","depth":3,"path":"language/lexical/encoding.md","ref":"language/lexical/encoding.md","articles":[]},{"title":"行構造","level":"1.3.2.3","depth":3,"path":"language/lexical/line.md","ref":"language/lexical/line.md","articles":[]},{"title":"空白文字","level":"1.3.2.4","depth":3,"path":"language/lexical/whitespace.md","ref":"language/lexical/whitespace.md","articles":[]},{"title":"コメント","level":"1.3.2.5","depth":3,"path":"language/lexical/comment.md","ref":"language/lexical/comment.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"language/lexical/tokenize.md","mtime":"2016-11-06T14:00:05.899Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2016-11-06T14:01:34.229Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
